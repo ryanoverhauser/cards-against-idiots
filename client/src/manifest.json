@@ -1,0 +1,31 @@
+{
+  "dependencies": {
+    "app.js": {
+      "files": [
+        "scripts/app.js",
+        "scripts/services/**/*.js",
+        "scripts/controllers/**/*.js",
+        "scripts/directives/**/*.js"
+      ]
+    },
+    "vendor.js": {
+      "bower": [
+        "angular",
+        "ngDraggable"
+      ]
+    },
+    "main.css": {
+      "files": [
+        "styles/main.scss"
+      ],
+      "main": true
+    }
+  },
+  "paths": {
+    "source": "client/src/",
+    "dist": "client/dist/"
+  },
+  "config": {
+    "devUrl": "http://localhost:8080"
+  }
+}

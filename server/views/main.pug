@@ -1,0 +1,43 @@
+doctype html
+html
+
+    include includes/head.pug
+
+    body(ng-app='cati', ng-controller='MainController')
+
+        header#site-header
+            nav.navbar.navbar-default.navbar-fixed-top(role='navigation')
+                .container
+                    .navbar-header
+                        a.navbar-brand
+                            i.fa.fa-globe
+                            |  CATI
+                    .navbar-left
+                        ul.nav.navbar-nav
+                            li
+                                a(href, ng-show='inGame', ng-click='leaveGame()') Leave Game
+                    .navbar-right
+                        a.toggle-mute(ng-click='toggleMute()', ng-class='{muted: isMuted()}')
+                    .navbar-right
+                        .round-timer(ng-show='inGame')
+                            i.fa.fa-clock-o
+                            |  {{displayTime}}
+
+        //- GAME PANEL 
+        #main
+            
+            //- INIT
+            #init(ng-hide='initialized')
+                form#init-form.form-inline(name='user')
+                    .form-group
+                        input#name.form-control.input-lg(type='text', placeholder='Choose a nickname', maxlength='20', required, ng-model='user.name', ng-maxlength="20")
+                    button#init-game.btn.btn-lg.btn-success(ng-click='init()',  ng-disabled='user.$invalid') Go!
+
+            //- GAME LOBBY
+            //- include ./includes/lobby.jade
+            
+            //- GAME BOARD
+            //- include ./includes/board.jade
+        
+        //- INFO PANEL 
+        //- include ./includes/infoPanel.jade
