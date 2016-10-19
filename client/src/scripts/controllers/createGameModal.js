@@ -6,11 +6,23 @@ function CreateGameModalController($uibModalInstance, user, util, socket, decks)
 
   var $ctrl = this;
 
-  $ctrl.decks = decks;
+  $ctrl.black_total = 0;
+  $ctrl.cancel = cancel;
   $ctrl.customDecks = [];
   $ctrl.customDeckInput = '';
-  $ctrl.white_total = 0;
-  $ctrl.black_total = 0;
+  $ctrl.decks = decks;
+  $ctrl.isChecked = isChecked;
+  $ctrl.isCustomChecked = isCustomChecked;
+  $ctrl.loadCustomDeck = loadCustomDeck;
+  $ctrl.ok = ok;
+  $ctrl.options = {
+    decks: [],
+    customDecks: [],
+    name: user.name() + "'s game",
+    scoreLimit: $ctrl.scores[1],
+    roundTime: $ctrl.times[3],
+    czarTime: $ctrl.times[3]
+  };
   $ctrl.scores = [
     {value: 5, name: 5},
     {value: 10, name: 10},
@@ -26,14 +38,9 @@ function CreateGameModalController($uibModalInstance, user, util, socket, decks)
     {value: 300, name: "5 min"},
     {value: 600, name: "10 min"}
   ];
-  $ctrl.options = {
-    decks: [],
-    customDecks: [],
-    name: user.name() + "'s game",
-    scoreLimit: $ctrl.scores[1],
-    roundTime: $ctrl.times[3],
-    czarTime: $ctrl.times[3]
-  };
+  $ctrl.toggleChecked = toggleChecked;
+  $ctrl.toggleCustomChecked = toggleCustomChecked;
+  $ctrl.white_total = 0;
 
   // Check all decks by default
   for (var i = 0; i < $ctrl.decks.length; i++) {
@@ -41,12 +48,50 @@ function CreateGameModalController($uibModalInstance, user, util, socket, decks)
   }
   updateTotals();
 
-  $ctrl.isChecked = function (deckId) {
+  socket.on('customDeckLoaded', function (data) {
+    onCustomDeckLoaded(data);
+  });
+
+  //////
+
+  function cancel () {
+    $uibModalInstance.dismiss('cancel');
+  }
+
+  function isChecked (deckId) {
     if ($ctrl.options.decks.indexOf( deckId ) > -1 ) return true;
     return false;
-  };
+  }
 
-  $ctrl.toggleChecked = function (deckId) {
+  function isCustomChecked (deckId) {
+    if ($ctrl.options.customDecks.indexOf( deckId ) > -1 ) return true;
+    return false;
+  }
+
+  function loadCustomDeck() {
+    socket.emit( 'loadCustomDeck', {
+      deckId: $ctrl.customDeckInput
+    });
+  }
+
+  function ok () {
+    $uibModalInstance.close($ctrl.options);
+  }
+
+  function onCustomDeckLoaded(data) {
+    if (data.err) {
+      alert(data.err);
+    } else {
+      if (typeof util.findByKeyValue( $ctrl.customDecks, 'code', data.deck.code) === "undefined") {
+        $ctrl.customDecks.push(data.deck);
+        $ctrl.options.customDecks.push(data.deck.code);
+        updateTotals();
+        $ctrl.customDeckInput = '';
+      }
+    }
+  }
+  
+  function toggleChecked (deckId) {
     var index = $ctrl.options.decks.indexOf( deckId );
     if ( index > -1 ) {
       $ctrl.options.decks.splice(index, 1);
@@ -54,14 +99,9 @@ function CreateGameModalController($uibModalInstance, user, util, socket, decks)
       $ctrl.options.decks.push(deckId);
     }
     updateTotals();
-  };
+  }
 
-  $ctrl.isCustomChecked = function (deckId) {
-    if ($ctrl.options.customDecks.indexOf( deckId ) > -1 ) return true;
-    return false;
-  };
-
-  $ctrl.toggleCustomChecked = function (deckId) {
+  function toggleCustomChecked (deckId) {
     var index = $ctrl.options.customDecks.indexOf( deckId );
     if ( index > -1 ) {
       $ctrl.options.customDecks.splice(index, 1);
@@ -69,21 +109,7 @@ function CreateGameModalController($uibModalInstance, user, util, socket, decks)
       $ctrl.options.customDecks.push(deckId);
     }
     updateTotals();
-  };
-
-  $ctrl.loadCustomDeck = function() {
-    socket.emit( 'loadCustomDeck', {
-      deckId: $ctrl.customDeckInput
-    });
-  };
-
-  $ctrl.ok = function () {
-    $uibModalInstance.close($ctrl.options);
-  };
-
-  $ctrl.cancel = function () {
-    $uibModalInstance.dismiss('cancel');
-  };  
+  }
 
   function updateTotals() {
     $ctrl.white_total = 0;
@@ -98,23 +124,6 @@ function CreateGameModalController($uibModalInstance, user, util, socket, decks)
       deck = util.findByKeyValue( $ctrl.customDecks, 'code', $ctrl.options.customDecks[i] );
       $ctrl.white_total += deck.response_count;
       $ctrl.black_total += deck.call_count;
-    }
-  }
-
-  socket.on('customDeckLoaded', function (data) {
-    onCustomDeckLoaded(data);
-  });
-
-  function onCustomDeckLoaded(data) {
-    if (data.err) {
-      alert(data.err);
-    } else {
-      if (typeof util.findByKeyValue( $ctrl.customDecks, 'code', data.deck.code) === "undefined") {
-        $ctrl.customDecks.push(data.deck);
-        $ctrl.options.customDecks.push(data.deck.code);
-        updateTotals();
-        $ctrl.customDeckInput = '';
-      }
     }
   }
 

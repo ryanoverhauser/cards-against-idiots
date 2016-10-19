@@ -26,6 +26,8 @@ function MainController( socket, user ) {
         console.log('decks', data.decks);
     });
 
+    //////
+
     function addAlert(alert) {
         $ctrl.alerts.push({
             type: alert.type || 'warning',

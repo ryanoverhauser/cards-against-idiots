@@ -6,19 +6,28 @@ function LobbyController($uibModal, socket, user) {
 
     var $ctrl = this;
 
-    $ctrl.inGame = false;
-    $ctrl.games = [];
+    $ctrl.createGame = createGame;
     $ctrl.decks = [];
+    $ctrl.games = [];
+    $ctrl.inGame = false;
+    $ctrl.joinGame = joinGame;
+    $ctrl.refreshGamesList = refreshGamesList;
 
-    $ctrl.refreshGamesList = function() {
-        socket.emit( 'getGames' );
-    };
+    socket.on('initialized', function (data) {
+        $ctrl.games = data.games;
+        $ctrl.decks = data.decks;
+    });
+    socket.on('gameList', function (data) {
+        $ctrl.games = data.games;
+        $ctrl.decks = data.decks;
+    });
+    socket.on('leftGame', function (data) {
+        $ctrl.games = data.games;
+    });
 
-    $ctrl.joinGame = function(gameId) {
-        socket.emit( 'joinGame', { gameId: gameId } );
-    };
+    //////
 
-    $ctrl.createGame = function() {
+    function createGame() {
         var modalInstance = $uibModal.open({
             templateUrl: 'templates/create',
             controller: 'CreateGameModalController as create',
@@ -44,22 +53,14 @@ function LobbyController($uibModal, socket, user) {
         }, function () {
             // console.log('Modal dismissed at: ' + new Date());
         });
-    };
+    }
 
+    function joinGame(gameId) {
+        socket.emit( 'joinGame', { gameId: gameId } );
+    }
 
-    // Socket event handlers
-    // =====================
-
-    socket.on('initialized', function (data) {
-        $ctrl.games = data.games;
-        $ctrl.decks = data.decks;
-    });
-    socket.on('gameList', function (data) {
-        $ctrl.games = data.games;
-        $ctrl.decks = data.decks;
-    });
-    socket.on('leftGame', function (data) {
-        $ctrl.games = data.games;
-    });
+    function refreshGamesList() {
+        socket.emit( 'getGames' );
+    }
 
 }

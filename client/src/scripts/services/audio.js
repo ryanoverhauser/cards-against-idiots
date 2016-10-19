@@ -5,18 +5,24 @@ audio.$inject = ['ngAudio'];
 function audio(ngAudio) {
     var muted = false;
     var sounds = {
-        round: ngAudio.load("audio/round.mp3"),
         alert: ngAudio.load("audio/alert.mp3"),
         drip: ngAudio.load("audio/drip.mp3"),
-        plink: ngAudio.load("audio/plink.mp3")
+        plink: ngAudio.load("audio/plink.mp3"),
+        round: ngAudio.load("audio/round.mp3")
     };
     var service = {
+        isMuted: isMuted,
         play: play,
-        toggleMute: toggleMute,
-        isMuted: isMuted
+        toggleMute: toggleMute
     };
 
     return service;
+
+    //////
+
+    function isMuted() {
+        return muted;
+    }
 
     function play(sound) {
         if (!muted) sounds[sound].play();
@@ -30,10 +36,6 @@ function audio(ngAudio) {
             muted = true;
             console.log('muted');
         }
-    }
-
-    function isMuted() {
-        return muted;
     }
 
 }
