@@ -59,12 +59,16 @@ function CreateGameModalController($uibModalInstance, user, util, socket, decks)
   }
 
   function isChecked (deckId) {
-    if ($ctrl.options.decks.indexOf( deckId ) > -1 ) return true;
+    if ($ctrl.options.decks.indexOf( deckId ) > -1 ) {
+      return true;
+    }
     return false;
   }
 
   function isCustomChecked (deckId) {
-    if ($ctrl.options.customDecks.indexOf( deckId ) > -1 ) return true;
+    if ($ctrl.options.customDecks.indexOf( deckId ) > -1 ) {
+      return true;
+    }
     return false;
   }
 
@@ -80,7 +84,7 @@ function CreateGameModalController($uibModalInstance, user, util, socket, decks)
 
   function onCustomDeckLoaded(data) {
     if (data.err) {
-      alert(data.err);
+      console.warn(data.err);
     } else {
       if (typeof util.findByKeyValue( $ctrl.customDecks, 'code', data.deck.code) === "undefined") {
         $ctrl.customDecks.push(data.deck);

@@ -25,7 +25,9 @@ function audio(ngAudio) {
     }
 
     function play(sound) {
-        if (!muted) sounds[sound].play();
+        if (!muted) {
+            sounds[sound].play();
+        }
     }
 
     function toggleMute() {
