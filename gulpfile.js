@@ -60,8 +60,6 @@ var enabled = {
   maps: !argv.production,
   // Fail styles task on error when `--production`
   failStyleTask: argv.production,
-  // Fail due to JSHint warnings only when `--production`
-  failJSHint: argv.production,
   // Strip debug statments from javascript when `--production`
   stripJSDebug: argv.production
 };
@@ -210,6 +208,16 @@ gulp.task('fonts', function() {
     .pipe(browserSync.stream());
 });
 
+// ### Audio
+// `gulp audio` - Grabs all the mp3 files and outputs them in a flattened directory
+// structure. See: https://github.com/armed/gulp-flatten
+gulp.task('audio', function() {
+  return gulp.src(path.source + 'audio/**/*.mp3')
+    .pipe(flatten())
+    .pipe(gulp.dest(path.dist + 'audio'))
+    .pipe(browserSync.stream());
+});
+
 // ### Images
 // `gulp images` - Run lossless compression on all the images.
 gulp.task('images', function() {
@@ -231,7 +239,7 @@ gulp.task('jshint', function() {
   ].concat(project.js))
     .pipe(jshint())
     .pipe(jshint.reporter('jshint-stylish'))
-    .pipe(gulpif(enabled.failJSHint, jshint.reporter('fail')));
+    .pipe(jshint.reporter('fail'));
 });
 
 // ### Clean
@@ -262,7 +270,7 @@ gulp.task('watch', function() {
 gulp.task('build', function(callback) {
   runSequence('styles',
               'scripts',
-              ['fonts', 'images'],
+              ['fonts', 'images', 'audio'],
               callback);
 });
 

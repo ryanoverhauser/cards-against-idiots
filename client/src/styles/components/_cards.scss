@@ -1,0 +1,32 @@
+.card {
+    background: #fff;
+    border: 1px solid #bbb;
+    border-radius: 10px;
+    padding: 14px 16px 18px;
+    margin-bottom: 16px;
+    height: 234px;
+    font-weight: bold;
+    font-size: 15px;
+    line-height: 22px;
+    box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.1);
+    &.card-white {
+        background: url('../img/wcard_logo.png') 16px 204px no-repeat #fff;
+        background-size: 88px 16px;
+    }
+    &.card-black {
+        color: #fff;
+        border-color: #000;
+        background: url('../img/bcard_logo.png') 16px 204px no-repeat #000;
+        background-size: 88px 16px;
+    }
+    &.card-large {
+        height: 350px;
+        width: 265px;
+        padding: 28px 30px 32px;
+        font-size: 20px;
+        line-height: 30px;
+        background-size: 145px 26px;
+        background-position: 26px 306px;
+    }
+    &.played { opacity: .3; }
+}

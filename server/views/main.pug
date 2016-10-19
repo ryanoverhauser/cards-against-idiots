@@ -3,7 +3,7 @@ html
 
     include includes/head.pug
 
-    body(ng-app='cati', ng-controller='MainController')
+    body(ng-app='cati', ng-controller='MainController as main')
 
         header#site-header
             nav.navbar.navbar-default.navbar-fixed-top(role='navigation')
@@ -23,21 +23,27 @@ html
                             i.fa.fa-clock-o
                             |  {{displayTime}}
 
-        //- GAME PANEL 
-        #main
-            
-            //- INIT
-            #init(ng-hide='initialized')
-                form#init-form.form-inline(name='user')
-                    .form-group
-                        input#name.form-control.input-lg(type='text', placeholder='Choose a nickname', maxlength='20', required, ng-model='user.name', ng-maxlength="20")
-                    button#init-game.btn.btn-lg.btn-success(ng-click='init()',  ng-disabled='user.$invalid') Go!
+        .container
 
-            //- GAME LOBBY
-            //- include ./includes/lobby.jade
-            
-            //- GAME BOARD
-            //- include ./includes/board.jade
+            //- GAME PANEL 
+            #main
+
+                //- ALERTS
+                div(
+                    uib-alert
+                    ng-repeat="alert in alerts",
+                    ng-class="'alert-' + (alert.type || 'warning')",
+                    close="closeAlert($index)"
+                ) {{alert.msg}}
+                
+                //- INIT
+                include ./includes/init.pug
+
+                //- GAME LOBBY
+                include ./includes/lobby.pug
+                
+                //- GAME BOARD
+                //- include ./includes/board.pug
         
         //- INFO PANEL 
-        //- include ./includes/infoPanel.jade
+        //- include ./includes/infoPanel.pug

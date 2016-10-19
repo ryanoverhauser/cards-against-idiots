@@ -11,6 +11,9 @@
     "vendor.js": {
       "bower": [
         "angular",
+        "angular-animate",
+        "angular-audio",
+        "angular-bootstrap",
         "ngDraggable"
       ]
     },

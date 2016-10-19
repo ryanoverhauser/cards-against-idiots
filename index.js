@@ -20,7 +20,7 @@ var server = require('http').Server(app),
     socket = require('./server/modules/socket')(server);
 
 // Routing
-var appSocketUrl = process.env.protocol + '://' + process.env.host + ':' + process.env.port;
+var appSocketUrl = process.env.PROTOCOL + '://' + process.env.HOST + ':' + process.env.PORT;
 
 app.get('/', function (req, res) {
   res.render('main', {
@@ -28,7 +28,11 @@ app.get('/', function (req, res) {
   });
 });
 
+app.get("/templates/create", function(req, res){
+    res.render("templates/create");
+});
+
 // Start listening
-server.listen(process.env.port, function () {
-  debug('Example app listening on port ' + process.env.port + '!');
+server.listen(process.env.PORT, function () {
+  debug('Example app listening on port ' + process.env.PORT + '!');
 });

@@ -1,7 +1,7 @@
 'use strict';
 
 var debug = require('debug')('socket'),
-    lobby = require('./lobby'),
+    lobby = require('./lobby')(),
     User = require('./user'),
     util = require('./util');
 
@@ -14,12 +14,15 @@ function Socket(server) {
         debug('user connected: ' + user.socketId);
 
         socket.on('init', function(data){
-            if (!user.initialized && util.has(data)) {
+            if (!user.initialized && util.exists(data)) {
                 if (user.init(data)) {
-                    debug('user initialized with name: ' + user.name);
+                    debug('user initialized with name: ' + user.id);
                     socket.join('lobby');
                     socket.emit('initialized', {
-                        userId: user.id
+                        userId: user.id,
+                        userName: user.name,
+                        games: lobby.getGames(),
+                        decks: lobby.getDecks()
                     });
                 } else {
                     socket.emit('alert', {

@@ -8,7 +8,10 @@
     "bootstrap-sass": "^3.3.7",
     "angular": "^1.5.8",
     "font-awesome": "^4.6.3",
-    "ngDraggable": "^0.1.11"
+    "ngDraggable": "^0.1.11",
+    "angular-bootstrap": "^2.2.0",
+    "angular-animate": "^1.5.8",
+    "angular-audio": "^1.7.3"
   },
   "overrides": {
     "font-awesome": {
@@ -24,7 +27,6 @@
     "bootstrap-sass": {
       "main": [
         "./assets/stylesheets/_bootstrap.scss",
-        "./assets/javascripts/bootstrap.js",
         "./assets/fonts/bootstrap/glyphicons-halflings-regular.eot",
         "./assets/fonts/bootstrap/glyphicons-halflings-regular.svg",
         "./assets/fonts/bootstrap/glyphicons-halflings-regular.ttf",

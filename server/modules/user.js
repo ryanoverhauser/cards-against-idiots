@@ -4,10 +4,10 @@ var debug = require('debug')('user'),
     util = require('./util'),
     validator = require('validator');
 
-class User{
+class User {
 
     constructor(socketId) {
-        this._id = util.generateUID();
+        this.id = util.generateUID();
         this.socketId = socketId;
         this.name = undefined;
         this.initialized = false;

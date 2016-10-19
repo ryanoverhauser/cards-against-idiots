@@ -1,1 +1,1 @@
-var app = angular.module('cati', ['ngDraggable']);
+var app = angular.module('cati', ['ngAnimate','ngAudio','ui.bootstrap','ngDraggable']);
