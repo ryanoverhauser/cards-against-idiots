@@ -1,49 +1,49 @@
 doctype html
 html
 
-    include includes/head.pug
+  include includes/head.pug
 
-    body(ng-app='cati', ng-controller='MainController as main')
+  body(ng-app='cati', ng-controller='MainController as main')
 
-        header#site-header
-            nav.navbar.navbar-default.navbar-fixed-top(role='navigation')
-                .container
-                    .navbar-header
-                        a.navbar-brand
-                            i.fa.fa-globe
-                            |  CATI
-                    .navbar-left
-                        ul.nav.navbar-nav
-                            li
-                                a(href, ng-show='inGame', ng-click='leaveGame()') Leave Game
-                    .navbar-right
-                        a.toggle-mute(ng-click='toggleMute()', ng-class='{muted: isMuted()}')
-                    .navbar-right
-                        .round-timer(ng-show='inGame')
-                            i.fa.fa-clock-o
-                            |  {{displayTime}}
-
+    header#site-header
+      nav.navbar.navbar-default.navbar-fixed-top(role='navigation')
         .container
+          .navbar-header
+            a.navbar-brand
+              i.fa.fa-globe
+              |  CATI
+          .navbar-left
+            ul.nav.navbar-nav
+              li
+                a(href, ng-show='inGame', ng-click='leaveGame()') Leave Game
+          .navbar-right
+            a.toggle-mute(ng-click='toggleMute()', ng-class='{muted: isMuted()}')
+          .navbar-right
+            .round-timer(ng-show='inGame')
+              i.fa.fa-clock-o
+              |  {{displayTime}}
 
-            //- GAME PANEL 
-            #main
+    .container
 
-                //- ALERTS
-                div(
-                    uib-alert
-                    ng-repeat="alert in alerts",
-                    ng-class="'alert-' + (alert.type || 'warning')",
-                    close="closeAlert($index)"
-                ) {{alert.msg}}
-                
-                //- INIT
-                include ./includes/init.pug
+      //- GAME PANEL 
+      #main
 
-                //- GAME LOBBY
-                include ./includes/lobby.pug
-                
-                //- GAME BOARD
-                //- include ./includes/board.pug
+        //- ALERTS
+        div(
+          uib-alert
+          ng-repeat="alert in alerts",
+          ng-class="'alert-' + (alert.type || 'warning')",
+          close="closeAlert($index)"
+        ) {{alert.msg}}
         
-        //- INFO PANEL 
-        //- include ./includes/infoPanel.pug
+        //- INIT
+        include ./includes/init.pug
+
+        //- GAME LOBBY
+        include ./includes/lobby.pug
+        
+        //- GAME BOARD
+        //- include ./includes/board.pug
+    
+    //- INFO PANEL 
+    //- include ./includes/infoPanel.pug

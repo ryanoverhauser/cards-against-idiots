@@ -1,42 +1,42 @@
 #site-header {
-    .navbar {
-        min-height: 40px;
-        margin-bottom: 16px;
-        .navbar-nav > li > a {
-            padding-top: 10px;
-            padding-bottom: 10px;
-        }
-        .navbar-brand {
-            padding: 10px;
-            height: 40px;
-        }
-        .round-timer {
-            font-size: 22px;
-            font-weight: bold;
-            color: #777;
-            line-height: 40px;
-            margin-right: 40px;
-        }
-        .toggle-mute {
-            display: inline-block;
-            width: 20px;
-            font-size: 22px;
-            line-height: 40px;
-            margin-right: 15px;
-            float: right;
-            color: #777;
-            text-decoration: none;
-            cursor: pointer;
-            font-family: 'FontAwesome';
-            &:before {
-                display: inline-block;
-                text-rendering: auto;
-                -webkit-font-smoothing: antialiased;
-                content: "\f028";
-            }
-            &.muted:before {
-                content: "\f026";
-            }
-        }
+  .navbar {
+    min-height: 40px;
+    margin-bottom: 16px;
+    .navbar-nav > li > a {
+      padding-top: 10px;
+      padding-bottom: 10px;
     }
+    .navbar-brand {
+      padding: 10px;
+      height: 40px;
+    }
+    .round-timer {
+      font-size: 22px;
+      font-weight: bold;
+      color: #777;
+      line-height: 40px;
+      margin-right: 40px;
+    }
+    .toggle-mute {
+      display: inline-block;
+      width: 20px;
+      font-size: 22px;
+      line-height: 40px;
+      margin-right: 15px;
+      float: right;
+      color: #777;
+      text-decoration: none;
+      cursor: pointer;
+      font-family: 'FontAwesome';
+      &:before {
+        display: inline-block;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        content: "\f028";
+      }
+      &.muted:before {
+        content: "\f026";
+      }
+    }
+  }
 }

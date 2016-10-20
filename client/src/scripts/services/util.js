@@ -1,20 +1,18 @@
 app.factory('util', util);
 
 function util (){
-	var service = {
-		findByKeyValue: findByKeyValue
-	};
+  var service = {
+    findByKeyValue: findByKeyValue
+  };
 
-	return service;
+  return service;
 
-	//////
+  //////
 
-    function findByKeyValue ( source, key, value ) {
-        return source.filter(function( obj ) {
-            return obj[key] === value;
-        })[ 0 ];
-    }
+  function findByKeyValue ( source, key, value ) {
+    return source.filter(function( obj ) {
+      return obj[key] === value;
+    })[ 0 ];
+  }
 
 }
-
-  

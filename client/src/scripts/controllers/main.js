@@ -4,45 +4,45 @@ MainController.$inject = ['socket', 'user'];
 
 function MainController( socket, user ) {
 
-    var $ctrl = this;
+  var $ctrl = this;
 
-    $ctrl.addAlert = addAlert;
-    $ctrl.alerts = [];
-    $ctrl.closeAlert = closeAlert;
-    $ctrl.init = init;
-    $ctrl.initialized = false;
+  $ctrl.addAlert = addAlert;
+  $ctrl.alerts = [];
+  $ctrl.closeAlert = closeAlert;
+  $ctrl.init = init;
+  $ctrl.initialized = false;
 
-    // socket.emit('init', {name: 'foobar'});
+  // socket.emit('init', {name: 'foobar'});
 
-    socket.on('alert', function(data){
-        addAlert(data);
+  socket.on('alert', function(data){
+    addAlert(data);
+  });
+
+  socket.on('initialized', function (data) {
+    user.init(data.userId, data.userName);
+    $ctrl.initialized = true;
+    console.log('user initialized', user.getUser());
+    console.log('games', data.games);
+    console.log('decks', data.decks);
+  });
+
+  //////
+
+  function addAlert(alert) {
+    $ctrl.alerts.push({
+      type: alert.type || 'warning',
+      msg: alert.msg
     });
+  }
 
-    socket.on('initialized', function (data) {
-        user.init(data.userId, data.userName);
-        $ctrl.initialized = true;
-        console.log('user initialized', user.getUser());
-        console.log('games', data.games);
-        console.log('decks', data.decks);
-    });
+  function closeAlert(index) {
+    $ctrl.alerts.splice(index, 1);
+  }
 
-    //////
-
-    function addAlert(alert) {
-        $ctrl.alerts.push({
-            type: alert.type || 'warning',
-            msg: alert.msg
-        });
+  function init() {
+    if ($ctrl.user.$valid) {
+      socket.emit( 'init', {name: $ctrl.user.name});
     }
-
-    function closeAlert(index) {
-        $ctrl.alerts.splice(index, 1);
-    }
-
-    function init() {
-        if ($ctrl.user.$valid) {
-            socket.emit( 'init', {name: $ctrl.user.name});
-        }
-    }
+  }
 
 }

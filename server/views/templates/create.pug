@@ -1,69 +1,69 @@
 .modal-header
-    h3.modal-title Create a New Game
+  h3.modal-title Create a New Game
 .modal-body
-    form#createGameForm.form-horizontal
-        .row
-            .col-xs-6
-                .form-group
-                    label.col-xs-4 Name
-                    .col-xs-8
-                        input.form-control(ng-model="create.options.name", placeholder="Name")
-                .form-group
-                    label.col-xs-4 
-                        | Score Limit &nbsp;
-                        i.fa.fa-question-circle.subtle(data-toggle="tooltip", data-placement="bottom", title="Points needed to win the game.")
-                    .col-xs-8
-                        select.form-control(ng-options="item.name for item in create.scores" ng-model="create.options.scoreLimit")
-                .form-group
-                    label.col-xs-4 
-                        | Round Timer &nbsp;
-                        i.fa.fa-question-circle.subtle(data-toggle="tooltip", data-placement="bottom", title="Time given to players to submit their answer")
-                    .col-xs-8
-                        select.form-control(ng-options="item.name for item in create.times" ng-model="create.options.roundTime")
-                .form-group
-                    label.col-xs-4 
-                        | Czar Timer &nbsp;
-                        i.fa.fa-question-circle.subtle(data-toggle="tooltip", data-placement="bottom", title="Time given to the card czar to choose a winner")
-                    .col-xs-8
-                        select.form-control(ng-options="item.name for item in create.times" ng-model="create.options.czarTime")
-                .form-group
-                    label.col-xs-4
-                        | Custom Decks &nbsp;
-                        i.fa.fa-question-circle.subtle(data-toggle="tooltip", data-placement="bottom", title="Enter a Cardcast deck 'Play Code'. Find or build your own decks at http://cardcastgame.com")
-                    .col-xs-3
-                        input.form-control(ng-model="create.customDeckInput")
-                    .col-xs-5
-                        button.btn.btn-primary(ng-click="create.loadCustomDeck()", ng-disabled="create.customDeckInput == ''") Load
-            .col-xs-6
-                table.table.table-condensed
-                    thead
-                        th Decks
-                        th.align-right White
-                        th.align-right Black
-                    tbody
-                        tr(ng-repeat="deck in create.decks")
-                            td
-                                .checkbox     
-                                    label
-                                        input(type="checkbox" value="{{ deck.id }}" ng-checked="create.isChecked(deck.id)" ng-click="create.toggleChecked(deck.id)")
-                                        | {{ deck.name }}
-                            td.align-right {{ deck.white_card_count }}
-                            td.align-right {{ deck.black_card_count }}
-                        tr(ng-repeat="deck in create.customDecks")
-                            td
-                                .checkbox     
-                                    label
-                                        input(type="checkbox" value="{{ deck.code }}" ng-checked="create.isCustomChecked(deck.code)" ng-click="create.toggleCustomChecked(deck.code)")
-                                        | {{ deck.name }}
-                            td.align-right {{ deck.response_count }}
-                            td.align-right {{ deck.call_count }}
-                        tr.totals
-                            td
-                                strong Totals
-                            td.align-right
-                                strong {{ create.white_total }}
-                            td.align-right
-                                strong {{ create.black_total }}
+  form#createGameForm.form-horizontal
+    .row
+      .col-xs-6
+        .form-group
+          label.col-xs-4 Name
+          .col-xs-8
+            input.form-control(ng-model="create.options.name", placeholder="Name")
+        .form-group
+          label.col-xs-4 
+            | Score Limit &nbsp;
+            i.fa.fa-question-circle.subtle(data-toggle="tooltip", data-placement="bottom", title="Points needed to win the game.")
+          .col-xs-8
+            select.form-control(ng-options="item.name for item in create.scores" ng-model="create.options.scoreLimit")
+        .form-group
+          label.col-xs-4 
+            | Round Timer &nbsp;
+            i.fa.fa-question-circle.subtle(data-toggle="tooltip", data-placement="bottom", title="Time given to players to submit their answer")
+          .col-xs-8
+            select.form-control(ng-options="item.name for item in create.times" ng-model="create.options.roundTime")
+        .form-group
+          label.col-xs-4 
+            | Czar Timer &nbsp;
+            i.fa.fa-question-circle.subtle(data-toggle="tooltip", data-placement="bottom", title="Time given to the card czar to choose a winner")
+          .col-xs-8
+            select.form-control(ng-options="item.name for item in create.times" ng-model="create.options.czarTime")
+        .form-group
+          label.col-xs-4
+            | Custom Decks &nbsp;
+            i.fa.fa-question-circle.subtle(data-toggle="tooltip", data-placement="bottom", title="Enter a Cardcast deck 'Play Code'. Find or build your own decks at http://cardcastgame.com")
+          .col-xs-3
+            input.form-control(ng-model="create.customDeckInput")
+          .col-xs-5
+            button.btn.btn-primary(ng-click="create.loadCustomDeck()", ng-disabled="create.customDeckInput == ''") Load
+      .col-xs-6
+        table.table.table-condensed
+          thead
+            th Decks
+            th.align-right White
+            th.align-right Black
+          tbody
+            tr(ng-repeat="deck in create.decks")
+              td
+                .checkbox     
+                  label
+                    input(type="checkbox" value="{{ deck.id }}" ng-checked="create.isChecked(deck.id)" ng-click="create.toggleChecked(deck.id)")
+                    | {{ deck.name }}
+              td.align-right {{ deck.white_card_count }}
+              td.align-right {{ deck.black_card_count }}
+            tr(ng-repeat="deck in create.customDecks")
+              td
+                .checkbox     
+                  label
+                    input(type="checkbox" value="{{ deck.code }}" ng-checked="create.isCustomChecked(deck.code)" ng-click="create.toggleCustomChecked(deck.code)")
+                    | {{ deck.name }}
+              td.align-right {{ deck.response_count }}
+              td.align-right {{ deck.call_count }}
+            tr.totals
+              td
+                strong Totals
+              td.align-right
+                strong {{ create.white_total }}
+              td.align-right
+                strong {{ create.black_total }}
 .modal-footer
-    button.btn.btn-primary(ng-click="create.ok()") OK
-    button.btn.btn-warning(ng-click="create.cancel()") Cancel
+  button.btn.btn-primary(ng-click="create.ok()") OK
+  button.btn.btn-warning(ng-click="create.cancel()") Cancel
