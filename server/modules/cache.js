@@ -19,7 +19,7 @@ function Cache() {
       var filePath = base + id;
       fs.readFile(filePath, 'utf8', function(err, data) {
         callback(err, data);
-      }); 
+      });
     }
 
   }

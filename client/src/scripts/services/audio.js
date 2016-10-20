@@ -10,10 +10,10 @@
   function audio(ngAudio) {
     var muted = false;
     var sounds = {
-      alert: ngAudio.load("audio/alert.mp3"),
-      drip: ngAudio.load("audio/drip.mp3"),
-      plink: ngAudio.load("audio/plink.mp3"),
-      round: ngAudio.load("audio/round.mp3")
+      alert: ngAudio.load('audio/alert.mp3'),
+      drip: ngAudio.load('audio/drip.mp3'),
+      plink: ngAudio.load('audio/plink.mp3'),
+      round: ngAudio.load('audio/round.mp3')
     };
     var service = {
       isMuted: isMuted,

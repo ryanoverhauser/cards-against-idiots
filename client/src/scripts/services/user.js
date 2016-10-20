@@ -1,4 +1,4 @@
-(function(){
+(function() {
   'use strict';
 
   angular
@@ -23,26 +23,26 @@
 
     //////
 
-    function init(id, name){
+    function init(id, name) {
       user.id = id;
       user.name = name;
       user.initialized = true;
       return user;
     }
 
-    function id(){
+    function id() {
       return user.id;
     }
 
-    function name(){
+    function name() {
       return user.name;
     }
 
-    function initialized(){
+    function initialized() {
       return user.initialized;
     }
 
-    function getUser(){
+    function getUser() {
       return user;
     }
 

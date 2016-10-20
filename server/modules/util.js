@@ -2,8 +2,8 @@
 
 class Util {
 
-  static findByKeyValue( source, key, value ) {
-    return source.filter(function( obj ) {
+  static findByKeyValue(source, key, value) {
+    return source.filter(function(obj) {
       return obj[key] === value;
     })[ 0 ];
   }
@@ -18,7 +18,7 @@ class Util {
   };
 
   static exists(data) {
-    return ( typeof(data) !== 'undefined' && data !== null ) ? true : false;
+    return (typeof(data) !== 'undefined' && data !== null) ? true : false;
   }
 
 };

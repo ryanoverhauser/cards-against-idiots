@@ -3,7 +3,7 @@
 var debug = require('debug')('game');
 var util = require('./util');
 
-function Game(options){
+function Game(options) {
 
   var id = util.generateUID();
   var players = [];

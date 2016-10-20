@@ -10,23 +10,24 @@ function Cardcast() {
 
   function fetchDeck(deckId, callback) {
     var url = 'https://api.cardcastgame.com/v1/decks/' + deckId;
-    https.get(url, function(res){
+    https.get(url, function(res) {
       var content = '';
       res.on('data', function(data) {
         content += data;
       });
       res.on('end', function () {
+        debug(content);
         var decoder = new StringDecoder('utf8');
         callback(decoder.write(content));
       });
     }).on('error', function(e) {
-      debug("Got error: " + e.message);
+      debug('Got error: ' + e.message);
     });
   }
 
   function fetchDeckCards(deckId, callback) {
     var url = 'https://api.cardcastgame.com/v1/decks/' + deckId + '/cards';
-    https.get(url, function(res){
+    https.get(url, function(res) {
       var content = '';
       res.on('data', function(data) {
         content += data;
@@ -36,7 +37,7 @@ function Cardcast() {
         callback(decoder.write(content));
       });
     }).on('error', function(e) {
-      debug("Got error: " + e.message);
+      debug('Got error: ' + e.message);
     });
   }
 
@@ -45,7 +46,7 @@ function Cardcast() {
       black: [],
       white: []
     }
-    for (var i=0; i < data.calls.length; i++) {
+    for (var i = 0; i < data.calls.length; i++) {
       var draw = (data.calls[i].text.length >= 3) ? 2 : 0;
       var card = {
         id: data.calls[i].id,
@@ -55,25 +56,24 @@ function Cardcast() {
       }
       res.black.push(card);
     }
-    for (var i=0; i < data.responses.length; i++) {
+    for (var i = 0; i < data.responses.length; i++) {
       var card = {
         id: data.responses[i].id,
         text: data.responses[i].text[0]
-      };  
+      };
       res.white.push(card);
     }
-    return res; 
+    return res;
   }
 
   function concatText(segments) {
     var text = '';
-    for (var i=0; i < segments.length; i++) {
-      if (i > 0) text += '____';
+    for (var i = 0; i < segments.length; i++) {
+      if (i > 0) { text += '____'; }
       text += segments[i];
     }
     return text;
   }
-
 
   return {
 
@@ -82,8 +82,8 @@ function Cardcast() {
       cache.get(key, function(err, data) {
         if (err) {
           fetchDeck(deckId, function(data) {
-            cache.put(key, data, function(err){
-              if (err) debug(err);
+            cache.put(key, data, function(err) {
+              if (err) { debug(err) };
             });
             callback(JSON.parse(data));
           });
@@ -97,8 +97,8 @@ function Cardcast() {
       cache.get(key, function(err, data) {
         if (err) {
           fetchDeckCards(deckId, function(data) {
-            cache.put(key, data, function(err){
-              if (err) debug(err);
+            cache.put(key, data, function(err) {
+              if (err) { debug(err) };
             });
             callback(parseCards(JSON.parse(data)));
           });

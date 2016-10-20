@@ -22,7 +22,7 @@ function User(socket) {
 
   function init(data) {
     if (!initialized && util.exists(data)) {
-      if ( validator.isLength( data.name, 1, 20 ) ) {
+      if (validator.isLength(data.name, 1, 20)) {
         name = data.name;
         initialized = true;
         debug('user initialized with name: ' + name);
@@ -36,7 +36,7 @@ function User(socket) {
       } else {
         socket.emit('alert', {
           type: warning,
-          msg: "Please choose a name between 1 and 20 characters."
+          msg: 'Please choose a name between 1 and 20 characters.'
         });
       }
     }
@@ -50,9 +50,9 @@ function User(socket) {
   function onLoadCustomDeck(data) {
     if (util.exists(data.deckId)) {
       cardcast.getDeck(data.deckId, function(deck) {
-        if ( util.exists(deck.id) && deck.id === 'not_found' ) {
+        if (util.exists(deck.id) && deck.id === 'not_found') {
           socket.emit('customDeckLoaded', {
-            err: "Deck not found"
+            err: 'Deck not found'
           });
         } else {
           socket.emit('customDeckLoaded', {

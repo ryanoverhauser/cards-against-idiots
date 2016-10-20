@@ -18,13 +18,13 @@ function Lobby() {
     debug('Loading decks...');
     var db = database();
     db.open();
-    db.getDecks(function(data){
+    db.getDecks(function(data) {
       db.close();
       decks = data;
       initialized = true;
       debug('Decks loaded');
       updateInterval = setInterval(update, 15000);
-    }); 
+    });
   };
 
   function update() {
@@ -38,7 +38,7 @@ function Lobby() {
 
   function listGames() {
     var gamesList = [];
-    games.forEach(function(game){
+    games.forEach(function(game) {
       gamesList.push(game.info());
     });
     return gamesList;

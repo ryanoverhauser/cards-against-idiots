@@ -1,4 +1,4 @@
-(function(){
+(function() {
   'use strict';
 
   angular
@@ -11,7 +11,7 @@
 
     var $ctrl = this;
 
-    $ctrl.black_total = 0;
+    $ctrl.blackTotal = 0;
     $ctrl.cancel = cancel;
     $ctrl.customDecks = [];
     $ctrl.customDeckInput = '';
@@ -38,7 +38,7 @@
     ];
     $ctrl.toggleChecked = toggleChecked;
     $ctrl.toggleCustomChecked = toggleCustomChecked;
-    $ctrl.white_total = 0;
+    $ctrl.whiteTotal = 0;
 
     initializeOptions();
 
@@ -52,39 +52,39 @@
       $uibModalInstance.dismiss('cancel');
     }
 
-    function initializeOptions(){
-        $ctrl.options = {
-          decks: [],
-          customDecks: [],
-          name: user.name() + '\'s game',
-          scoreLimit: $ctrl.scores[1],
-          roundTime: $ctrl.times[3],
-          czarTime: $ctrl.times[3]
-        };
+    function initializeOptions() {
+      $ctrl.options = {
+        decks: [],
+        customDecks: [],
+        name: user.name() + '\'s game',
+        scoreLimit: $ctrl.scores[1],
+        roundTime: $ctrl.times[3],
+        czarTime: $ctrl.times[3]
+      };
 
-        // Select all decks by default
-        for (var i = 0; i < $ctrl.decks.length; i++) {
-          $ctrl.options.decks.push($ctrl.decks[i].id);
-        }
-        updateTotals();
+      // Select all decks by default
+      for (var i = 0; i < $ctrl.decks.length; i++) {
+        $ctrl.options.decks.push($ctrl.decks[i].id);
+      }
+      updateTotals();
     }
 
     function isChecked (deckId) {
-      if ($ctrl.options.decks.indexOf( deckId ) > -1 ) {
+      if ($ctrl.options.decks.indexOf(deckId) > -1) {
         return true;
       }
       return false;
     }
 
     function isCustomChecked (deckId) {
-      if ($ctrl.options.customDecks.indexOf( deckId ) > -1 ) {
+      if ($ctrl.options.customDecks.indexOf(deckId) > -1) {
         return true;
       }
       return false;
     }
 
     function loadCustomDeck() {
-      socket.emit( 'loadCustomDeck', {
+      socket.emit('loadCustomDeck', {
         deckId: $ctrl.customDeckInput
       });
     }
@@ -98,7 +98,7 @@
         console.warn(data.err);
       } else {
         console.log('Loaded custom deck',data.deck);
-        if (typeof util.findByKeyValue( $ctrl.customDecks, 'code', data.deck.code) === 'undefined') {
+        if (typeof util.findByKeyValue($ctrl.customDecks, 'code', data.deck.code) === 'undefined') {
           $ctrl.customDecks.push(data.deck);
           $ctrl.options.customDecks.push(data.deck.code);
           updateTotals();
@@ -106,10 +106,10 @@
         }
       }
     }
-    
+
     function toggleChecked (deckId) {
-      var index = $ctrl.options.decks.indexOf( deckId );
-      if ( index > -1 ) {
+      var index = $ctrl.options.decks.indexOf(deckId);
+      if (index > -1) {
         $ctrl.options.decks.splice(index, 1);
       } else {
         $ctrl.options.decks.push(deckId);
@@ -118,8 +118,8 @@
     }
 
     function toggleCustomChecked (deckId) {
-      var index = $ctrl.options.customDecks.indexOf( deckId );
-      if ( index > -1 ) {
+      var index = $ctrl.options.customDecks.indexOf(deckId);
+      if (index > -1) {
         $ctrl.options.customDecks.splice(index, 1);
       } else {
         $ctrl.options.customDecks.push(deckId);
@@ -128,18 +128,18 @@
     }
 
     function updateTotals() {
-      $ctrl.white_total = 0;
-      $ctrl.black_total = 0;
+      $ctrl.whiteTotal = 0;
+      $ctrl.blackTotal = 0;
       var i, deck;
       for (i = 0; i < $ctrl.options.decks.length; i++) {
-        deck = util.findByKeyValue( $ctrl.decks, 'id', $ctrl.options.decks[i] );
-        $ctrl.white_total += deck.white_card_count;
-        $ctrl.black_total += deck.black_card_count;
+        deck = util.findByKeyValue($ctrl.decks, 'id', $ctrl.options.decks[i]);
+        $ctrl.whiteTotal += deck.white_card_count;
+        $ctrl.blackTotal += deck.black_card_count;
       }
       for (i = 0; i < $ctrl.options.customDecks.length; i++) {
-        deck = util.findByKeyValue( $ctrl.customDecks, 'code', $ctrl.options.customDecks[i] );
-        $ctrl.white_total += parseInt(deck.response_count);
-        $ctrl.black_total += parseInt(deck.call_count);
+        deck = util.findByKeyValue($ctrl.customDecks, 'code', $ctrl.options.customDecks[i]);
+        $ctrl.whiteTotal += parseInt(deck.response_count);
+        $ctrl.blackTotal += parseInt(deck.call_count);
       }
     }
 

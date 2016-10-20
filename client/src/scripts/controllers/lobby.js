@@ -1,4 +1,4 @@
-(function(){
+(function() {
   'use strict';
 
   angular
@@ -37,7 +37,7 @@
       var modalInstance = $uibModal.open({
         templateUrl: 'templates/create',
         controller: 'CreateGameModalController as create',
-        size: "lg",
+        size: 'lg',
         resolve: {
           decks: function () {
             return $ctrl.decks;
@@ -62,11 +62,11 @@
     }
 
     function joinGame(gameId) {
-      socket.emit( 'joinGame', { gameId: gameId } );
+      socket.emit('joinGame', {gameId: gameId});
     }
 
     function refreshGamesList() {
-      socket.emit( 'getGames' );
+      socket.emit('getGames');
     }
 
   }

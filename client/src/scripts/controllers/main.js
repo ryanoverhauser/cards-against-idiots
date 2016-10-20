@@ -1,4 +1,4 @@
-(function(){
+(function() {
   'use strict';
 
   angular
@@ -7,7 +7,7 @@
 
   MainController.$inject = ['socket', 'user'];
 
-  function MainController( socket, user ) {
+  function MainController(socket, user) {
 
     var $ctrl = this;
 
@@ -19,7 +19,7 @@
 
     // socket.emit('init', {name: 'foobar'});
 
-    socket.on('alert', function(data){
+    socket.on('alert', function(data) {
       addAlert(data);
     });
 
@@ -46,7 +46,7 @@
 
     function init() {
       if ($ctrl.user.$valid) {
-        socket.emit( 'init', {name: $ctrl.user.name});
+        socket.emit('init', {name: $ctrl.user.name});
       }
     }
 

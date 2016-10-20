@@ -21,7 +21,7 @@ function Server() {
   // Sockets
   var io = require('socket.io')(server);
   global.socketIO = io;
-  io.sockets.on('connection', function (socket){
+  io.sockets.on('connection', function (socket) {
     var user = new User(socket);
     debug('user connected: ' + socket.client.id);
   });

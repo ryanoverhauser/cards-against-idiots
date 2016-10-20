@@ -1,11 +1,11 @@
-(function(){
+(function() {
   'use strict';
 
   angular
     .module('cati')
     .factory('util', util);
 
-  function util (){
+  function util () {
     var service = {
       findByKeyValue: findByKeyValue
     };
@@ -14,8 +14,8 @@
 
     //////
 
-    function findByKeyValue ( source, key, value ) {
-      return source.filter(function( obj ) {
+    function findByKeyValue (source, key, value) {
+      return source.filter(function(obj) {
         return obj[key] === value;
       })[ 0 ];
     }
