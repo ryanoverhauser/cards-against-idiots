@@ -17,8 +17,8 @@ function LobbyController($uibModal, socket, user) {
     $ctrl.games = data.games;
     $ctrl.decks = data.decks;
   });
-  socket.on('gameList', function (data) {
-    console.log('gameList', data);
+  socket.on('updateLobby', function (data) {
+    console.log('updateLobby', data);
     $ctrl.games = data.games;
     $ctrl.decks = data.decks;
   });
@@ -49,8 +49,8 @@ function LobbyController($uibModal, socket, user) {
         roundTime: options.roundTime.value,
         czarTime: options.czarTime.value
       };
-      // socket.emit('createGame', gameOpts);
-      console.log('createGame', gameOpts);
+      socket.emit('createGame', gameOpts);
+      // console.log('createGame', gameOpts);
     }, function () {
       // console.log('Modal dismissed at: ' + new Date());
     });

@@ -17,7 +17,7 @@ function User(socket) {
 
   socket.on('init', init);
   socket.on('loadCustomDeck', onLoadCustomDeck);
-  socket.on('createGame', onLoadCustomDeck);
+  socket.on('createGame', onCreateGame);
 
   function init(data) {
     if (!initialized && util.exists(data)) {
@@ -58,7 +58,8 @@ function User(socket) {
   }
 
   function onCreateGame(data) {
-    debug('createGame', data);
+    // debug('createGame', data);
+    lobby.createGame(data);
   }
 
   return {
