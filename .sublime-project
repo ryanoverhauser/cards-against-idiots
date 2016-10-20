@@ -7,6 +7,7 @@
   ],
   "settings":
   {
+    "rulers": [80],
     "tab_size": 2
   }
 }

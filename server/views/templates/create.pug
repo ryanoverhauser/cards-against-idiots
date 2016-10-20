@@ -7,33 +7,67 @@
         .form-group
           label.col-xs-4 Name
           .col-xs-8
-            input.form-control(ng-model="create.options.name", placeholder="Name")
+            input.form-control(
+              ng-model="create.options.name"
+              placeholder="Name"
+            )
         .form-group
           label.col-xs-4 
             | Score Limit &nbsp;
-            i.fa.fa-question-circle.subtle(data-toggle="tooltip", data-placement="bottom", title="Points needed to win the game.")
+            i.fa.fa-question-circle.subtle(
+              data-toggle="tooltip"
+              data-placement="bottom"
+              title="Points needed to win the game."
+            )
           .col-xs-8
-            select.form-control(ng-options="item.name for item in create.scores" ng-model="create.options.scoreLimit")
+            select.form-control(
+              ng-options="item.name for item in create.scores"
+              ng-model="create.options.scoreLimit"
+            )
         .form-group
           label.col-xs-4 
             | Round Timer &nbsp;
-            i.fa.fa-question-circle.subtle(data-toggle="tooltip", data-placement="bottom", title="Time given to players to submit their answer")
+            i.fa.fa-question-circle.subtle(
+              data-toggle="tooltip"
+              data-placement="bottom"
+              title="Time given to players to submit their answer"
+            )
           .col-xs-8
-            select.form-control(ng-options="item.name for item in create.times" ng-model="create.options.roundTime")
+            select.form-control(
+              ng-options="item.name for item in create.times"
+              ng-model="create.options.roundTime"
+            )
         .form-group
           label.col-xs-4 
             | Czar Timer &nbsp;
-            i.fa.fa-question-circle.subtle(data-toggle="tooltip", data-placement="bottom", title="Time given to the card czar to choose a winner")
+            i.fa.fa-question-circle.subtle(
+              data-toggle="tooltip"
+              data-placement="bottom"
+              title="Time given to the card czar to choose a winner"
+            )
           .col-xs-8
-            select.form-control(ng-options="item.name for item in create.times" ng-model="create.options.czarTime")
+            select.form-control(
+              ng-options="item.name for item in create.times"
+              ng-model="create.options.czarTime"
+            )
         .form-group
           label.col-xs-4
             | Custom Decks &nbsp;
-            i.fa.fa-question-circle.subtle(data-toggle="tooltip", data-placement="bottom", title="Enter a Cardcast deck 'Play Code'. Find or build your own decks at http://cardcastgame.com")
+            i.fa.fa-question-circle.subtle(
+              data-toggle="tooltip"
+              data-placement="bottom"
+              title="Enter a Cardcast deck 'Play Code'. \
+Find or build your own decks at http://cardcastgame.com"
+            )
           .col-xs-3
-            input.form-control(ng-model="create.customDeckInput")
+            input.form-control(
+              ng-model="create.customDeckInput"
+            )
           .col-xs-5
-            button.btn.btn-primary(ng-click="create.loadCustomDeck()", ng-disabled="create.customDeckInput == ''") Load
+            button.btn.btn-primary(
+              ng-click="create.loadCustomDeck()"
+              ng-disabled="create.customDeckInput == ''"
+            ) Load
       .col-xs-6
         table.table.table-condensed
           thead
@@ -45,7 +79,12 @@
               td
                 .checkbox     
                   label
-                    input(type="checkbox" value="{{ deck.id }}" ng-checked="create.isChecked(deck.id)" ng-click="create.toggleChecked(deck.id)")
+                    input(
+                      type="checkbox"
+                      value="{{ deck.id }}"
+                      ng-checked="create.isChecked(deck.id)"
+                      ng-click="create.toggleChecked(deck.id)"
+                    )
                     | {{ deck.name }}
               td.align-right {{ deck.white_card_count }}
               td.align-right {{ deck.black_card_count }}
@@ -53,7 +92,12 @@
               td
                 .checkbox     
                   label
-                    input(type="checkbox" value="{{ deck.code }}" ng-checked="create.isCustomChecked(deck.code)" ng-click="create.toggleCustomChecked(deck.code)")
+                    input(
+                      type="checkbox"
+                      value="{{ deck.code }}"
+                      ng-checked="create.isCustomChecked(deck.code)"
+                      ng-click="create.toggleCustomChecked(deck.code)"
+                    )
                     | {{ deck.name }}
               td.align-right {{ deck.response_count }}
               td.align-right {{ deck.call_count }}

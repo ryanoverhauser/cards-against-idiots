@@ -1,4 +1,7 @@
-#lobby(ng-controller='LobbyController as lobby' ng-show='main.initialized && !lobby.inGame')
+#lobby(
+  ng-controller="LobbyController as lobby"
+  ng-show="main.initialized && !lobby.inGame"
+)
   .container
     table#games-table.table
       thead
@@ -6,16 +9,26 @@
           th Game
           th Players
           th.align-right 
-            button.btn.btn-default(type='button', ng-click='lobby.refreshGamesList()')
+            button.btn.btn-default(
+              type="button"
+              ng-click="lobby.refreshGamesList()"
+            )
               i.fa.fa-refresh
       tbody
-        tr.game(ng-repeat='game in lobby.games')
+        tr.game(ng-repeat="game in lobby.games")
           td {{ game.name }}
           td {{ game.playerCount }} / {{ game.playerLimit }}
           td.align-right 
-            button.btn.btn-sm.btn-primary(type='button', ng-click='lobby.joinGame(game.id)', ng-disabled="game.playerCount >= game.playerLimit") Join
+            button.btn.btn-sm.btn-primary(
+              type="button"
+              ng-click="lobby.joinGame(game.id)"
+              ng-disabled="game.playerCount >= game.playerLimit"
+            ) Join
         tr
           td
-            button.btn.btn-sm.btn-success(type='button', ng-click='lobby.createGame()') Create Game
+            button.btn.btn-sm.btn-success(
+              type="button"
+              ng-click="lobby.createGame()"
+            ) Create Game
           td
           td
