@@ -40,9 +40,7 @@ function MainController( socket, user ) {
     }
 
     function init() {
-        console.log("hello");
         if ($ctrl.user.$valid) {
-            console.log("valid");
             socket.emit( 'init', {name: $ctrl.user.name});
         }
     }

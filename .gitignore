@@ -3,3 +3,5 @@ node_modules
 client/dist
 npm-debug.log
 .env
+TODO
+*.sublime-workspace

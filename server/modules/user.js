@@ -1,27 +1,69 @@
 'use strict';
 
-var debug = require('debug')('user'),
-    util = require('./util'),
-    validator = require('validator');
+var debug = require('debug')('user');
+var util = require('./util');
+var validator = require('validator');
 
-class User {
+var cardcast = require('./cardcast')();
+var lobby = require('./lobby')();
 
-    constructor(socketId) {
-        this.id = util.generateUID();
-        this.socketId = socketId;
-        this.name = undefined;
-        this.initialized = false;
-        this.inGame = false;
+function User(socket) {
+
+  var id = util.generateUID();
+  var socket = socket;
+  var name = undefined;
+  var initialized = false;
+  var inGame = false;
+
+  socket.on('init', init);
+  socket.on('loadCustomDeck', onLoadCustomDeck);
+  socket.on('createGame', onLoadCustomDeck);
+
+  function init(data) {
+    if (!initialized && util.exists(data)) {
+      if ( validator.isLength( data.name, 1, 20 ) ) {
+        name = data.name;
+        initialized = true;
+        debug('user initialized with name: ' + name);
+        socket.join('lobby');
+        socket.emit('initialized', {
+          userId: id,
+          userName: name,
+          games: lobby.listGames(),
+          decks: lobby.listDecks()
+        });
+      } else {
+        socket.emit('alert', {
+          type: warning,
+          msg: "Please choose a name between 1 and 20 characters."
+        });
+      }
     }
+  }
 
-    init(data) {
-        if ( validator.isLength( data.name, 1, 20 ) ) {
-            this.name = data.name;
-            this.initialized = true;
-            return true;
+  function onLoadCustomDeck(data) {
+    if (util.exists(data.deckId)) {
+      cardcast.getDeck(data.deckId, function(deck) {
+        if ( util.exists(deck.id) && deck.id === 'not_found' ) {
+          socket.emit('customDeckLoaded', {
+            err: "Deck not found"
+          });                     
+        } else {
+          socket.emit('customDeckLoaded', {
+            deck: deck
+          });
         }
-        return false;
+      });
     }
+  }
+
+  function onCreateGame(data) {
+    debug('createGame', data);
+  }
+
+  return {
+    id: id
+  }
 
 };
 

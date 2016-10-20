@@ -18,6 +18,7 @@ function LobbyController($uibModal, socket, user) {
         $ctrl.decks = data.decks;
     });
     socket.on('gameList', function (data) {
+        console.log('gameList', data);
         $ctrl.games = data.games;
         $ctrl.decks = data.decks;
     });

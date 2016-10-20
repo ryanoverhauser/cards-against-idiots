@@ -1,18 +1,18 @@
 {
-    "bitwise"     : true,
-    "browser"     : true,
-    "curly"       : true,
-    "eqeqeq"      : true,
-    "eqnull"      : true,
-    "esversion"   : 6,
-    "jquery"      : true,
-    "noarg"       : true,
-    "node"        : true,
-    "strict"      : false,
-    "undef"       : true,
-    "globals"     : {
-      "angular"   : false,
-      "app"   : false,
-      "io"        : false
-    }
+  "bitwise"     : true,
+  "browser"     : true,
+  "curly"       : true,
+  "eqeqeq"      : true,
+  "eqnull"      : true,
+  "esversion"   : 6,
+  "jquery"      : true,
+  "noarg"       : true,
+  "node"        : true,
+  "strict"      : false,
+  "undef"       : true,
+  "globals"     : {
+    "angular"   : false,
+    "app"       : false,
+    "io"        : false
+  }
 }

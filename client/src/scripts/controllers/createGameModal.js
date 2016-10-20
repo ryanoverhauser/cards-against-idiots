@@ -15,14 +15,7 @@ function CreateGameModalController($uibModalInstance, user, util, socket, decks)
   $ctrl.isCustomChecked = isCustomChecked;
   $ctrl.loadCustomDeck = loadCustomDeck;
   $ctrl.ok = ok;
-  $ctrl.options = {
-    decks: [],
-    customDecks: [],
-    name: user.name() + "'s game",
-    scoreLimit: $ctrl.scores[1],
-    roundTime: $ctrl.times[3],
-    czarTime: $ctrl.times[3]
-  };
+  $ctrl.options = {};
   $ctrl.scores = [
     {value: 5, name: 5},
     {value: 10, name: 10},
@@ -30,23 +23,19 @@ function CreateGameModalController($uibModalInstance, user, util, socket, decks)
     {value: 20, name: 20}
   ];
   $ctrl.times = [
-    {value: 30, name: "30 sec"},
-    {value: 60, name: "60 sec"},
-    {value: 90, name: "90 sec"},
-    {value: 120, name: "2 min"},
-    {value: 180, name: "3 min"},
-    {value: 300, name: "5 min"},
-    {value: 600, name: "10 min"}
+    {value: 30, name: '30 sec'},
+    {value: 60, name: '60 sec'},
+    {value: 90, name: '90 sec'},
+    {value: 120, name:'2 min'},
+    {value: 180, name:'3 min'},
+    {value: 300, name:'5 min'},
+    {value: 600, name: '10 min'}
   ];
   $ctrl.toggleChecked = toggleChecked;
   $ctrl.toggleCustomChecked = toggleCustomChecked;
   $ctrl.white_total = 0;
 
-  // Check all decks by default
-  for (var i = 0; i < $ctrl.decks.length; i++) {
-    $ctrl.options.decks.push($ctrl.decks[i].id);
-  }
-  updateTotals();
+  initializeOptions();
 
   socket.on('customDeckLoaded', function (data) {
     onCustomDeckLoaded(data);
@@ -56,6 +45,23 @@ function CreateGameModalController($uibModalInstance, user, util, socket, decks)
 
   function cancel () {
     $uibModalInstance.dismiss('cancel');
+  }
+
+  function initializeOptions(){
+      $ctrl.options = {
+        decks: [],
+        customDecks: [],
+        name: user.name() + '\'s game',
+        scoreLimit: $ctrl.scores[1],
+        roundTime: $ctrl.times[3],
+        czarTime: $ctrl.times[3]
+      };
+
+      // Select all decks by default
+      for (var i = 0; i < $ctrl.decks.length; i++) {
+        $ctrl.options.decks.push($ctrl.decks[i].id);
+      }
+      updateTotals();
   }
 
   function isChecked (deckId) {
@@ -86,7 +92,8 @@ function CreateGameModalController($uibModalInstance, user, util, socket, decks)
     if (data.err) {
       console.warn(data.err);
     } else {
-      if (typeof util.findByKeyValue( $ctrl.customDecks, 'code', data.deck.code) === "undefined") {
+      console.log('Loaded custom deck',data.deck);
+      if (typeof util.findByKeyValue( $ctrl.customDecks, 'code', data.deck.code) === 'undefined') {
         $ctrl.customDecks.push(data.deck);
         $ctrl.options.customDecks.push(data.deck.code);
         updateTotals();
@@ -126,8 +133,8 @@ function CreateGameModalController($uibModalInstance, user, util, socket, decks)
     }
     for (i = 0; i < $ctrl.options.customDecks.length; i++) {
       deck = util.findByKeyValue( $ctrl.customDecks, 'code', $ctrl.options.customDecks[i] );
-      $ctrl.white_total += deck.response_count;
-      $ctrl.black_total += deck.call_count;
+      $ctrl.white_total += parseInt(deck.response_count);
+      $ctrl.black_total += parseInt(deck.call_count);
     }
   }
 
