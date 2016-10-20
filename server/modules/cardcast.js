@@ -1,3 +1,5 @@
+'use strict';
+
 var debug = require('debug')('cardcast');
 var https = require('https');
 var StringDecoder = require('string_decoder').StringDecoder;
