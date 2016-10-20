@@ -52,6 +52,8 @@ function Lobby() {
     var newGame = new Game(options);
     games.push(newGame);
     update();
+    debug('New Game:',newGame.info());
+    return newGame.id;
   }
 
   return {

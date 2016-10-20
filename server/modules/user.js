@@ -11,13 +11,14 @@ function User(socket) {
 
   var id = util.generateUID();
   var socket = socket;
-  var name = undefined;
+  var name;
   var initialized = false;
   var inGame = false;
 
   socket.on('init', init);
   socket.on('loadCustomDeck', onLoadCustomDeck);
   socket.on('createGame', onCreateGame);
+  socket.on('joinGame', onJoinGame);
 
   function init(data) {
     if (!initialized && util.exists(data)) {
@@ -41,13 +42,18 @@ function User(socket) {
     }
   }
 
+  function joinGame(gameId) {
+    // join the game
+    inGame = gameId;
+  }
+
   function onLoadCustomDeck(data) {
     if (util.exists(data.deckId)) {
       cardcast.getDeck(data.deckId, function(deck) {
         if ( util.exists(deck.id) && deck.id === 'not_found' ) {
           socket.emit('customDeckLoaded', {
             err: "Deck not found"
-          });                     
+          });
         } else {
           socket.emit('customDeckLoaded', {
             deck: deck
@@ -58,8 +64,12 @@ function User(socket) {
   }
 
   function onCreateGame(data) {
-    // debug('createGame', data);
-    lobby.createGame(data);
+    var gameId = lobby.createGame(data);
+    joinGame(gameId);
+  }
+
+  function onJoinGame(data) {
+    joinGame(data.gameId);
   }
 
   return {
