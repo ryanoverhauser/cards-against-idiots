@@ -3,6 +3,7 @@
   "authors": [
     "Ryan Overhauser <ryan.overhauser@gmail.com>"
   ],
+  "license": "CC-BY-NC-SA-4.0",
   "private": true,
   "dependencies": {
     "bootstrap-sass": "^3.3.7",
