@@ -1,18 +1,26 @@
-app.factory('util', util);
+(function(){
+  'use strict';
 
-function util (){
-  var service = {
-    findByKeyValue: findByKeyValue
-  };
+  angular
+    .module('cati')
+    .factory('util', util);
 
-  return service;
+  function util (){
+    var service = {
+      findByKeyValue: findByKeyValue
+    };
 
-  //////
+    return service;
 
-  function findByKeyValue ( source, key, value ) {
-    return source.filter(function( obj ) {
-      return obj[key] === value;
-    })[ 0 ];
+    //////
+
+    function findByKeyValue ( source, key, value ) {
+      return source.filter(function( obj ) {
+        return obj[key] === value;
+      })[ 0 ];
+    }
+
   }
 
-}
+})();
+

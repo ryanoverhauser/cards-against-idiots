@@ -1,48 +1,55 @@
-app.controller('MainController', MainController);
+(function(){
+  'use strict';
 
-MainController.$inject = ['socket', 'user'];
+  angular
+    .module('cati')
+    .controller('MainController', MainController);
 
-function MainController( socket, user ) {
+  MainController.$inject = ['socket', 'user'];
 
-  var $ctrl = this;
+  function MainController( socket, user ) {
 
-  $ctrl.addAlert = addAlert;
-  $ctrl.alerts = [];
-  $ctrl.closeAlert = closeAlert;
-  $ctrl.init = init;
-  $ctrl.initialized = false;
+    var $ctrl = this;
 
-  // socket.emit('init', {name: 'foobar'});
+    $ctrl.addAlert = addAlert;
+    $ctrl.alerts = [];
+    $ctrl.closeAlert = closeAlert;
+    $ctrl.init = init;
+    $ctrl.initialized = false;
 
-  socket.on('alert', function(data){
-    addAlert(data);
-  });
+    // socket.emit('init', {name: 'foobar'});
 
-  socket.on('initialized', function (data) {
-    user.init(data.userId, data.userName);
-    $ctrl.initialized = true;
-    console.log('user initialized', user.getUser());
-    console.log('games', data.games);
-    console.log('decks', data.decks);
-  });
-
-  //////
-
-  function addAlert(alert) {
-    $ctrl.alerts.push({
-      type: alert.type || 'warning',
-      msg: alert.msg
+    socket.on('alert', function(data){
+      addAlert(data);
     });
-  }
 
-  function closeAlert(index) {
-    $ctrl.alerts.splice(index, 1);
-  }
+    socket.on('initialized', function (data) {
+      user.init(data.userId, data.userName);
+      $ctrl.initialized = true;
+      console.log('user initialized', user.getUser());
+      console.log('games', data.games);
+      console.log('decks', data.decks);
+    });
 
-  function init() {
-    if ($ctrl.user.$valid) {
-      socket.emit( 'init', {name: $ctrl.user.name});
+    //////
+
+    function addAlert(alert) {
+      $ctrl.alerts.push({
+        type: alert.type || 'warning',
+        msg: alert.msg
+      });
     }
+
+    function closeAlert(index) {
+      $ctrl.alerts.splice(index, 1);
+    }
+
+    function init() {
+      if ($ctrl.user.$valid) {
+        socket.emit( 'init', {name: $ctrl.user.name});
+      }
+    }
+
   }
 
-}
+})();

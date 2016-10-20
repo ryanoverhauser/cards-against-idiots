@@ -1,37 +1,45 @@
-app.factory('socket', socket);
+(function(){
+  'use strict';
 
-socket.$inject = ['$rootScope'];
+  angular
+    .module('cati')
+    .factory('socket', socket);
 
-function socket($rootScope) {
-  var socket = io.connect(window.appSocketUrl);
-  var service = {
-    emit: emit,
-    on: on,
-    socket: socket
-  };
+  socket.$inject = ['$rootScope'];
 
-  return service;
+  function socket($rootScope) {
+    var socket = io.connect(window.appSocketUrl);
+    var service = {
+      emit: emit,
+      on: on,
+      socket: socket
+    };
 
-  /////
+    return service;
 
-  function on (eventName, callback) {
-    socket.on(eventName, function () {  
-      var args = arguments;
-      $rootScope.$apply(function () {
-        callback.apply(socket, args);
-      });
-    });
-  }
+    /////
 
-  function emit (eventName, data, callback) {
-    socket.emit(eventName, data, function () {
-      var args = arguments;
-      $rootScope.$apply(function () {
-        if (callback) {
+    function on (eventName, callback) {
+      socket.on(eventName, function () {  
+        var args = arguments;
+        $rootScope.$apply(function () {
           callback.apply(socket, args);
-        }
+        });
       });
-    });
+    }
+
+    function emit (eventName, data, callback) {
+      socket.emit(eventName, data, function () {
+        var args = arguments;
+        $rootScope.$apply(function () {
+          if (callback) {
+            callback.apply(socket, args);
+          }
+        });
+      });
+    }
+
   }
 
-}
+})();
+
