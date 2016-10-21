@@ -10,7 +10,9 @@
   },
   "scripts": {
     "build": "bower install && gulp",
-    "start": "node index.js"
+    "start": "node index.js",
+    "jshint": "gulp jshint",
+    "jscs": "jscs gulpfile.js index.js server client/src"
   },
   "dependencies": {
     "debug": "^2.2.0",

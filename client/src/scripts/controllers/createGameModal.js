@@ -131,6 +131,7 @@
       $ctrl.whiteTotal = 0;
       $ctrl.blackTotal = 0;
       var i, deck;
+      // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
       for (i = 0; i < $ctrl.options.decks.length; i++) {
         deck = util.findByKeyValue($ctrl.decks, 'id', $ctrl.options.decks[i]);
         $ctrl.whiteTotal += deck.white_card_count;
@@ -141,6 +142,7 @@
         $ctrl.whiteTotal += parseInt(deck.response_count);
         $ctrl.blackTotal += parseInt(deck.call_count);
       }
+      // jscs:enable requireCamelCaseOrUpperCaseIdentifiers
     }
 
   }
