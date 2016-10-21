@@ -8,6 +8,9 @@
     "email": "ryan.overhauser@gmail.com",
     "url": "http://ryanoverhauser.com/"
   },
+  "engines": {
+    "node": "4.6.1"
+  },
   "scripts": {
     "build": "bower install && gulp",
     "start": "node index.js",
