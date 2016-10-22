@@ -14,6 +14,7 @@
     $ctrl.addAlert = addAlert;
     $ctrl.alerts = [];
     $ctrl.closeAlert = closeAlert;
+    $ctrl.inGame = false;
     $ctrl.init = init;
     $ctrl.initialized = false;
 
@@ -29,6 +30,16 @@
       console.log('user initialized', user.getUser());
       console.log('games', data.games);
       console.log('decks', data.decks);
+    });
+
+    socket.on('joinedGame', function (data) {
+      $ctrl.inGame = true;
+      console.log(data);
+    });
+
+    socket.on('leftGame', function () {
+      $ctrl.inGame = false;
+      console.log('Left Game');
     });
 
     //////

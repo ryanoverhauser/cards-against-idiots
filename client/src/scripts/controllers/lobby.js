@@ -14,7 +14,6 @@
     $ctrl.createGame = createGame;
     $ctrl.decks = [];
     $ctrl.games = [];
-    $ctrl.inGame = false;
     $ctrl.joinGame = joinGame;
     $ctrl.refreshGamesList = refreshGamesList;
 
@@ -28,6 +27,7 @@
       $ctrl.decks = data.decks;
     });
     socket.on('leftGame', function (data) {
+      console.log('leftGame', data);
       $ctrl.games = data.games;
     });
 

@@ -13,12 +13,13 @@ function User(socket) {
   var socket = socket;
   var name;
   var initialized = false;
-  var inGame = false;
+  var currentGame = false;
 
   socket.on('init', init);
   socket.on('loadCustomDeck', onLoadCustomDeck);
   socket.on('createGame', onCreateGame);
   socket.on('joinGame', onJoinGame);
+  socket.on('leaveGame', onLeaveGame);
 
   function init(data) {
     if (!initialized && util.exists(data)) {
@@ -42,9 +43,27 @@ function User(socket) {
     }
   }
 
+  function player() {
+    return {
+      id: id,
+      name: name
+    };
+  }
+
   function joinGame(gameId) {
-    // join the game
-    inGame = gameId;
+    var game = lobby.getGame(gameId);
+    if (game) {
+      game.join(player(), function(err, data) {
+        if (err) {
+          debug('Error: ' + data.msg);
+        } else {
+          debug(data);
+          currentGame = game;
+          socket.emit('joinedGame', game.info());
+          socket.join(game.id);
+        }
+      });
+    }
   }
 
   function onLoadCustomDeck(data) {
@@ -70,6 +89,15 @@ function User(socket) {
 
   function onJoinGame(data) {
     joinGame(data.gameId);
+  }
+
+  function onLeaveGame() {
+    if (currentGame) {
+      currentGame.leave(id);
+    }
+    socket.emit('leftGame', {
+      games: lobby.listGames()
+    });
   }
 
   return {

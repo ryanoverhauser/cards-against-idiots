@@ -3,6 +3,7 @@
 var debug = require('debug')('lobby');
 var database = require('./database');
 var Game = require('./game');
+var util = require('./util');
 
 function Lobby() {
 
@@ -48,6 +49,10 @@ function Lobby() {
     return decks;
   }
 
+  function getGame(gameId) {
+    return util.findByKeyValue(games, 'id', gameId);
+  }
+
   function createGame(options) {
     var newGame = new Game(options);
     games.push(newGame);
@@ -59,7 +64,8 @@ function Lobby() {
   return {
     listGames: listGames,
     listDecks: listDecks,
-    createGame: createGame
+    createGame: createGame,
+    getGame: getGame
   }
 
 }

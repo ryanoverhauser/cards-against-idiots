@@ -1,0 +1,7 @@
+#game(
+  ng-controller="GameController as game"
+  ng-show="main.initialized && main.inGame"
+)
+  .container
+    h1 Hey, you's in a game!
+    a(ng-click="game.leave()") Leave Game
