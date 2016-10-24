@@ -53,18 +53,15 @@ function Lobby() {
     return util.findByKeyValue(games, 'id', gameId);
   }
 
-  function createGame(options) {
-    var newGame = new Game(options);
-    games.push(newGame);
+  function addGame(game) {
+    games.push(game);
     update();
-    debug('New Game:',newGame.info());
-    return newGame.id;
   }
 
   return {
     listGames: listGames,
     listDecks: listDecks,
-    createGame: createGame,
+    addGame: addGame,
     getGame: getGame
   }
 

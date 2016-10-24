@@ -1,9 +1,10 @@
 'use strict';
 
 var debug = require('debug')('user');
-var util = require('./util');
 var validator = require('validator');
 
+var Game = require('./game');
+var util = require('./util');
 var cardcast = require('./cardcast')();
 var lobby = require('./lobby')();
 
@@ -43,28 +44,24 @@ function User(socket) {
     }
   }
 
-  function player() {
+  function info() {
     return {
       id: id,
-      name: name
+      name: name,
+      socketId: socket.client.id
     };
   }
 
-  function joinGame(gameId) {
-    var game = lobby.getGame(gameId);
-    if (game) {
-      game.join(player(), function(err, data) {
-        if (err) {
-          debug('Error: ' + data.msg);
-        } else {
-          debug(data);
-          currentGame = game;
-          socket.emit('joinedGame', game.info());
-          socket.join(game.id);
-          socket.leave('lobby');
-        }
-      });
-    }
+  function joinGame(game) {
+    game.join(info(), function(err, data) {
+      if (err) {
+        debug('Error: ' + data.msg);
+      } else {
+        currentGame = game;
+        socket.join(game.id);
+        socket.leave('lobby');
+      }
+    });
   }
 
   function onLoadCustomDeck(data) {
@@ -84,12 +81,19 @@ function User(socket) {
   }
 
   function onCreateGame(data) {
-    var gameId = lobby.createGame(data);
-    joinGame(gameId);
+    var newGame = new Game(data);
+    newGame.init()
+    .then(function() {
+      lobby.addGame(newGame);
+      joinGame(newGame);
+    });
   }
 
   function onJoinGame(data) {
-    joinGame(data.gameId);
+    var game = lobby.getGame(data.gameId);
+    if (game) {
+      joinGame(game);
+    }
   }
 
   function onLeaveGame() {

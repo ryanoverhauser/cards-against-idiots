@@ -3,6 +3,7 @@
 var debug = require('debug')('game');
 var db = require('./database')();
 var Stack = require('./stack');
+var Player = require('./player');
 var util = require('./util');
 
 function Game(options) {
@@ -17,16 +18,17 @@ function Game(options) {
   var blackCards = new Stack();
   var blackDiscards = new Stack();
 
-  loadDecks();
-
-  function loadDecks() {
-    db.open();
-    db.getCardsFromDecks(options.decks, function(white, black) {
-      whiteCards.add(white);
-      blackCards.add(black);
-      whiteCards.shuffle();
-      blackCards.shuffle();
-      db.close();
+  function init() {
+    return new Promise(function(resolve, reject) {
+      db.open();
+      db.getCardsFromDecks(options.decks, function(white, black) {
+        whiteCards.add(white);
+        blackCards.add(black);
+        whiteCards.shuffle();
+        blackCards.shuffle();
+        db.close();
+        resolve(true);
+      });
     });
   }
 
@@ -39,10 +41,17 @@ function Game(options) {
     };
   }
 
-  function join(player, cb) {
+  function join(playerInfo, cb) {
     if (players.length < playerLimit) {
+      var player = new Player(playerInfo);
+      player.hand.add(whiteCards.draw(10));
       players.push(player);
-      cb(false, info());
+      io.to(player.socketId).emit('joinedGame', info());
+      io.to(player.socketId).emit('hand', player.hand.get());
+      cb(false, {
+        game: info(),
+        hand: player.hand.get()
+      });
     } else {
       cb(true, {msg: 'Game is full.'});
     }
@@ -67,6 +76,7 @@ function Game(options) {
 
   return {
     id: id,
+    init: init,
     info: info,
     join: join,
     leave: leave
