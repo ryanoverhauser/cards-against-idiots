@@ -19,6 +19,15 @@
     $ctrl.initialized = false;
 
     // socket.emit('init', {name: 'foobar'});
+    // socket.on('initialized', function () {
+    //   socket.emit('createGame', {
+    //     name: 'foobar\'s game',
+    //     decks: [3,4],
+    //     customDecks: [],
+    //     scoreLimit: 10,
+    //     roundTime: 120
+    //   });
+    // });
 
     socket.on('alert', function(data) {
       addAlert(data);

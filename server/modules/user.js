@@ -61,6 +61,7 @@ function User(socket) {
           currentGame = game;
           socket.emit('joinedGame', game.info());
           socket.join(game.id);
+          socket.leave('lobby');
         }
       });
     }
@@ -98,6 +99,7 @@ function User(socket) {
     socket.emit('leftGame', {
       games: lobby.listGames()
     });
+    socket.join('lobby');
   }
 
   return {

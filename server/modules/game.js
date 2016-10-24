@@ -1,6 +1,8 @@
 'use strict';
 
 var debug = require('debug')('game');
+var db = require('./database')();
+var Stack = require('./stack');
 var util = require('./util');
 
 function Game(options) {
@@ -9,6 +11,24 @@ function Game(options) {
   var io = global.socketIO;
   var players = [];
   var playerLimit = 8;
+
+  var whiteCards = new Stack();
+  var whiteDiscards = new Stack();
+  var blackCards = new Stack();
+  var blackDiscards = new Stack();
+
+  loadDecks();
+
+  function loadDecks() {
+    db.open();
+    db.getCardsFromDecks(options.decks, function(white, black) {
+      whiteCards.add(white);
+      blackCards.add(black);
+      whiteCards.shuffle();
+      blackCards.shuffle();
+      db.close();
+    });
+  }
 
   function info() {
     return {
@@ -34,7 +54,7 @@ function Game(options) {
     if (index >= 0) {
       message({
         type: 'update',
-        msg: players[index].name + ' has left the game '
+        msg: players[index].name + ' has left the game.'
       });
       players.splice(index, 1);
     }

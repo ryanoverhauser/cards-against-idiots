@@ -54,6 +54,7 @@
           roundTime: options.roundTime.value,
           czarTime: options.czarTime.value
         };
+        console.log(gameOpts);
         socket.emit('createGame', gameOpts);
         // console.log('createGame', gameOpts);
       }, function () {
