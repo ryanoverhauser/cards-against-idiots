@@ -10,6 +10,7 @@ function Game(options) {
 
   var id = util.generateUID();
   var io = global.socketIO;
+  var name = options.name;
   var players = [];
   var playerLimit = 8;
 
@@ -19,23 +20,21 @@ function Game(options) {
   var blackDiscards = new Stack();
 
   function init() {
-    return new Promise(function(resolve, reject) {
-      db.open();
-      db.getCardsFromDecks(options.decks, function(white, black) {
-        whiteCards.add(white);
-        blackCards.add(black);
-        whiteCards.shuffle();
-        blackCards.shuffle();
-        db.close();
-        resolve(true);
-      });
+    return db.getCardsFromDecks(options.decks)
+    .then((result) => {
+      whiteCards.add(result.whiteCards);
+      blackCards.add(result.blackCards);
+      whiteCards.shuffle();
+      blackCards.shuffle();
+      debug('Game initialized: ' + name);
+      return true;
     });
   }
 
   function info() {
     return {
       id: id,
-      name: options.name,
+      name: name,
       playerLimit: playerLimit,
       playerCount: players.length
     };

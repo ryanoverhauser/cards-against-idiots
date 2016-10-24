@@ -1,7 +1,7 @@
 'use strict';
 
 var debug = require('debug')('lobby');
-var database = require('./database');
+var db = require('./database')();
 var Game = require('./game');
 var util = require('./util');
 
@@ -16,15 +16,16 @@ function Lobby() {
   init();
 
   function init() {
-    debug('Loading decks...');
-    var db = database();
-    db.open();
-    db.getDecks(function(data) {
-      db.close();
-      decks = data;
-      initialized = true;
+    db.getDecks()
+    .then(function(rows) {
+      decks = rows;
       debug('Decks loaded');
+      initialized = true;
       updateInterval = setInterval(update, 15000);
+      debug('Initialized');
+    })
+    .catch(function(err) {
+      debug('Error getting decks', err);
     });
   };
 
@@ -56,6 +57,7 @@ function Lobby() {
   function addGame(game) {
     games.push(game);
     update();
+    debug('Added new game: ' + game.name);
   }
 
   return {

@@ -8,7 +8,7 @@ function BlackCard(id, text, draw, pick) {
   this.text = text;
   this.draw = draw;
   this.pick = pick;
-  this.toString = function() {
+  this.toString = () => {
     return text;
   };
 }
@@ -16,16 +16,55 @@ function BlackCard(id, text, draw, pick) {
 function WhiteCard(id, text) {
   this.id = id;
   this.text = text;
-  this.toString = function() {
+  this.toString = () => {
     return text;
   };
 }
 
 function Database() {
 
-  var connection;
+  var connection = mysql.createConnection({
+    host        : process.env.DB_HOST,
+    port        : process.env.DB_PORT,
+    user        : process.env.DB_USER,
+    password    : process.env.DB_PASSWORD,
+    database    : process.env.DB_NAME
+  });
 
-  function getDecks(callback) {
+  connection.connect(function(err) {
+    if (err) { throw err };
+    debug('Successfuly opened MySql connection');
+  });
+
+  function runQuery(queryString) {
+    return new Promise((resolve, reject) => {
+      connection.query(queryString, function(err, rows, fields) {
+        if (err) { reject(err) };
+        debug('Query complete');
+        resolve(rows);
+      });
+    });
+  }
+
+  function parseWhiteCards(rows) {
+    var cards = [];
+    for (let r of rows) {
+      var card = new WhiteCard(r.id, r.text);
+      cards.push(card);
+    }
+    return cards;
+  }
+
+  function parseBlackCards(rows) {
+    var cards = [];
+    for (let r of rows) {
+      var card = new BlackCard(r.id, r.text, r.draw, r.pick);
+      cards.push(card);
+    }
+    return cards;
+  }
+
+  function getDecks() {
     var queryString = 'SELECT id, name, ' +
       '( SELECT COUNT(white_cards.id) ' +
         'FROM white_cards ' +
@@ -36,124 +75,79 @@ function Database() {
         'WHERE black_cards.deck_id = card_decks.id ' +
       ') as black_card_count ' +
       'FROM card_decks';
-    connection.query(queryString, function(err, rows, fields) {
-      if (err) { throw err };
-      callback(rows);
+    return runQuery(queryString);
+  }
+
+  function getAllCards() {
+    var queryStringWhite = 'SELECT id, text FROM white_cards';
+    var queryStringBlack = 'SELECT id, text, draw, pick FROM black_cards';
+
+    return Promise.all([
+      runQuery(queryStringWhite),
+      runQuery(queryStringBlack)
+    ]).then((result) => {
+      return {
+        whiteCards: parseWhiteCards(result[0]),
+        blackCards: parseBlackCards(result[1])
+      };
     });
   }
 
-  function getAllCards(callback) {
-    var white = [],
-        black = [];
-    var queryString = 'SELECT id, text FROM white_cards';
-    connection.query(queryString, function(err, rows, fields) {
-      if (err) { throw err };
-      for (let r of rows) {
-        var card = new WhiteCard(r.id, r.text);
-        white.push(card);
-      }
-      queryString = 'SELECT id, text, draw, pick FROM black_cards';
-      connection.query(queryString, function(err, rows, fields) {
-        if (err) { throw err };
-        for (let r of rows) {
-          var card = new BlackCard(r.id, r.text, r.draw, r.pick);
-          black.push(card);
-        }
-        callback(white, black);
-      });
-    });
-  }
-
-  function getActiveCards(callback) {
-    var white = [],
-        black = [];
-    var queryString = 'SELECT white_cards.id, white_cards.text ' +
+  function getActiveCards() {
+    var queryStringWite = 'SELECT white_cards.id, white_cards.text ' +
       'FROM white_cards ' +
       'INNER JOIN card_decks ' +
       'ON white_cards.deck_id = card_decks.id ' +
       'WHERE white_cards.active = 1 ' +
       'AND card_decks.active = 1';
-    connection.query(queryString, function(err, rows, fields) {
-      if (err) { throw err };
-      for (let r of rows) {
-        var card = new WhiteCard(r.id, r.text);
-        white.push(card);
-      }
-      queryString = 'SELECT black_cards.id, black_cards.text, ' +
-        'black_cards.draw, black_cards.pick ' +
-        'FROM black_cards ' +
-        'INNER JOIN card_decks ' +
-        'ON black_cards.deck_id = card_decks.id ' +
-        'WHERE black_cards.active = 1 ' +
-        'AND card_decks.active = 1';
-      connection.query(queryString, function(err, rows, fields) {
-        if (err) { throw err };
-        for (let r of rows) {
-          var card = new BlackCard(r.id, r.text, r.draw, r.pick);
-          black.push(card);
-        }
-        callback(white, black);
-      });
+    var queryStringBlack = 'SELECT black_cards.id, black_cards.text, ' +
+      'black_cards.draw, black_cards.pick ' +
+      'FROM black_cards ' +
+      'INNER JOIN card_decks ' +
+      'ON black_cards.deck_id = card_decks.id ' +
+      'WHERE black_cards.active = 1 ' +
+      'AND card_decks.active = 1';
+
+    return Promise.all([
+      runQuery(queryStringWhite),
+      runQuery(queryStringBlack)
+    ]).then((result) => {
+      return {
+        whiteCards: parseWhiteCards(result[0]),
+        blackCards: parseBlackCards(result[1])
+      };
     });
   }
 
   function getCardsFromDecks(decks, callback) {
-    var white = [],
-        black = [],
-        ors = '',
-        i;
+    var ors = '';
 
-    for (i = 0; i < decks.length; ++i) {
+    for (var i = 0; i < decks.length; ++i) {
       if (i > 0) { ors = ors + ' OR '; }
       ors = ors + 'deck_id = ' + decks[i];
     }
-    var queryString = 'SELECT id, text ' +
+
+    var queryStringWhite = 'SELECT id, text ' +
       'FROM white_cards ' +
       'WHERE active = 1 ' +
       'AND (' + ors + ')';
-    connection.query(queryString, function(err, rows, fields) {
-      if (err) { throw err };
-      for (let r of rows) {
-        var card = new WhiteCard(r.id, r.text);
-        white.push(card);
-      }
-      queryString = 'SELECT id, text, draw, pick ' +
-        'FROM black_cards ' +
-        'WHERE active = 1 ' +
-        'AND (' + ors + ')';
-      connection.query(queryString, function(err, rows, fields) {
-        if (err) { throw err };
-        for (let r of rows) {
-          var card = new BlackCard(r.id, r.text, r.draw, r.pick);
-          black.push(card);
-        }
-        callback(white, black);
-      });
-    });
-  }
+    var queryStringBlack = 'SELECT id, text, draw, pick ' +
+      'FROM black_cards ' +
+      'WHERE active = 1 ' +
+      'AND (' + ors + ')';
 
-  function open() {
-    debug('Opening mysql connection');
-    connection = mysql.createConnection({
-      host        : process.env.DB_HOST,
-      port        : process.env.DB_PORT,
-      user        : process.env.DB_USER,
-      password    : process.env.DB_PASSWORD,
-      database    : process.env.DB_NAME
+    return Promise.all([
+      runQuery(queryStringWhite),
+      runQuery(queryStringBlack)
+    ]).then((result) => {
+      return {
+        whiteCards: parseWhiteCards(result[0]),
+        blackCards: parseBlackCards(result[1])
+      };
     });
-    connection.connect(function(err) {
-      if (err) { throw err };
-    });
-  }
-
-  function close() {
-    debug('Closing mysql connection');
-    connection.end();
   }
 
   return {
-    open: open,
-    close: close,
     getDecks: getDecks,
     getAllCards: getAllCards,
     getActiveCards: getActiveCards,

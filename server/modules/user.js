@@ -86,6 +86,9 @@ function User(socket) {
     .then(function() {
       lobby.addGame(newGame);
       joinGame(newGame);
+    })
+    .catch(function(err) {
+      debug('Error creating game', err);
     });
   }
 
