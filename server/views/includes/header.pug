@@ -1,0 +1,25 @@
+header#site-header
+  nav.navbar.navbar-inverse.navbar-fixed-top(role="navigation")
+    .container
+      .navbar-header
+        a.navbar-brand
+          i.fa.fa-globe
+          |  CATI
+      .navbar-left
+        ul.nav.navbar-nav
+          li
+            a.leave-game(
+              ng-show="inGame"
+              ng-click="leaveGame()"
+            ) Leave Game
+      .navbar-right
+        ul.nav.navbar-nav
+          li
+            a.toggle-mute(
+              ng-click="toggleMute()"
+              ng-class="{muted: isMuted()}"
+            )
+      .navbar-right
+        .round-timer(ng-show="inGame")
+          i.fa.fa-clock-o
+          |  {{displayTime}}

@@ -12,7 +12,8 @@
     "ngDraggable": "^0.1.11",
     "angular-bootstrap": "^2.2.0",
     "angular-animate": "^1.5.8",
-    "angular-audio": "^1.7.3"
+    "angular-audio": "^1.7.3",
+    "angular-resizable": "^1.2.0"
   },
   "overrides": {
     "font-awesome": {

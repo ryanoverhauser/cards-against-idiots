@@ -5,51 +5,37 @@ html
 
   body(ng-app="cati", ng-controller="MainController as main")
 
-    header#site-header
-      nav.navbar.navbar-default.navbar-fixed-top(role="navigation")
-        .container
-          .navbar-header
-            a.navbar-brand
-              i.fa.fa-globe
-              |  CATI
-          .navbar-left
-            ul.nav.navbar-nav
-              li
-                a.leave-game(
-                  ng-show="inGame"
-                  ng-click="leaveGame()"
-                ) Leave Game
-          .navbar-right
-            a.toggle-mute(
-              ng-click="toggleMute()"
-              ng-class="{muted: isMuted()}"
-            )
-          .navbar-right
-            .round-timer(ng-show="inGame")
-              i.fa.fa-clock-o
-              |  {{displayTime}}
+    include ./includes/header.pug
 
-    .container
+    //- PAGE WRAP
+    #wrapper
 
-      //- GAME PANEL 
+      //- GAME PANEL
       #main
+        .container
 
-        //- ALERTS
-        div(
-          uib-alert
-          ng-repeat="alert in alerts",
-          ng-class="'alert-' + (alert.type || 'warning')",
-          close="closeAlert($index)"
-        ) {{alert.msg}}
-        
-        //- INIT
-        include ./includes/init.pug
+          //- ALERTS
+          div(
+            uib-alert
+            ng-repeat="alert in alerts",
+            ng-class="'alert-' + (alert.type || 'warning')",
+            close="closeAlert($index)"
+          ) {{alert.msg}}
+          
+          //- INIT
+          include ./includes/init.pug
 
-        //- GAME LOBBY
-        include ./includes/lobby.pug
-        
-        //- GAME BOARD
-        include ./includes/game.pug
-    
-    //- INFO PANEL 
-    //- include ./includes/infoPanel.pug
+          //- GAME LOBBY
+          include ./includes/lobby.pug
+          
+          //- GAME BOARD
+          include ./includes/game.pug
+
+      //- INFO PANEL
+      #info(
+        resizable
+        r-directions="['top']"
+        r-flex="true"
+      )
+        .container
+          //- include ./includes/infoPanel.pug

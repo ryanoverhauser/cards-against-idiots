@@ -1,6 +1,6 @@
 (function() {
   'use strict';
 
-  angular.module('cati', ['ngAnimate','ngAudio','ui.bootstrap','ngDraggable']);
+  angular.module('cati', ['ngAnimate','ngAudio','ui.bootstrap','ngDraggable','angularResizable']);
 
 })();
