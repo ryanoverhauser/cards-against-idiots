@@ -1,8 +1,8 @@
 'use strict';
 
 var debug = require('debug')('lobby');
+
 var db = require('./database')();
-var Game = require('./game');
 var util = require('./util');
 
 function Lobby() {
@@ -60,13 +60,23 @@ function Lobby() {
     debug('Added new game: ' + game.name);
   }
 
+  function removeGame(gameId) {
+    var i = util.findIndexByKeyValue(games, 'id', gameId);
+    if (i >= 0) {
+      debug('Removing empty game: ' + games[i].name);
+      games.splice(i, 1);
+      update();
+    }
+  }
+
   return {
     listGames: listGames,
     listDecks: listDecks,
     addGame: addGame,
-    getGame: getGame
+    getGame: getGame,
+    removeGame: removeGame
   }
 
 }
 
-module.exports = Lobby;
+module.exports = Lobby();

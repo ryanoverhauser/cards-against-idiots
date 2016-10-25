@@ -3,10 +3,11 @@
 var debug = require('debug')('user');
 var validator = require('validator');
 
-var Game = require('./game');
-var util = require('./util');
 var cardcast = require('./cardcast')();
-var lobby = require('./lobby')();
+var lobby = require('./lobby');
+var util = require('./util');
+
+var Game = require('./game');
 
 function User(socket) {
 
@@ -21,6 +22,7 @@ function User(socket) {
   socket.on('createGame', onCreateGame);
   socket.on('joinGame', onJoinGame);
   socket.on('leaveGame', onLeaveGame);
+  socket.on('disconnect', onDisconnect);
 
   function init(data) {
     if (!initialized && util.exists(data)) {
@@ -53,14 +55,15 @@ function User(socket) {
   }
 
   function joinGame(game) {
-    game.join(info(), function(err, data) {
-      if (err) {
-        debug('Error: ' + data.msg);
-      } else {
-        currentGame = game;
-        socket.join(game.id);
-        socket.leave('lobby');
-      }
+    game.join(info())
+    .then(() => {
+      currentGame = game;
+      socket.join(game.id);
+      socket.leave('lobby');
+      debug('User ' + name + ' joined game ' + game.name);
+    })
+    .catch(function(err) {
+      debug('Error joining game:', err);
     });
   }
 
@@ -83,12 +86,12 @@ function User(socket) {
   function onCreateGame(data) {
     var newGame = new Game(data);
     newGame.init()
-    .then(function() {
+    .then(() => {
       lobby.addGame(newGame);
       joinGame(newGame);
     })
-    .catch(function(err) {
-      debug('Error creating game', err);
+    .catch((err) => {
+      debug('Error creating game:', err);
     });
   }
 
@@ -100,13 +103,19 @@ function User(socket) {
   }
 
   function onLeaveGame() {
+    socket.join('lobby');
+    socket.emit('leftGame');
     if (currentGame) {
       currentGame.leave(id);
+      currentGame = false;
     }
-    socket.emit('leftGame', {
-      games: lobby.listGames()
-    });
-    socket.join('lobby');
+  }
+
+  function onDisconnect() {
+    if (currentGame) {
+      currentGame.leave(id);
+      currentGame = false;
+    }
   }
 
   return {

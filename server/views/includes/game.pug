@@ -4,4 +4,20 @@
 )
   .container
     h1 Hey, you's in a game!
-    a(ng-click="game.leave()") Leave Game
+    h4 Round State: {{ game.round.state }}
+    h4 Round Black Card: {{ game.round.blackCard.text }}
+    h4 Hand
+    p(ng-repeat="card in game.hand") {{ card.text }}
+    h4 Scoreboard
+    table.table
+        tr
+          th Name
+          th Score
+          th Wins
+        tr(ng-repeat="p in game.scoreboard")
+          th {{ p.name }}
+          th {{ p.score }}
+          th {{ p.wins }}
+
+    p
+      a(ng-click="game.leave()") Leave Game

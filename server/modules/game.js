@@ -1,18 +1,22 @@
 'use strict';
 
 var debug = require('debug')('game');
+
 var db = require('./database')();
-var Stack = require('./stack');
-var Player = require('./player');
+var lobby = require('./lobby');
 var util = require('./util');
 
-function Game(options) {
+var Stack = require('./stack');
+var Player = require('./player');
+var Round = require('./round');
+
+function Game(gameOpts) {
 
   var id = util.generateUID();
   var io = global.socketIO;
-  var name = options.name;
+  var name = gameOpts.name;
   var players = [];
-  var playerLimit = 8;
+  var currentRound;
 
   var whiteCards = new Stack();
   var whiteDiscards = new Stack();
@@ -20,44 +24,68 @@ function Game(options) {
   var blackDiscards = new Stack();
 
   function init() {
-    return db.getCardsFromDecks(options.decks)
+    return db.getCardsFromDecks(gameOpts.decks)
     .then((result) => {
       whiteCards.add(result.whiteCards);
       blackCards.add(result.blackCards);
       whiteCards.shuffle();
       blackCards.shuffle();
-      debug('Game initialized: ' + name);
+      newRound();
+      debug('Game initialized: ' + info());
       return true;
     });
+  }
+
+  function newRound() {
+    currentRound = new Round(id, gameOpts, blackCards.drawOne(), players);
+    io.to(id).emit('newRound', currentRound.status());
   }
 
   function info() {
     return {
       id: id,
       name: name,
-      playerLimit: playerLimit,
-      playerCount: players.length
+      czarTime: gameOpts.czarTime,
+      playerLimit: gameOpts.playerLimit,
+      playerCount: players.length,
+      roundTime: gameOpts.roundTime,
+      scoreLimit: gameOpts.scoreLimit,
+      round: currentRound.status()
     };
   }
 
-  function join(playerInfo, cb) {
-    if (players.length < playerLimit) {
+  function scoreboard() {
+    var scoreboard = [];
+    for (let p of players) {
+      scoreboard.push({
+        name: p.name,
+        score: p.score(),
+        wins: p.wins(),
+      });
+    }
+    return scoreboard;
+  }
+
+  function join(playerInfo) {
+    return new Promise((resolve, reject) => {
+      if (players.length === gameOpts.playerLimit) {
+        reject('Game is full');
+      }
       var player = new Player(playerInfo);
       player.hand.add(whiteCards.draw(10));
       players.push(player);
-      io.to(player.socketId).emit('joinedGame', info());
-      io.to(player.socketId).emit('hand', player.hand.get());
-      cb(false, {
-        game: info(),
-        hand: player.hand.get()
+      message(player.name + ' joined the game.');
+      currentRound.update();
+      io.to(player.socketId).emit('joinedGame', {
+        round: currentRound.status(),
+        scoreboard: scoreboard()
       });
-    } else {
-      cb(true, {msg: 'Game is full.'});
-    }
+      io.to(player.socketId).emit('hand', player.hand.get());
+      resolve();
+    });
   }
 
   function leave(playerId) {
-    debug(players);
     var index = util.findIndexByKeyValue(players, 'id', playerId);
     if (index >= 0) {
       message({
@@ -66,19 +94,27 @@ function Game(options) {
       });
       players.splice(index, 1);
     }
-    debug(players);
+    if (!players.length) {
+      lobby.removeGame(id);
+    }
   }
 
-  function message(data) {
-    io.to(id).emit('message', data);
+  function message(msg, type) {
+    type = type || 'update';
+    io.to(id).emit('message', {
+      msg: msg,
+      type: type
+    });
   }
 
   return {
     id: id,
+    name: name,
     init: init,
     info: info,
     join: join,
-    leave: leave
+    leave: leave,
+    scoreboard: scoreboard
   };
 
 }

@@ -21,14 +21,11 @@
       $ctrl.games = data.games;
       $ctrl.decks = data.decks;
     });
+
     socket.on('updateLobby', function (data) {
       console.log('updateLobby', data);
       $ctrl.games = data.games;
       $ctrl.decks = data.decks;
-    });
-    socket.on('leftGame', function (data) {
-      console.log('leftGame', data);
-      $ctrl.games = data.games;
     });
 
     //////

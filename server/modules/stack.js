@@ -12,6 +12,10 @@ function Stack() {
     return cards.splice(0, count);
   }
 
+  function drawOne() {
+    return cards.shift();
+  }
+
   function count() {
     return cards.length;
   }
@@ -41,6 +45,7 @@ function Stack() {
     get: get,
     count: count,
     draw: draw,
+    drawOne: drawOne,
     empty: empty,
     shuffle: shuffle
   };
