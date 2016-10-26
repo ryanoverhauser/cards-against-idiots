@@ -15,7 +15,9 @@
         td.score {{ p.score }}
   .console(ng-controller="ConsoleController as console")
     .messages(scroll-glue)
-      .msg(ng-repeat="msg in console.messages") {{ msg.text }}
+      .msg(ng-repeat="msg in console.messages" class="{{ msg.type }}")
+        span(ng-if="msg.user") {{ msg.user }}: 
+        | {{ msg.text }}
     form.chatForm(name="console.input" ng-submit="console.sendMessage()" method="post")
       input.chat-input.form-control(type="text" ng-model="console.input.msg")
       //- input(type="submit" value="Submit")

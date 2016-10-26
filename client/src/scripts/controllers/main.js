@@ -19,18 +19,18 @@
     $ctrl.initialized = false;
     $ctrl.leaveGame = leaveGame;
 
-    socket.emit('init', {name: 'foobar'});
-    socket.on('initialized', function () {
-      socket.emit('createGame', {
-        name: 'foobar\'s game',
-        decks: [3,4],
-        customDecks: [],
-        scoreLimit: 10,
-        roundTime: 120,
-        playerLimit: 8,
-        czarTime: 120
-      });
-    });
+    // socket.emit('init', {name: 'foobar'});
+    // socket.on('initialized', function () {
+    //   socket.emit('createGame', {
+    //     name: 'foobar\'s game',
+    //     decks: [3,4],
+    //     customDecks: [],
+    //     scoreLimit: 10,
+    //     roundTime: 120,
+    //     playerLimit: 8,
+    //     czarTime: 120
+    //   });
+    // });
 
     socket.on('alert', function(data) {
       addAlert(data);

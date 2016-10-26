@@ -33,9 +33,16 @@
     padding: 6px;
     .msg {
       padding-bottom: 3px;
-      &.update { color: $brand-info }
-      &.info { color: $brand-warning }
-      &.chat { color: $brand-primary }
+      &.chat { 
+        span {
+          color: $brand-success;
+          font-weight: 700;
+        }
+      }
+      &.update { color: $gray-light }
+      &.info { color: $brand-info }
+      &.warning { color: $brand-warning }
+      &.success { color: $brand-success }
     }
   }
   input {

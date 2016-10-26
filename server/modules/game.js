@@ -96,16 +96,19 @@ function Game(gameOpts) {
     }
   }
 
-  function sendChatMessage(name, msg) {
-    var msgText = name + ': ' + msg;
-    message(msgText, 'chat');
-  }
-
   function message(msg, type) {
     type = type || 'update';
     io.to(id).emit('message', {
       text: msg,
       type: type
+    });
+  }
+
+  function sendChatMessage(username, msg) {
+    io.to(id).emit('message', {
+      text: msg,
+      type: 'chat',
+      user: username
     });
   }
 

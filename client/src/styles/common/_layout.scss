@@ -2,6 +2,8 @@ html, body {
   height: 100%;
 }
 
+
+
 #game {
   height: 100%;
   display: flex;
@@ -36,8 +38,10 @@ html, body {
   }
 }
 
-#alerts {
-  margin: 20px 0;
+.alerts {
+  width: 970px;
+  max-width: 80%;
+  margin: 60px auto 20px;
 }
 
 #init {
