@@ -1,0 +1,44 @@
+#info {
+  padding: 1px 0 15px;
+  background: $navbar-inverse-bg;
+  color: $navbar-inverse-color;
+  .rg-top {
+    background: $navbar-inverse-bg;
+    span {
+      margin: 5px 0 0 -10px;
+      height: 5px;
+      border-color: #666;
+    }
+  }
+}
+
+.scoreboard {
+  td.status, th.status {
+    width: 15px;
+  }
+  td.name, th.name {}
+  td.score, th.score {
+    text-align: right;
+    width: 50px;
+  }
+}
+
+.console {
+  background: green;
+  overflow: hidden;
+  .messages {
+    height: calc(100% - 34px);
+    background: #444;
+    overflow-y: scroll;
+    padding: 6px;
+    .msg {
+      padding-bottom: 3px;
+      &.update { color: $brand-info }
+      &.info { color: $brand-warning }
+      &.chat { color: $brand-primary }
+    }
+  }
+  input {
+    border-radius: 0;
+  }
+}

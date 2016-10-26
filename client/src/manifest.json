@@ -15,6 +15,7 @@
         "angular-audio",
         "angular-bootstrap",
         "angular-resizable",
+        "angular-scroll-glue",
         "ngDraggable"
       ]
     },

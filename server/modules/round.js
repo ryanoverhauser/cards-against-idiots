@@ -4,7 +4,7 @@ var debug = require('debug')('round');
 var Stack = require('./stack');
 var util = require('./util');
 
-function Round(gameId, gameOpts, blackCard, players) {
+function Round(gameId, gameOpts, prompt, players) {
   var answers = [];
   var io = global.socketIO;
   var state = 'waiting';
@@ -12,7 +12,7 @@ function Round(gameId, gameOpts, blackCard, players) {
   function status() {
     return {
       state: state,
-      blackCard: blackCard
+      prompt: prompt
     }
   }
 

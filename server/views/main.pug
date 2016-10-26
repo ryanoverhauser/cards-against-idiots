@@ -7,35 +7,19 @@ html
 
     include ./includes/header.pug
 
-    //- PAGE WRAP
-    #wrapper
+    //- ALERTS
+    div(
+      uib-alert
+      ng-repeat="alert in alerts",
+      ng-class="'alert-' + (alert.type || 'warning')",
+      close="closeAlert($index)"
+    ) {{alert.msg}}
 
-      //- GAME PANEL
-      #main
-        .container
+    //- INIT
+    include ./includes/init.pug
 
-          //- ALERTS
-          div(
-            uib-alert
-            ng-repeat="alert in alerts",
-            ng-class="'alert-' + (alert.type || 'warning')",
-            close="closeAlert($index)"
-          ) {{alert.msg}}
-          
-          //- INIT
-          include ./includes/init.pug
+    //- LOBBY
+    include ./includes/lobby.pug
 
-          //- GAME LOBBY
-          include ./includes/lobby.pug
-          
-          //- GAME BOARD
-          include ./includes/game.pug
-
-      //- INFO PANEL
-      #info(
-        resizable
-        r-directions="['top']"
-        r-flex="true"
-      )
-        .container
-          //- include ./includes/infoPanel.pug
+    //- GAME
+    include ./includes/game.pug

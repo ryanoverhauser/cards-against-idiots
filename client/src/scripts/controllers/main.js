@@ -17,19 +17,20 @@
     $ctrl.inGame = false;
     $ctrl.init = init;
     $ctrl.initialized = false;
+    $ctrl.leaveGame = leaveGame;
 
-    // socket.emit('init', {name: 'foobar'});
-    // socket.on('initialized', function () {
-    //   socket.emit('createGame', {
-    //     name: 'foobar\'s game',
-    //     decks: [3,4],
-    //     customDecks: [],
-    //     scoreLimit: 10,
-    //     roundTime: 120,
-    //     playerLimit: 8,
-    //     czarTime: 120
-    //   });
-    // });
+    socket.emit('init', {name: 'foobar'});
+    socket.on('initialized', function () {
+      socket.emit('createGame', {
+        name: 'foobar\'s game',
+        decks: [3,4],
+        customDecks: [],
+        scoreLimit: 10,
+        roundTime: 120,
+        playerLimit: 8,
+        czarTime: 120
+      });
+    });
 
     socket.on('alert', function(data) {
       addAlert(data);
@@ -53,7 +54,6 @@
 
     socket.on('joinedGame', function (data) {
       $ctrl.inGame = true;
-      console.log(data);
     });
 
     socket.on('leftGame', function () {
@@ -78,6 +78,10 @@
       if ($ctrl.user.$valid) {
         socket.emit('init', {name: $ctrl.user.name});
       }
+    }
+
+    function leaveGame() {
+      socket.emit('leaveGame');
     }
 
   }

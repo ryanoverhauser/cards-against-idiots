@@ -1,53 +1,15 @@
-html, body {
-  height: 100%;
-}
-
 body {
   background: url('../images/retina_wood.png') #444;
 }
 
-#wrapper {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-#main,
-#info {
-  width: 100%;
-  justify-content: top;
-  flex-direction: column;
-}
-
-#main {
-  padding: 41px 0 20px;
-  flex: 1;
-  overflow-y: auto;
-}
-
-#info {
-  flex-basis: 200px;
-  background: $navbar-inverse-bg;
-  color: $navbar-inverse-color;
-  .rg-top {
-    background: $navbar-inverse-bg;
-  }
-}
-
-#alerts {
-  margin: 20px 0;
-}
-
-#init {
-  margin-top: 60px;
-  .init-form {
-    margin: 0 auto;
-    max-width: 600px;
-    text-align: center;
-    .btn {
-      outline: none;
-    }
-  }
+// No more puffy looking fonts!
+html { 
+  -webkit-font-smoothing: antialiased;  
+  -moz-font-smoothing : greyscale;
+  -o-font-smoothing : antialiased;  
+  -ms-font-smoothing : antialiased; 
+  -khtml-font-smoothing : antialiased;
+  overflow-x: hidden;
 }
 
 .align-right {

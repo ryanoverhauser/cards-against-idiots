@@ -1,6 +1,6 @@
 header#site-header
   nav.navbar.navbar-inverse.navbar-fixed-top(role="navigation")
-    .container
+    .container-fluid
       .navbar-header
         a.navbar-brand
           i.fa.fa-globe
@@ -9,8 +9,8 @@ header#site-header
         ul.nav.navbar-nav
           li
             a.leave-game(
-              ng-show="inGame"
-              ng-click="leaveGame()"
+              ng-show="main.inGame"
+              ng-click="main.leaveGame()"
             ) Leave Game
       .navbar-right
         ul.nav.navbar-nav

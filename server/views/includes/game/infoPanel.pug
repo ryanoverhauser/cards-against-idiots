@@ -1,0 +1,21 @@
+#info(
+  resizable
+  r-directions="['top']"
+  r-flex="true"
+)
+  .scoreboard(ng-controller="ScoreboardController as scoreboard")
+    table.table
+      tr
+        th.status
+        th.name Name
+        th.score Score
+      tr(ng-repeat="p in scoreboard.scoreboard")
+        td.status {{ p.status }}
+        td.name {{ p.name }}
+        td.score {{ p.score }}
+  .console(ng-controller="ConsoleController as console")
+    .messages(scroll-glue)
+      .msg(ng-repeat="msg in console.messages") {{ msg.text }}
+    form.chatForm(name="console.input" ng-submit="console.sendMessage()" method="post")
+      input.chat-input.form-control(type="text" ng-model="console.input.msg")
+      //- input(type="submit" value="Submit")

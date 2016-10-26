@@ -88,10 +88,7 @@ function Game(gameOpts) {
   function leave(playerId) {
     var index = util.findIndexByKeyValue(players, 'id', playerId);
     if (index >= 0) {
-      message({
-        type: 'update',
-        msg: players[index].name + ' has left the game.'
-      });
+      message(players[index].name + ' has left the game.');
       players.splice(index, 1);
     }
     if (!players.length) {
@@ -99,10 +96,15 @@ function Game(gameOpts) {
     }
   }
 
+  function sendChatMessage(name, msg) {
+    var msgText = name + ': ' + msg;
+    message(msgText, 'chat');
+  }
+
   function message(msg, type) {
     type = type || 'update';
     io.to(id).emit('message', {
-      msg: msg,
+      text: msg,
       type: type
     });
   }
@@ -114,7 +116,8 @@ function Game(gameOpts) {
     info: info,
     join: join,
     leave: leave,
-    scoreboard: scoreboard
+    scoreboard: scoreboard,
+    sendChatMessage: sendChatMessage
   };
 
 }

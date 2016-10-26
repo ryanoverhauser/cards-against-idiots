@@ -1,0 +1,53 @@
+html, body {
+  height: 100%;
+}
+
+#game {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#board, #info {
+  width: 100%;
+  justify-content: top;
+  flex-direction: column;
+}
+
+#board {
+  padding: 41px 0 20px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+#info {
+  flex-basis: 200px;
+  display: flex;
+  flex-direction: row;
+  .scoreboard, .console {
+    overflow: auto;
+    margin: 0 ($grid-gutter-width / 2);
+  }
+  .scoreboard {
+    flex-basis: 340px;
+  }
+  .console {
+    flex: 2;
+  }
+}
+
+#alerts {
+  margin: 20px 0;
+}
+
+#init {
+  margin-top: 60px;
+  .init-form {
+    margin: 0 auto;
+    max-width: 600px;
+    text-align: center;
+    .btn {
+      outline: none;
+    }
+  }
+}

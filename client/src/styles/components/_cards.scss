@@ -5,18 +5,18 @@
   padding: 14px 16px 18px;
   margin-bottom: 16px;
   height: 234px;
-  font-weight: bold;
+  font-weight: 700;
   font-size: 15px;
   line-height: 22px;
   box-shadow: 2px 2px 5px 0px rgba(0,0,0,0.1);
   &.card-white {
-    background: url('../img/wcard_logo.png') 16px 204px no-repeat #fff;
+    background: url('../images/wcard_logo.png') 16px 204px no-repeat #fff;
     background-size: 88px 16px;
   }
   &.card-black {
     color: #fff;
     border-color: #000;
-    background: url('../img/bcard_logo.png') 16px 204px no-repeat #000;
+    background: url('../images/bcard_logo.png') 16px 204px no-repeat #000;
     background-size: 88px 16px;
   }
   &.card-large {
@@ -28,5 +28,19 @@
     background-size: 145px 26px;
     background-position: 26px 306px;
   }
-  &.played { opacity: .3; }
+  &.played {
+    opacity: .3;
+  }
+  #hand & {
+    background: #fff;
+    border-radius: 6px;
+    padding: 6%;
+    font-size: .9vw;
+    line-height: 1.2vw;
+    height: 100%;
+  }
+  .disabled & {
+    opacity: .5;
+    cursor: default;
+  }
 }

@@ -1,0 +1,9 @@
+#hand {
+  display: flex;
+  align-items: stretch;
+  height: 13vw;
+  .card-slot {
+    padding: .2vw;
+    flex: 1;
+  }
+}

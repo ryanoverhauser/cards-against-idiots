@@ -2,24 +2,16 @@
   ng-controller="GameController as game"
   ng-show="main.initialized && main.inGame"
 )
-  .container
-    h1 Hey, you's in a game!
-    h4 Round State: {{ game.round.state }}
-    h4 Round Black Card: {{ game.round.blackCard.text }}
-    h4 Hand
-    p
-      span(ng-repeat="card in game.hand") {{ card.text }}
-        br
-    h4 Scoreboard
-    table.table
-        tr
-          th Name
-          th Score
-          th Wins
-        tr(ng-repeat="p in game.scoreboard")
-          th {{ p.name }}
-          th {{ p.score }}
-          th {{ p.wins }}
 
-    p
-      a(ng-click="game.leave()") Leave Game
+  //- BOARD
+  #board
+    .container-fluid
+      
+      //- PLAY AREA
+      include ./game/playArea.pug
+      
+      //- PLAYER HAND
+      include ./game/hand.pug
+
+  //- INFO PANEL
+  include ./game/infoPanel.pug

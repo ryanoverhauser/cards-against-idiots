@@ -22,6 +22,7 @@ function User(socket) {
   socket.on('createGame', onCreateGame);
   socket.on('joinGame', onJoinGame);
   socket.on('leaveGame', onLeaveGame);
+  socket.on('message', onMessage);
   socket.on('disconnect', onDisconnect);
 
   function init(data) {
@@ -108,6 +109,12 @@ function User(socket) {
     if (currentGame) {
       currentGame.leave(id);
       currentGame = false;
+    }
+  }
+
+  function onMessage(data) {
+    if (currentGame) {
+      currentGame.sendChatMessage(name, data.message);
     }
   }
 
