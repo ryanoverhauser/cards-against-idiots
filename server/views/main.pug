@@ -8,13 +8,13 @@ html
     include ./includes/header.pug
 
     //- ALERTS
-    .alerts
-      div(
-        uib-alert
-        ng-repeat="alert in main.alerts",
-        ng-class="'alert-' + (alert.type || 'warning')",
-        close="main.closeAlert($index)"
-      ) {{alert.msg}}
+    //- .alerts
+    //-   div(
+    //-     uib-alert
+    //-     ng-repeat="alert in main.alerts",
+    //-     ng-class="'alert-' + (alert.type || 'warning')",
+    //-     close="main.closeAlert($index)"
+    //-   ) {{alert.msg}}
 
     //- INIT
     include ./includes/init.pug

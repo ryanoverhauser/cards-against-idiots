@@ -1,3 +1,10 @@
 #hand
-  .card-slot(ng-repeat="card in game.hand")
-    .card.card-white {{ card.text }}
+  .card-slot(
+  	ng-repeat="card in game.hand"
+    ng-class="card.disabled ? 'disabled' : ''"
+  )
+    .card.card-white(
+      ng-drag='true'
+      ng-drag-data='card'
+      ng-drag-success='onDragCard(card)'
+    ) {{ card.text }}

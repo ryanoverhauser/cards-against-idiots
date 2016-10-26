@@ -1,3 +1,10 @@
 #play-area
   .prompt
     .card.card-large.card-black {{ game.round.prompt.text }}
+  .play-slots
+    .play-slot(
+      ng-repeat="slot in game.playSlots"
+      ng-class="slot.card ? 'filled' : 'empty'"
+      ng-drop='true'
+      ng-drop-success='game.placeCard(slot,$data)'
+    ) {{ slot.card.text }}

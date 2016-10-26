@@ -1,3 +1,44 @@
 #play-area {
+  @extend .clearfix;
   margin-top: 20px;
+}
+
+.prompt, {
+  float: left;
+  .card {
+    margin-right: 15px;
+    float: left;
+  }
+}
+
+.play-slots {
+  float: left;
+}
+
+.play-slot {
+  @extend .card;
+  float: left;
+  height: 260px;
+  width: 200px;
+  margin-right: 15px;
+  &.empty {
+    box-shadow: none;
+    border: 2px dashed #ddd;
+    text-align: center;
+    font-size: 22px;
+    line-height: 30px;
+    color: #d9d9d9;
+    opacity: .4;
+  }
+  &.filled {
+    @extend .card-white;
+    background: url('../images/wcard_logo.png') 16px 230px no-repeat #FFF;
+    background-size: 88px 16px;
+  }
+  &[ng-drop].drag-enter{
+    background: $brand-success;
+    &.filled {
+      opacity: .4;
+    }
+  }
 }
