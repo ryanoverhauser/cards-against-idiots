@@ -4,7 +4,7 @@ $icon-font-path:                            "../fonts/";
 //=== Inverted navbar
 // Reset inverted navbar basics
 $navbar-inverse-color:                      #ddd;
-$navbar-inverse-bg:                         #383838 !default;
+$navbar-inverse-bg:                         #1a1a1a !default;
 $navbar-inverse-border:                     darken($navbar-inverse-bg, 10%) !default;
 
 // Inverted navbar links
@@ -13,7 +13,7 @@ $navbar-inverse-link-hover-color:           #fff !default;
 $navbar-inverse-link-hover-bg:              transparent !default;
 $navbar-inverse-link-active-color:          $navbar-inverse-link-hover-color !default;
 $navbar-inverse-link-active-bg:             darken($navbar-inverse-bg, 10%) !default;
-$navbar-inverse-link-disabled-color:        #444 !default;
+$navbar-inverse-link-disabled-color:        #2a2a2a !default;
 $navbar-inverse-link-disabled-bg:           transparent !default;
 
 // Inverted navbar brand label
@@ -22,6 +22,6 @@ $navbar-inverse-brand-hover-color:          #fff !default;
 $navbar-inverse-brand-hover-bg:             transparent !default;
 
 // Inverted navbar toggle
-$navbar-inverse-toggle-hover-bg:            #444 !default;
+$navbar-inverse-toggle-hover-bg:            #2a2a2a !default;
 $navbar-inverse-toggle-icon-bar-bg:         #fff !default;
-$navbar-inverse-toggle-border-color:        #444 !default;
+$navbar-inverse-toggle-border-color:        #2a2a2a !default;

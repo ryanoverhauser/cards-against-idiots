@@ -28,7 +28,7 @@
   overflow: hidden;
   .messages {
     height: calc(100% - 34px);
-    background: #444;
+    background: lighten($navbar-inverse-bg, 5%);
     overflow-y: scroll;
     padding: 6px;
     .msg {
