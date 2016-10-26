@@ -27,13 +27,10 @@
     }
 
     function sendMessage() {
-      // // emit events via the chat console for dev purposes
-      // if ($ctrl.input.msg.substring(0,2) === '//') {
-      //   socket.emit($ctrl.input.msg.substring(2));
-      // } else {
-      //   socket.emit('message', {message: $ctrl.input.msg});
-      // }
-      socket.emit('message', {message: $ctrl.input.msg});
+      var msg = $ctrl.input.msg;
+      if (msg && msg.trim() !== '') {
+        socket.emit('message', {message: msg.trim()});
+      }
       $ctrl.input.msg = '';
     }
 

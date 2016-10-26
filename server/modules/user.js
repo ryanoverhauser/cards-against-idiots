@@ -24,6 +24,7 @@ function User(socket) {
   socket.on('leaveGame', onLeaveGame);
   socket.on('message', onMessage);
   socket.on('disconnect', onDisconnect);
+  socket.on('submitAnswer', onSubmitAnswer);
 
   function init(data) {
     if (!initialized && util.exists(data)) {
@@ -122,6 +123,12 @@ function User(socket) {
     if (currentGame) {
       currentGame.leave(id);
       currentGame = false;
+    }
+  }
+
+  function onSubmitAnswer(data) {
+    if (currentGame) {
+      currentGame.submitAnswer(id, data);
     }
   }
 

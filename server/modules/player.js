@@ -9,22 +9,16 @@ function Player(playerInfo) {
   var socketId = playerInfo.socketId;
   var score = 0;
   var wins = 0;
+  var czar = false;
   var hand = new Stack();
-
-  function getScore() {
-    return score;
-  }
-
-  function getWins() {
-    return wins;
-  }
 
   return {
     id: id,
     name: name,
     socketId: socketId,
-    score: getScore,
-    wins: getWins,
+    score: score,
+    wins: wins,
+    czar: czar,
     hand: hand
   }
 

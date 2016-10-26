@@ -30,15 +30,29 @@ function Game(gameOpts) {
       blackCards.add(result.blackCards);
       whiteCards.shuffle();
       blackCards.shuffle();
-      newRound();
       debug('Game initialized: ' + info());
       return true;
     });
   }
 
   function newRound() {
+    pickCzar();
     currentRound = new Round(id, gameOpts, blackCards.drawOne(), players);
     io.to(id).emit('newRound', currentRound.status());
+  }
+
+  function pickCzar() {
+    if (players.length) {
+      var currentCzarIndex = util.findIndexByKeyValue(players, 'czar', true);
+      if (currentCzarIndex >= 0) {
+        players[currentCzarIndex].czar = false;
+      }
+      if (currentCzarIndex < (players.length - 1)) {
+        players[currentCzarIndex + 1].czar = true;
+      } else {
+        players[0].czar = true;
+      }
+    }
   }
 
   function info() {
@@ -49,38 +63,55 @@ function Game(gameOpts) {
       playerLimit: gameOpts.playerLimit,
       playerCount: players.length,
       roundTime: gameOpts.roundTime,
-      scoreLimit: gameOpts.scoreLimit,
-      round: currentRound.status()
+      scoreLimit: gameOpts.scoreLimit
     };
   }
 
-  function scoreboard() {
-    var scoreboard = [];
+  function playerList() {
+    var playerList = [];
     for (let p of players) {
-      scoreboard.push({
+      playerList.push({
+        id: p.id,
         name: p.name,
-        score: p.score(),
-        wins: p.wins(),
+        score: p.score,
+        wins: p.wins,
+        czar: p.czar,
       });
     }
-    return scoreboard;
+    return playerList;
   }
 
   function join(playerInfo) {
     return new Promise((resolve, reject) => {
+
+      /* Check that game is not full */
       if (players.length === gameOpts.playerLimit) {
         reject('Game is full');
       }
+
+      /* Setup new player and add to players array */
       var player = new Player(playerInfo);
       player.hand.add(whiteCards.draw(10));
       players.push(player);
-      message(player.name + ' joined the game.');
-      currentRound.update();
+
+      /* Update the round or create new round if not set */
+      if (!currentRound) {
+        newRound();
+      } else {
+        currentRound.update();
+      }
+
+      /* Send game info to player */
       io.to(player.socketId).emit('joinedGame', {
         round: currentRound.status(),
-        scoreboard: scoreboard()
+        players: playerList()
       });
       io.to(player.socketId).emit('hand', player.hand.get());
+
+      /* Alert other clients */
+      sendMessage(player.name + ' joined the game.');
+      sendUpdate();
+
       resolve();
     });
   }
@@ -88,28 +119,41 @@ function Game(gameOpts) {
   function leave(playerId) {
     var index = util.findIndexByKeyValue(players, 'id', playerId);
     if (index >= 0) {
-      message(players[index].name + ' has left the game.');
+      /* Alert other clients */
+      sendMessage(players[index].name + ' has left the game.');
       players.splice(index, 1);
+      sendUpdate();
     }
     if (!players.length) {
       lobby.removeGame(id);
     }
   }
 
-  function message(msg, type) {
+  function sendUpdate() {
+    io.to(id).emit('updateGame', {
+      round: currentRound.status(),
+      players: playerList()
+    });
+  }
+
+  function sendMessage(text, type) {
     type = type || 'update';
     io.to(id).emit('message', {
-      text: msg,
+      text: text,
       type: type
     });
   }
 
-  function sendChatMessage(username, msg) {
+  function sendChatMessage(username, text) {
     io.to(id).emit('message', {
-      text: msg,
+      text: text,
       type: 'chat',
       user: username
     });
+  }
+
+  function submitAnswer(userId, answer) {
+    debug('submitAnswer', userId, answer);
   }
 
   return {
@@ -119,8 +163,9 @@ function Game(gameOpts) {
     info: info,
     join: join,
     leave: leave,
-    scoreboard: scoreboard,
-    sendChatMessage: sendChatMessage
+    players: playerList,
+    sendChatMessage: sendChatMessage,
+    submitAnswer: submitAnswer
   };
 
 }

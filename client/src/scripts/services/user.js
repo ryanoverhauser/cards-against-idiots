@@ -6,16 +6,12 @@
     .factory('user', user);
 
   function user() {
-    var user = {
-      id: null,
-      name: null,
-      initialized: false
-    };
+
     var service = {
+      id: null,
       init: init,
-      id: id,
-      name: name,
-      initialized: initialized,
+      name: null,
+      initialized: false,
       getUser: getUser
     };
 
@@ -23,26 +19,18 @@
 
     //////
 
-    function init(id, name) {
-      user.id = id;
-      user.name = name;
-      user.initialized = true;
-      return user;
-    }
-
-    function id() {
-      return user.id;
-    }
-
-    function name() {
-      return user.name;
-    }
-
-    function initialized() {
-      return user.initialized;
-    }
-
     function getUser() {
+      return {
+        id: service.id,
+        name: service.name,
+        initialized: service.initialized
+      };
+    }
+
+    function init(id, name) {
+      service.id = id;
+      service.name = name;
+      service.initialized = true;
       return user;
     }
 
