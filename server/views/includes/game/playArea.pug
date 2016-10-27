@@ -1,7 +1,12 @@
 #play-area
   .prompt
-    .card.card-large.card-black {{ game.round.prompt.text }}
-  .play-slots(ng-show="!game.czar")
+    .card.card-large.card-black
+      span(
+        ng-show="game.isActive()"
+      ) {{ game.round.prompt.text }}
+  .play-slots(
+    ng-show="game.isActive() && !game.czar"
+  )
     .play-slot(
       ng-repeat="slot in game.playSlots"
       ng-class="slot.card ? 'filled' : 'empty'"
@@ -15,7 +20,10 @@
       button.btn.btn-primary(
         ng-click="game.submitAnswer()"
       ) Submit
-  .czar-message(ng-show="game.czar")
+  .waiting-message(ng-show="!game.isActive()")
+    p
+      |  Waiting for at least three players.
+  .czar-message(ng-show="game.isActive() && game.czar")
     p
       i.fa.fa-lg.fa-star
       |  You're the Card Czar. You'll have to wait for the rest of these assholes to submit their cards. For your patience you will be rewarded with a chance to judge your peers.

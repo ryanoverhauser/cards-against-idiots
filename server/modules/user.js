@@ -127,8 +127,12 @@ function User(socket) {
   }
 
   function onSubmitAnswer(data) {
-    if (currentGame) {
-      currentGame.submitAnswer(id, data);
+    debug(currentGame.round);
+    if (currentGame && currentGame.round) {
+      currentGame.round.submitAnswer({
+        userId: id,
+        cards: data
+      });
     }
   }
 

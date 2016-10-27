@@ -4,10 +4,32 @@ var debug = require('debug')('round');
 var Stack = require('./stack');
 var util = require('./util');
 
-function Round(gameId, gameOpts, prompt, players) {
+function Round(game) {
   var answers = [];
   var io = global.socketIO;
   var state = 'waiting';
+  var prompt = game.blackCards.drawOne();
+
+  function submitAnswer(answer) {
+    debug(answer);
+    var player = util.findByKeyValue(game.players, 'id', answer.userId);
+    if (player) {
+      player.answered = true;
+      answers.push(answer);
+      update();
+      game.sendUpdate();
+    }
+  }
+
+  function allAnswered() {
+    var allAnswered = true;
+    game.players.map(function(p) {
+      if (!p.answered && !p.czar) {
+        allAnswered = false;
+      }
+    });
+    return allAnswered;
+  }
 
   function status() {
     return {
@@ -19,15 +41,19 @@ function Round(gameId, gameOpts, prompt, players) {
   function update() {
     switch (state) {
       case 'waiting':
-        if (players.length > 2) {
+        if (game.players.length > 2) {
           state = 'open';
-          io.to(gameId).emit('roundStatus', status());
+          io.to(game.id).emit('roundStatus', status());
         }
         break;
       case 'open':
-        if (players.length < 3) {
+        if (game.players.length < 3) {
           state = 'waiting';
-          io.to(gameId).emit('roundStatus', status());
+          io.to(game.id).emit('roundStatus', status());
+        } else {
+          if (allAnswered()) {
+            state = 'closed';
+          }
         }
         break;
       case 'closed':
@@ -36,8 +62,9 @@ function Round(gameId, gameOpts, prompt, players) {
   }
 
   return {
+    submitAnswer: submitAnswer,
     status: status,
-    update: update,
+    update: update
   }
 
 }

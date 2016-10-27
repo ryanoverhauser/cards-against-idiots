@@ -14,22 +14,38 @@ function Game(gameOpts) {
 
   var id = util.generateUID();
   var io = global.socketIO;
-  var name = gameOpts.name;
-  var players = [];
-  var currentRound;
 
-  var whiteCards = new Stack();
-  var whiteDiscards = new Stack();
-  var blackCards = new Stack();
-  var blackDiscards = new Stack();
+  var game = {
+    id: id,
+    name: gameOpts.name,
+    init: init,
+    info: info,
+    join: join,
+    leave: leave,
+    players: [],
+    playerList: playerList,
+    round: false,
+    sendChatMessage: sendChatMessage,
+    sendMessage: sendMessage,
+    sendUpdate: sendUpdate,
+  };
+
+  game.whiteCards = new Stack();
+  game.whiteDiscards = new Stack();
+  game.blackCards = new Stack();
+  game.blackDiscards = new Stack();
+
+  return game;
+
+  //////
 
   function init() {
     return db.getCardsFromDecks(gameOpts.decks)
     .then((result) => {
-      whiteCards.add(result.whiteCards);
-      blackCards.add(result.blackCards);
-      whiteCards.shuffle();
-      blackCards.shuffle();
+      game.whiteCards.add(result.whiteCards);
+      game.blackCards.add(result.blackCards);
+      game.whiteCards.shuffle();
+      game.blackCards.shuffle();
       debug('Game initialized: ' + info());
       return true;
     });
@@ -37,31 +53,31 @@ function Game(gameOpts) {
 
   function newRound() {
     pickCzar();
-    currentRound = new Round(id, gameOpts, blackCards.drawOne(), players);
-    io.to(id).emit('newRound', currentRound.status());
+    game.round = new Round(game);
+    io.to(id).emit('newRound', game.round.status());
   }
 
   function pickCzar() {
-    if (players.length) {
-      var currentCzarIndex = util.findIndexByKeyValue(players, 'czar', true);
+    if (game.players.length) {
+      var currentCzarIndex = util.findIndexByKeyValue(game.players, 'czar', true);
       if (currentCzarIndex >= 0) {
-        players[currentCzarIndex].czar = false;
+        game.players[currentCzarIndex].czar = false;
       }
-      if (currentCzarIndex < (players.length - 1)) {
-        players[currentCzarIndex + 1].czar = true;
+      if (currentCzarIndex < (game.players.length - 1)) {
+        game.players[currentCzarIndex + 1].czar = true;
       } else {
-        players[0].czar = true;
+        game.players[0].czar = true;
       }
     }
   }
 
   function info() {
     return {
-      id: id,
-      name: name,
+      id: game.id,
+      name: game.name,
       czarTime: gameOpts.czarTime,
       playerLimit: gameOpts.playerLimit,
-      playerCount: players.length,
+      playerCount: game.players.length,
       roundTime: gameOpts.roundTime,
       scoreLimit: gameOpts.scoreLimit
     };
@@ -69,7 +85,7 @@ function Game(gameOpts) {
 
   function playerList() {
     var playerList = [];
-    for (let p of players) {
+    for (let p of game.players) {
       playerList.push({
         id: p.id,
         name: p.name,
@@ -85,26 +101,30 @@ function Game(gameOpts) {
     return new Promise((resolve, reject) => {
 
       /* Check that game is not full */
-      if (players.length === gameOpts.playerLimit) {
+      if (game.players.length === gameOpts.playerLimit) {
         reject('Game is full');
       }
 
       /* Setup new player and add to players array */
       var player = new Player(playerInfo);
-      player.hand.add(whiteCards.draw(10));
-      players.push(player);
+      player.hand.add(game.whiteCards.draw(10));
+      game.players.push(player);
 
       /* Update the round or create new round if not set */
-      if (!currentRound) {
+      if (!game.round) {
         newRound();
       } else {
-        currentRound.update();
+        game.round.update();
       }
 
       /* Send game info to player */
       io.to(player.socketId).emit('joinedGame', {
-        round: currentRound.status(),
+        round: game.round.status(),
         players: playerList()
+      });
+      io.to(player.socketId).emit('message', {
+        text: 'Welcome to ' + game.name,
+        type: 'info'
       });
       io.to(player.socketId).emit('hand', player.hand.get());
 
@@ -117,21 +137,21 @@ function Game(gameOpts) {
   }
 
   function leave(playerId) {
-    var index = util.findIndexByKeyValue(players, 'id', playerId);
+    var index = util.findIndexByKeyValue(game.players, 'id', playerId);
     if (index >= 0) {
       /* Alert other clients */
-      sendMessage(players[index].name + ' has left the game.');
-      players.splice(index, 1);
+      sendMessage(game.players[index].name + ' has left the game.');
+      game.players.splice(index, 1);
       sendUpdate();
     }
-    if (!players.length) {
+    if (!game.players.length) {
       lobby.removeGame(id);
     }
   }
 
   function sendUpdate() {
     io.to(id).emit('updateGame', {
-      round: currentRound.status(),
+      round: game.round.status(),
       players: playerList()
     });
   }
@@ -151,22 +171,6 @@ function Game(gameOpts) {
       user: username
     });
   }
-
-  function submitAnswer(userId, answer) {
-    debug('submitAnswer', userId, answer);
-  }
-
-  return {
-    id: id,
-    name: name,
-    init: init,
-    info: info,
-    join: join,
-    leave: leave,
-    players: playerList,
-    sendChatMessage: sendChatMessage,
-    submitAnswer: submitAnswer
-  };
 
 }
 

@@ -48,8 +48,8 @@
       user.init(data.userId, data.userName);
       $ctrl.initialized = true;
       console.log('user initialized', user.getUser());
-      console.log('games', data.games);
-      console.log('decks', data.decks);
+      // console.log('games', data.games);
+      // console.log('decks', data.decks);
     });
 
     socket.on('joinedGame', function (data) {
