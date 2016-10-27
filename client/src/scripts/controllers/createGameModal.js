@@ -56,7 +56,7 @@
       $ctrl.options = {
         decks: [],
         customDecks: [],
-        name: user.name() + '\'s game',
+        name: user.name + '\'s game',
         scoreLimit: $ctrl.scores[1],
         roundTime: $ctrl.times[3],
         czarTime: $ctrl.times[3]
