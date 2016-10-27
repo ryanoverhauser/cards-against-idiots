@@ -1,6 +1,7 @@
 'use strict';
 
 var debug = require('debug')('game');
+var Table = require('cli-table');
 
 var db = require('./database')();
 var lobby = require('./lobby');
@@ -24,6 +25,7 @@ function Game(gameOpts) {
     leave: leave,
     players: [],
     playerList: playerList,
+    playerLimit: 8,
     round: false,
     sendChatMessage: sendChatMessage,
     sendMessage: sendMessage,
@@ -39,6 +41,47 @@ function Game(gameOpts) {
 
   //////
 
+  function cardCount() {
+    var table = new Table({
+      head: ['','Draw Pile', 'Discards', 'In Play', 'Total'],
+      colWidths: [15, 15, 15, 15, 15],
+      colAligns: ['left', 'right', 'right', 'right', 'right']
+    });
+
+    var roundCount = (game.round) ? 1 : 0;
+    var handCount = 0;
+    game.players.map(function(p) {
+      handCount += p.hand.count();
+    })
+
+    table.push([
+      'Black Cards',
+      game.blackCards.count(),
+      game.blackDiscards.count(),
+      roundCount,
+      game.blackCards.count() + game.blackDiscards.count() + roundCount
+    ]);
+
+    table.push([
+      'White Cards',
+      game.whiteCards.count(),
+      game.whiteDiscards.count(),
+      handCount,
+      game.whiteCards.count() + game.whiteDiscards.count() + handCount
+    ]);
+
+    table.push([
+      'Totals',
+      game.blackCards.count() + game.whiteCards.count(),
+      game.blackDiscards.count() + game.whiteDiscards.count(),
+      roundCount + handCount,
+      game.blackCards.count() + game.blackDiscards.count() + roundCount +
+      game.whiteCards.count() + game.whiteDiscards.count() + handCount
+    ]);
+
+    debug('Card Count\n' + table.toString());
+  }
+
   function init() {
     return db.getCardsFromDecks(gameOpts.decks)
     .then((result) => {
@@ -47,6 +90,7 @@ function Game(gameOpts) {
       game.whiteCards.shuffle();
       game.blackCards.shuffle();
       debug('Game initialized: ' + info());
+      cardCount();
       return true;
     });
   }
@@ -55,6 +99,7 @@ function Game(gameOpts) {
     pickCzar();
     game.round = new Round(game);
     io.to(id).emit('newRound', game.round.status());
+    cardCount();
   }
 
   function pickCzar() {
@@ -76,7 +121,7 @@ function Game(gameOpts) {
       id: game.id,
       name: game.name,
       czarTime: gameOpts.czarTime,
-      playerLimit: gameOpts.playerLimit,
+      playerLimit: game.playerLimit,
       playerCount: game.players.length,
       roundTime: gameOpts.roundTime,
       scoreLimit: gameOpts.scoreLimit
@@ -101,7 +146,7 @@ function Game(gameOpts) {
     return new Promise((resolve, reject) => {
 
       /* Check that game is not full */
-      if (game.players.length === gameOpts.playerLimit) {
+      if (game.players.length >= gameOpts.playerLimit) {
         reject('Game is full');
       }
 
@@ -132,6 +177,8 @@ function Game(gameOpts) {
       sendMessage(player.name + ' joined the game.');
       sendUpdate();
 
+      cardCount();
+
       resolve();
     });
   }
@@ -141,8 +188,11 @@ function Game(gameOpts) {
     if (index >= 0) {
       /* Alert other clients */
       sendMessage(game.players[index].name + ' has left the game.');
+      game.whiteDiscards.add(game.players[index].hand.empty());
       game.players.splice(index, 1);
+      game.round.update();
       sendUpdate();
+      cardCount();
     }
     if (!game.players.length) {
       lobby.removeGame(id);

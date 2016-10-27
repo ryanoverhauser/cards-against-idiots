@@ -18,6 +18,7 @@
     "jscs": "jscs gulpfile.js index.js server client/src"
   },
   "dependencies": {
+    "cli-table": "^0.3.1",
     "debug": "^2.2.0",
     "dotenv": "^2.0.0",
     "express": "^4.14.0",
