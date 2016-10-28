@@ -1,5 +1,7 @@
 'use strict';
 
+var util = require('./util');
+
 function Stack() {
 
   var cards = [];
@@ -28,6 +30,17 @@ function Stack() {
     return cards;
   }
 
+  function getById(id) {
+    return util.findByKeyValue(cards, 'id', id);
+  }
+
+  function removeById(id) {
+    var i = util.findIndexByKeyValue(cards, 'id', id);
+    if (i >= 0) {
+      cards.splice(i, 1);
+    }
+  }
+
   function shuffle() {
     var theLength = cards.length - 1;
     var toSwap;
@@ -43,10 +56,12 @@ function Stack() {
   return {
     add: add,
     get: get,
+    getById: getById,
     count: count,
     draw: draw,
     drawOne: drawOne,
     empty: empty,
+    removeById: removeById,
     shuffle: shuffle
   };
 

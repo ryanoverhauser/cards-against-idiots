@@ -1,29 +1,34 @@
 #play-area
+
   .prompt
     .card.card-large.card-black
-      span(
-        ng-show="game.isActive()"
-      ) {{ game.round.prompt.text }}
-  .play-slots(
-    ng-show="game.isActive() && !game.czar"
-  )
+      span(ng-show="game.isActive()") {{ game.round.prompt.text }}
+
+  //- PLAY SLOTS
+  .play-slots(ng-show="game.isOpen() && !game.czar")
     .play-slot(
       ng-repeat="slot in game.playSlots"
       ng-class="slot.card ? 'filled' : 'empty'"
       ng-drop='true'
       ng-drop-success='game.placeCard(slot,$data)'
     ) {{ slot.card.text }}
-    .play-controls
-      button.btn.btn-default(
-        ng-click="game.clearCards()"
-      ) Clear
-      button.btn.btn-primary(
-        ng-click="game.submitAnswer()"
-      ) Submit
-  .waiting-message(ng-show="!game.isActive()")
-    p
-      |  Waiting for at least three players.
-  .czar-message(ng-show="game.isActive() && game.czar")
-    p
-      i.fa.fa-lg.fa-star
-      |  You're the Card Czar. You'll have to wait for the rest of these assholes to submit their cards. For your patience you will be rewarded with a chance to judge your peers.
+    .play-controls(ng-show="game.isOpen() && !game.answered")
+      button.btn.btn-default(ng-click="game.clearCards()") Clear
+      button.btn.btn-primary(ng-click="game.submitAnswer()") Submit
+    p.answered(ng-show="game.answered")
+      i.fa.fa-check
+      |  Waiting for other players
+
+  //- ANSWERS    
+  .answers(ng-show="game.isClosed()")
+    .answer-slot(ng-repeat="answer in game.round.answers")
+      .card.card-white(ng-repeat="card in answer.cards") {{ card.text }}
+      .czar-controls(ng-show="game.czar")
+        button.btn.btn-primary(ng-click="game.pickWinner(answer)") Pick Winner
+
+  //- MESSAGES
+  p.waiting-message(ng-show="!game.isActive()")
+    | Waiting for at least three players.
+  p.czar-message(ng-show="game.isOpen() && game.czar")
+    i.fa.fa-lg.fa-star
+    | You're the Card Czar. You'll have to wait for the rest of these assholes to submit their cards. For your patience you will be rewarded with a chance to judge your peers.

@@ -10,6 +10,55 @@ function Round(game) {
   var state = 'waiting';
   var prompt = game.blackCards.drawOne();
 
+  /* Chech if all players have submitted an answer */
+  function allAnswered() {
+    var allAnswered = true;
+    for (let player of game.players) {
+      if (!player.answered && !player.czar) { // still waiting on answer
+        allAnswered = false;
+      }
+    };
+    return allAnswered;
+  }
+
+  /* Cleanup after round ends */
+  function cleanup() {
+    // Discard prompt card
+    game.blackDiscards.add([prompt]);
+    // Discard answer cards and remove from player hands
+    for (let answer of answers) {
+      game.whiteDiscards.add(answer.cards);
+      var player = util.findByKeyValue(game.players, 'id', answer.userId);
+      if (player) {
+        for (let card of answer.cards) {
+          player.hand.removeById(card.id);
+        };
+      }
+    };
+    // Reset player status
+    for (let player of game.players) {
+      player.answered = false;
+    };
+  }
+
+  /* Handle czar choosing round winner */
+  function pickWinner(userId, answer) {
+    debug('pickWinner', answer);
+    var czar = util.findByKeyValue(game.players, 'id', userId);
+    //confirm the player is actually the card czar
+    if (czar.czar) {
+      io.to(game.id).emit('roundEnded', answer);
+      // Award point to round winner
+      var winner = util.findByKeyValue(game.players, 'id', answer.userId);
+      if (winner) {
+        winner.score += 1;
+      }
+      cleanup();
+      game.newRound();
+    }
+  }
+
+  /* Handle player submitting an answer */
   function submitAnswer(answer) {
     debug(answer);
     var player = util.findByKeyValue(game.players, 'id', answer.userId);
@@ -21,23 +70,19 @@ function Round(game) {
     }
   }
 
-  function allAnswered() {
-    var allAnswered = true;
-    game.players.map(function(p) {
-      if (!p.answered && !p.czar) {
-        allAnswered = false;
-      }
-    });
-    return allAnswered;
-  }
-
+  /* Get round status */
   function status() {
-    return {
+    var status = {
       state: state,
       prompt: prompt
     }
+    if (allAnswered()) {
+      status.answers = answers;
+    }
+    return status;
   }
 
+  /* Update round status */
   function update() {
     switch (state) {
       case 'waiting':
@@ -62,6 +107,8 @@ function Round(game) {
   }
 
   return {
+    pickWinner: pickWinner,
+    prompt: prompt,
     submitAnswer: submitAnswer,
     status: status,
     update: update

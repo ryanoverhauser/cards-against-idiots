@@ -23,6 +23,7 @@ function Game(gameOpts) {
     info: info,
     join: join,
     leave: leave,
+    newRound: newRound,
     players: [],
     playerList: playerList,
     playerLimit: 8,
@@ -50,9 +51,9 @@ function Game(gameOpts) {
 
     var roundCount = (game.round) ? 1 : 0;
     var handCount = 0;
-    game.players.map(function(p) {
-      handCount += p.hand.count();
-    })
+    for (let player of game.players) {
+      handCount += player.hand.count();
+    };
 
     table.push([
       'Black Cards',
@@ -79,7 +80,15 @@ function Game(gameOpts) {
       game.whiteCards.count() + game.whiteDiscards.count() + handCount
     ]);
 
-    debug('Card Count\n' + table.toString());
+    debug(game.name + ' Card Count:\n' + table.toString());
+  }
+
+  function deal() {
+    for (let player of game.players) {
+      var count = 10 + game.round.prompt.draw - player.hand.count();
+      player.hand.add(game.whiteCards.draw(count));
+      io.to(player.socketId).emit('hand', player.hand.get());
+    };
   }
 
   function init() {
@@ -97,8 +106,14 @@ function Game(gameOpts) {
 
   function newRound() {
     pickCzar();
+    delete game.round;
     game.round = new Round(game);
-    io.to(id).emit('newRound', game.round.status());
+    game.round.update();
+    deal();
+    io.to(id).emit('newRound', {
+      round: game.round.status(),
+      players: playerList()
+    });
     cardCount();
   }
 

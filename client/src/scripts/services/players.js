@@ -17,6 +17,7 @@
 
     socket.on('joinedGame', update);
     socket.on('updateGame', update);
+    socket.on('newRound', update);
 
     return service;
 

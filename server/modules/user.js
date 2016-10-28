@@ -17,16 +17,59 @@ function User(socket) {
   var initialized = false;
   var currentGame = false;
 
-  socket.on('init', init);
-  socket.on('loadCustomDeck', onLoadCustomDeck);
   socket.on('createGame', onCreateGame);
+  socket.on('disconnect', onDisconnect);
+  socket.on('init', onInit);
   socket.on('joinGame', onJoinGame);
+  socket.on('loadCustomDeck', onLoadCustomDeck);
   socket.on('leaveGame', onLeaveGame);
   socket.on('message', onMessage);
-  socket.on('disconnect', onDisconnect);
+  socket.on('pickWinner', onPickWinner);
   socket.on('submitAnswer', onSubmitAnswer);
 
-  function init(data) {
+  function info() {
+    return {
+      id: id,
+      name: name,
+      socketId: socket.client.id
+    };
+  }
+
+  function joinGame(game) {
+    game.join(info())
+    .then(() => {
+      currentGame = game;
+      socket.join(game.id);
+      socket.leave('lobby');
+      debug('User ' + name + ' joined game ' + game.name);
+    })
+    .catch(function(err) {
+      debug('Error joining game:', err);
+      throw(err);
+    });
+  }
+
+  function onCreateGame(data) {
+    var newGame = new Game(data);
+    newGame.init()
+    .then(() => {
+      lobby.addGame(newGame);
+      joinGame(newGame);
+    })
+    .catch((err) => {
+      debug('Error creating game:', err);
+      throw(err);
+    });
+  }
+
+  function onDisconnect() {
+    if (currentGame) {
+      currentGame.leave(id);
+      currentGame = false;
+    }
+  }
+
+  function onInit(data) {
     if (!initialized && util.exists(data)) {
       if (validator.isLength(data.name, 1, 20)) {
         name = data.name;
@@ -48,25 +91,20 @@ function User(socket) {
     }
   }
 
-  function info() {
-    return {
-      id: id,
-      name: name,
-      socketId: socket.client.id
-    };
+  function onJoinGame(data) {
+    var game = lobby.getGame(data.gameId);
+    if (game) {
+      joinGame(game);
+    }
   }
 
-  function joinGame(game) {
-    game.join(info())
-    .then(() => {
-      currentGame = game;
-      socket.join(game.id);
-      socket.leave('lobby');
-      debug('User ' + name + ' joined game ' + game.name);
-    })
-    .catch(function(err) {
-      debug('Error joining game:', err);
-    });
+  function onLeaveGame() {
+    socket.join('lobby');
+    socket.emit('leftGame');
+    if (currentGame) {
+      currentGame.leave(id);
+      currentGame = false;
+    }
   }
 
   function onLoadCustomDeck(data) {
@@ -85,44 +123,16 @@ function User(socket) {
     }
   }
 
-  function onCreateGame(data) {
-    var newGame = new Game(data);
-    newGame.init()
-    .then(() => {
-      lobby.addGame(newGame);
-      joinGame(newGame);
-    })
-    .catch((err) => {
-      debug('Error creating game:', err);
-    });
-  }
-
-  function onJoinGame(data) {
-    var game = lobby.getGame(data.gameId);
-    if (game) {
-      joinGame(game);
-    }
-  }
-
-  function onLeaveGame() {
-    socket.join('lobby');
-    socket.emit('leftGame');
-    if (currentGame) {
-      currentGame.leave(id);
-      currentGame = false;
-    }
-  }
-
   function onMessage(data) {
     if (currentGame) {
       currentGame.sendChatMessage(name, data.message);
     }
   }
 
-  function onDisconnect() {
-    if (currentGame) {
-      currentGame.leave(id);
-      currentGame = false;
+  function onPickWinner(data) {
+    debug(currentGame.round);
+    if (currentGame && currentGame.round) {
+      currentGame.round.pickWinner(id, data);
     }
   }
 

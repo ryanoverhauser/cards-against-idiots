@@ -42,3 +42,25 @@
     }
   }
 }
+
+.answers {
+  float: left;
+}
+
+.answer-slot {
+  float: left;
+  margin: 0 12px;
+  .card {
+    float: left;
+    height: 260px;
+    width: 200px;
+    margin: 0 4px 16px;
+    background: url('../images/wcard_logo.png') 16px 230px no-repeat #FFF;
+    background-size: 88px 16px;
+  }
+  .czar-controls {
+    text-align: center;
+    clear: both;
+  }
+}
+

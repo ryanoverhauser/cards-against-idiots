@@ -12,16 +12,21 @@
     var $ctrl = this;
 
     $ctrl.answered = false;
+    $ctrl.clearCards = clearCards;
     $ctrl.czar = false;
     $ctrl.hand = {};
     $ctrl.isActive = isActive;
-    $ctrl.round = false;
-    $ctrl.clearCards = clearCards;
+    $ctrl.isClosed = isClosed;
+    $ctrl.isOpen = isOpen;
+    $ctrl.isWaiting = isWaiting;
+    $ctrl.pickWinner = pickWinner;
     $ctrl.placeCard = placeCard;
     $ctrl.playerList = [];
     $ctrl.playSlots = [];
+    $ctrl.round = false;
     $ctrl.submitAnswer = submitAnswer;
 
+    // Listen for updates to the player list
     players.registerObserver(updatePlayers);
 
     function clearCards() {
@@ -43,8 +48,25 @@
     }
 
     function isActive() {
-      console.log('isActive', $ctrl.round.state);
       return $ctrl.round.state !== 'waiting';
+    }
+
+    function isClosed() {
+      return $ctrl.round.state === 'closed';
+    }
+
+    function isOpen() {
+      return $ctrl.round.state === 'open';
+    }
+
+    function isWaiting() {
+      return $ctrl.round.state === 'waiting';
+    }
+
+    function pickWinner(answer) {
+      if ($ctrl.czar) {
+        socket.emit('pickWinner', answer);
+      }
     }
 
     function placeCard(slot, card) {
@@ -93,6 +115,7 @@
     socket.on('joinedGame', onJoinedGame);
     socket.on('newRound', onNewRound);
     socket.on('updateGame', onUpdateGame);
+    socket.on('roundEnded', onRoundEnded);
 
     function onHand(data) {
       // console.log('hand', data);
@@ -107,9 +130,14 @@
 
     function onNewRound(data) {
       console.log('newRound', data);
-      $ctrl.round = data;
+      $ctrl.round = data.round;
       setupRound();
     }
+
+    function onRoundEnded(data) {
+      console.log('onRoundEnded', data);
+    }
+
     function onUpdateGame(data) {
       console.log('updateGame', data);
       $ctrl.round = data.round;
