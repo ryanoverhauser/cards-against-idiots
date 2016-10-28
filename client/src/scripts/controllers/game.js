@@ -29,6 +29,12 @@
     // Listen for updates to the player list
     players.registerObserver(updatePlayers);
 
+    function cleanCard(card) {
+      var cleaned = angular.copy(card);
+      delete cleaned.disabled;
+      return cleaned;
+    }
+
     function clearCards() {
       for (var i = 0; i < $ctrl.playSlots.length; i++) {
         if ($ctrl.playSlots[i].card) {
@@ -101,8 +107,11 @@
     }
 
     function submitAnswer() {
-      var answer = $ctrl.playSlots.map(function(s) {return s.card;});
-      socket.emit('submitAnswer', angular.copy(answer));
+      var answer = $ctrl.playSlots.map(function(s) {
+        return cleanCard(s.card);
+      });
+      console.log('submitAnswer', answer);
+      socket.emit('submitAnswer', answer);
       $ctrl.answered = true;
     }
 
