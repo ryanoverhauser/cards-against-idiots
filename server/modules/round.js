@@ -8,6 +8,10 @@ function Round(game) {
   var answers = [];
   var io = global.socketIO;
   var state = 'waiting';
+
+  if (!game.blackCards.count()) {
+    game.reshuffleBlack();
+  }
   var prompt = game.blackCards.drawOne();
 
   /* Chech if all players have submitted an answer */
@@ -51,6 +55,7 @@ function Round(game) {
       // Award point to round winner
       var winner = util.findByKeyValue(game.players, 'id', answer.userId);
       if (winner) {
+        game.sendMessage(winner.name + ' wins the round!');
         winner.score += 1;
       }
       cleanup();

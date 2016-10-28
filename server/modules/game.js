@@ -28,6 +28,9 @@ function Game(gameOpts) {
     playerList: playerList,
     playerLimit: 8,
     round: false,
+    scoreLimit: gameOpts.scoreLimit,
+    reshuffleBlack: reshuffleBlack,
+    reshuffleWhite: reshuffleWhite,
     sendChatMessage: sendChatMessage,
     sendMessage: sendMessage,
     sendUpdate: sendUpdate,
@@ -41,6 +44,17 @@ function Game(gameOpts) {
   return game;
 
   //////
+
+  function checkGame() {
+    for (let player of game.players) {
+      if (player.score >= game.scoreLimit) {
+        player.wins += 1;
+        sendMessage(player.name + ' wins the game!', 'info');
+        newGame();
+        break;
+      }
+    }
+  }
 
   function cardCount() {
     var table = new Table({
@@ -86,8 +100,13 @@ function Game(gameOpts) {
   function deal() {
     for (let player of game.players) {
       var count = 10 + game.round.prompt.draw - player.hand.count();
-      player.hand.add(game.whiteCards.draw(count));
-      io.to(player.socketId).emit('hand', player.hand.get());
+      if (count > game.whiteCards.count()) {
+        reshuffleWhite();
+      }
+      if (count) {
+        player.hand.add(game.whiteCards.draw(count));
+        io.to(player.socketId).emit('hand', player.hand.get());
+      }
     };
   }
 
@@ -104,33 +123,6 @@ function Game(gameOpts) {
     });
   }
 
-  function newRound() {
-    pickCzar();
-    delete game.round;
-    game.round = new Round(game);
-    game.round.update();
-    deal();
-    io.to(id).emit('newRound', {
-      round: game.round.status(),
-      players: playerList()
-    });
-    cardCount();
-  }
-
-  function pickCzar() {
-    if (game.players.length) {
-      var currentCzarIndex = util.findIndexByKeyValue(game.players, 'czar', true);
-      if (currentCzarIndex >= 0) {
-        game.players[currentCzarIndex].czar = false;
-      }
-      if (currentCzarIndex < (game.players.length - 1)) {
-        game.players[currentCzarIndex + 1].czar = true;
-      } else {
-        game.players[0].czar = true;
-      }
-    }
-  }
-
   function info() {
     return {
       id: game.id,
@@ -143,20 +135,6 @@ function Game(gameOpts) {
     };
   }
 
-  function playerList() {
-    var playerList = [];
-    for (let p of game.players) {
-      playerList.push({
-        id: p.id,
-        name: p.name,
-        score: p.score,
-        wins: p.wins,
-        czar: p.czar,
-      });
-    }
-    return playerList;
-  }
-
   function join(playerInfo) {
     return new Promise((resolve, reject) => {
 
@@ -167,7 +145,6 @@ function Game(gameOpts) {
 
       /* Setup new player and add to players array */
       var player = new Player(playerInfo);
-      player.hand.add(game.whiteCards.draw(10));
       game.players.push(player);
 
       /* Update the round or create new round if not set */
@@ -183,10 +160,10 @@ function Game(gameOpts) {
         players: playerList()
       });
       io.to(player.socketId).emit('message', {
-        text: 'Welcome to ' + game.name,
+        text: 'Welcome to ' + game.name + '!',
         type: 'info'
       });
-      io.to(player.socketId).emit('hand', player.hand.get());
+      deal();
 
       /* Alert other clients */
       sendMessage(player.name + ' joined the game.');
@@ -214,10 +191,73 @@ function Game(gameOpts) {
     }
   }
 
-  function sendUpdate() {
-    io.to(id).emit('updateGame', {
+  function newGame() {
+    sendMessage('Starting new game...', 'warning');
+    // discard all hand cards and reset points
+    for (let player of game.players) {
+      player.score = 0;
+      game.whiteDiscards.add(player.hand.empty());
+    }
+    reshuffleWhite();
+  }
+
+  function newRound() {
+    checkGame();
+    pickCzar();
+    delete game.round;
+    game.round = new Round(game);
+    game.round.update();
+    deal();
+    io.to(id).emit('newRound', {
       round: game.round.status(),
       players: playerList()
+    });
+    cardCount();
+  }
+
+  function pickCzar() {
+    if (game.players.length) {
+      var currentCzarIndex = util.findIndexByKeyValue(game.players, 'czar', true);
+      if (currentCzarIndex >= 0) {
+        game.players[currentCzarIndex].czar = false;
+      }
+      if (currentCzarIndex < (game.players.length - 1)) {
+        game.players[currentCzarIndex + 1].czar = true;
+      } else {
+        game.players[0].czar = true;
+      }
+    }
+  }
+
+  function playerList() {
+    var playerList = [];
+    for (let p of game.players) {
+      playerList.push({
+        id: p.id,
+        name: p.name,
+        score: p.score,
+        wins: p.wins,
+        czar: p.czar,
+      });
+    }
+    return playerList;
+  }
+
+  function reshuffleWhite() {
+    game.whiteCards.add(game.whiteDiscards.empty());
+    game.whiteCards.shuffle;
+  }
+
+  function reshuffleBlack() {
+    game.blackCards.add(game.blackDiscards.empty());
+    game.blackCards.shuffle;
+  }
+
+  function sendChatMessage(username, text) {
+    io.to(id).emit('message', {
+      text: text,
+      type: 'chat',
+      user: username
     });
   }
 
@@ -229,11 +269,10 @@ function Game(gameOpts) {
     });
   }
 
-  function sendChatMessage(username, text) {
-    io.to(id).emit('message', {
-      text: text,
-      type: 'chat',
-      user: username
+  function sendUpdate() {
+    io.to(id).emit('updateGame', {
+      round: game.round.status(),
+      players: playerList()
     });
   }
 

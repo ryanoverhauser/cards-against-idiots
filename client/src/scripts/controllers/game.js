@@ -71,7 +71,7 @@
 
     function pickWinner(answer) {
       if ($ctrl.czar) {
-        socket.emit('pickWinner', answer);
+        socket.emit('pickWinner', angular.copy(answer));
       }
     }
 

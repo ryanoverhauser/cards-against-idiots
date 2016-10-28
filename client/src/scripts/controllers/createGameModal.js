@@ -28,6 +28,7 @@
       {value: 20, name: 20}
     ];
     $ctrl.times = [
+      {value: 15, name: '15 sec'},
       {value: 30, name: '30 sec'},
       {value: 60, name: '60 sec'},
       {value: 90, name: '90 sec'},
@@ -58,8 +59,8 @@
         customDecks: [],
         name: user.name + '\'s game',
         scoreLimit: $ctrl.scores[1],
-        roundTime: $ctrl.times[3],
-        czarTime: $ctrl.times[3]
+        roundTime: $ctrl.times[2],
+        czarTime: $ctrl.times[2]
       };
 
       // Select all decks by default
