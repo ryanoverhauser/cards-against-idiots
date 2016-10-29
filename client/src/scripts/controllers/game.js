@@ -14,6 +14,7 @@
     $ctrl.answered = false;
     $ctrl.clearCards = clearCards;
     $ctrl.czar = false;
+    $ctrl.getNumber = getNumber;
     $ctrl.hand = {};
     $ctrl.isActive = isActive;
     $ctrl.isClosed = isClosed;
@@ -51,6 +52,10 @@
       } else {
         $ctrl.czar = false;
       }
+    }
+
+    function getNumber(num) {
+      return new Array(num);
     }
 
     function isActive() {

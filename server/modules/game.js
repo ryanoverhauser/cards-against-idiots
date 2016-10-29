@@ -233,6 +233,7 @@ function Game(gameOpts) {
     var playerList = [];
     for (let p of game.players) {
       playerList.push({
+        answered: p.answered,
         id: p.id,
         name: p.name,
         score: p.score,

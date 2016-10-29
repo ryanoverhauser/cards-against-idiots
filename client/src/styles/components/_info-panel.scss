@@ -13,10 +13,34 @@
 }
 
 .scoreboard {
-  td.status, th.status {
-    width: 15px;
+  .table>tbody>tr>td,
+  .table>tbody>tr>th,
+  .table>tfoot>tr>td,
+  .table>tfoot>tr>th,
+  .table>thead>tr>td,
+  .table>thead>tr>th {
+    border-color: #333;
   }
-  td.name, th.name {}
+  td.status, th.status {
+    width: 20px;
+    padding-left: 6px;
+    padding-right: 0;
+    .fa-star {
+      color: $brand-danger;
+    }
+    .fa-check {
+      color: $brand-success;
+    }
+  }
+  td.name, th.name {
+    .fa-trophy {
+      color: $brand-warning;
+      margin-left: 5px;
+      &:first-child {
+        margin-left: 12px;
+      }
+    }
+  }
   td.score, th.score {
     text-align: right;
     width: 50px;
