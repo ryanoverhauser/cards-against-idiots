@@ -5,7 +5,7 @@ var Stack = require('./stack');
 var util = require('./util');
 
 function Round(game) {
-  var answers = [];
+  var answers = new Stack();
   var io = global.socketIO;
   var state = 'waiting';
 
@@ -13,6 +13,8 @@ function Round(game) {
     game.reshuffleBlack();
   }
   var prompt = game.blackCards.drawOne();
+
+  pickCzar();
 
   /* Chech if all players have submitted an answer */
   function allAnswered() {
@@ -30,7 +32,7 @@ function Round(game) {
     // Discard prompt card
     game.blackDiscards.add([prompt]);
     // Discard answer cards and remove from player hands
-    for (let answer of answers) {
+    for (let answer of answers.get()) {
       game.whiteDiscards.add(answer.cards);
       var player = util.findByKeyValue(game.players, 'id', answer.userId);
       if (player) {
@@ -45,6 +47,32 @@ function Round(game) {
     };
   }
 
+  /* Check that the round still has a czar, otherwise reset the round */
+  function czarCheck() {
+    var czar = util.findByKeyValue(game.players, 'czar', true);
+    if (!czar) {
+      debug('czar has left');
+      game.sendMessage('Card Czar has left the game. Reseting round...', 'info');
+      pickCzar();
+      reset();
+    }
+  }
+
+  /* Assign round czar */
+  function pickCzar() {
+    if (game.players.length) {
+      var currentCzarIndex = util.findIndexByKeyValue(game.players, 'czar', true);
+      if (currentCzarIndex >= 0) {
+        game.players[currentCzarIndex].czar = false;
+      }
+      if (currentCzarIndex < (game.players.length - 1)) {
+        game.players[currentCzarIndex + 1].czar = true;
+      } else {
+        game.players[0].czar = true;
+      }
+    }
+  }
+
   /* Handle czar choosing round winner */
   function pickWinner(userId, answer) {
     debug('pickWinner', answer);
@@ -55,12 +83,25 @@ function Round(game) {
       // Award point to round winner
       var winner = util.findByKeyValue(game.players, 'id', answer.userId);
       if (winner) {
-        game.sendMessage(winner.name + ' wins the round!');
+        game.sendMessage(winner.name + ' wins the round!', 'info');
         winner.score += 1;
       }
       cleanup();
       game.newRound();
     }
+  }
+
+  /* Re-initalize the round */
+  function reset() {
+    debug('resetting round');
+    answers = new Stack();
+    state = 'waiting';
+
+    for (let player of game.players) {
+      player.answered = false;
+    };
+
+    io.to(game.id).emit('resetRound');
   }
 
   /* Handle player submitting an answer */
@@ -69,7 +110,8 @@ function Round(game) {
     var player = util.findByKeyValue(game.players, 'id', answer.userId);
     if (player) {
       player.answered = true;
-      answers.push(answer);
+      answers.add(answer);
+      answers.shuffle();
       update();
       game.sendUpdate();
     }
@@ -82,13 +124,14 @@ function Round(game) {
       prompt: prompt
     }
     if (allAnswered()) {
-      status.answers = answers;
+      status.answers = answers.get();
     }
     return status;
   }
 
   /* Update round status */
   function update() {
+    czarCheck();
     switch (state) {
       case 'waiting':
         if (game.players.length > 2) {
@@ -99,10 +142,13 @@ function Round(game) {
       case 'open':
         if (game.players.length < 3) {
           state = 'waiting';
+          game.sendMessage('Too few players. Resetting round...', 'info');
+          reset();
           io.to(game.id).emit('roundStatus', status());
         } else {
           if (allAnswered()) {
             state = 'closed';
+            game.sendMessage('The answers are in. Waiting on the Card Czar...', 'info');
           }
         }
         break;

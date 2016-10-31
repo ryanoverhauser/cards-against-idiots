@@ -130,14 +130,12 @@ function User(socket) {
   }
 
   function onPickWinner(data) {
-    debug(currentGame.round);
     if (currentGame && currentGame.round) {
       currentGame.round.pickWinner(id, data);
     }
   }
 
   function onSubmitAnswer(data) {
-    debug(currentGame.round);
     if (currentGame && currentGame.round) {
       currentGame.round.submitAnswer({
         userId: id,

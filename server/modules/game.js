@@ -186,6 +186,7 @@ function Game(gameOpts) {
       sendUpdate();
       cardCount();
     }
+    /* Remove game if empty */
     if (!game.players.length) {
       lobby.removeGame(id);
     }
@@ -203,7 +204,6 @@ function Game(gameOpts) {
 
   function newRound() {
     checkGame();
-    pickCzar();
     delete game.round;
     game.round = new Round(game);
     game.round.update();
@@ -213,20 +213,6 @@ function Game(gameOpts) {
       players: playerList()
     });
     cardCount();
-  }
-
-  function pickCzar() {
-    if (game.players.length) {
-      var currentCzarIndex = util.findIndexByKeyValue(game.players, 'czar', true);
-      if (currentCzarIndex >= 0) {
-        game.players[currentCzarIndex].czar = false;
-      }
-      if (currentCzarIndex < (game.players.length - 1)) {
-        game.players[currentCzarIndex + 1].czar = true;
-      } else {
-        game.players[0].czar = true;
-      }
-    }
   }
 
   function playerList() {

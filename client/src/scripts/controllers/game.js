@@ -134,6 +134,7 @@
     socket.on('joinedGame', onJoinedGame);
     socket.on('newRound', onNewRound);
     socket.on('updateGame', onUpdateGame);
+    socket.on('resetRound', onResetRound);
     socket.on('roundEnded', onRoundEnded);
 
     function onHand(data) {
@@ -151,6 +152,12 @@
       console.log('newRound', data);
       $ctrl.round = data.round;
       setupRound();
+    }
+
+    function onResetRound() {
+      console.log('resetRound');
+      $ctrl.answered = false;
+      clearCards();
     }
 
     function onRoundEnded(data) {
