@@ -20,6 +20,22 @@
     socket.on('initialized', function (data) {
       $ctrl.games = data.games;
       $ctrl.decks = data.decks;
+
+      // // Auto join/create - For testing only
+      // if ($ctrl.games.length) {
+      //   joinGame($ctrl.games[0].id);
+      // } else {
+      //   socket.emit('createGame', {
+      //     name: 'foobar\'s game',
+      //     decks: [3,4],
+      //     customDecks: [],
+      //     scoreLimit: 10,
+      //     roundTime: 120,
+      //     playerLimit: 8,
+      //     czarTime: 120
+      //   });
+      // }
+
     });
 
     socket.on('updateLobby', function (data) {
