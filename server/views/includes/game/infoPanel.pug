@@ -13,7 +13,7 @@
         td.status
           i.i.fa.fa-star(ng-show="p.czar")
           i.i.fa.fa-check(ng-show="p.answered")
-        td.name {{ p.name }}
+        td.name(ng-class="{'self' : game.isSelf(p.id)}") {{ p.name }}
           i.i.fa.fa-trophy(ng-repeat="win in game.getNumber(p.wins) track by $index")
         td.score {{ p.score }}
   .console(ng-controller="ConsoleController as console")

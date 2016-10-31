@@ -19,6 +19,7 @@
     $ctrl.isActive = isActive;
     $ctrl.isClosed = isClosed;
     $ctrl.isOpen = isOpen;
+    $ctrl.isSelf = isSelf;
     $ctrl.isWaiting = isWaiting;
     $ctrl.pickWinner = pickWinner;
     $ctrl.placeCard = placeCard;
@@ -68,6 +69,10 @@
 
     function isOpen() {
       return $ctrl.round.state === 'open';
+    }
+
+    function isSelf(id) {
+      return user.id === id;
     }
 
     function isWaiting() {

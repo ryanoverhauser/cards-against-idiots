@@ -33,6 +33,10 @@
     }
   }
   td.name, th.name {
+    &.self {
+      font-weight: bold;
+      color: $brand-warning;
+    }
     .fa-trophy {
       color: $brand-warning;
       margin-left: 5px;
