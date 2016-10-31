@@ -74,6 +74,13 @@
     }
   }
   input {
+    border: none;
+    border-top: 1px solid #555;
     border-radius: 0;
+    background: #444;
+    color: #999;
+    &:focus {
+      border-color: #516677;
+    }
   }
 }
