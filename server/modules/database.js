@@ -3,23 +3,9 @@
 var debug = require('debug')('database');
 var mysql = require('mysql');
 
-function BlackCard(id, text, draw, pick) {
-  this.id = id;
-  this.text = text;
-  this.draw = draw;
-  this.pick = pick;
-  this.toString = () => {
-    return text;
-  };
-}
-
-function WhiteCard(id, text) {
-  this.id = id;
-  this.text = text;
-  this.toString = () => {
-    return text;
-  };
-}
+var cards = require('./cards');
+var BlackCard = cards.blackCard;
+var WhiteCard = cards.whiteCard;
 
 function Database() {
 

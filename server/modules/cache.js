@@ -1,27 +1,66 @@
 'use strict';
 
 var fs = require('fs');
+var debug = require('debug')('cache');
 
 function Cache() {
 
   var base = __dirname + '/../cache/';
+  var cacheTime = (process.env.CACHE_TIME) ? parseInt(process.env.CACHE_TIME) : 1800;
+
+  function get(key) {
+    var filePath = base + key;
+    return validate(filePath).then(readFile);
+  }
+
+  function put(key, value) {
+    return new Promise((resolve, reject) => {
+      var filePath = base + key;
+      fs.writeFile(filePath, value, function(err) {
+        if (!err) {
+          resolve();
+        } else {
+          reject(err);
+        }
+      });
+    });
+  }
+
+  function readFile(filePath) {
+    return new Promise((resolve, reject) => {
+      fs.readFile(filePath, 'utf8', function(err, data) {
+        if (!err) {
+          resolve(data);
+        } else {
+          reject(err);
+        }
+      });
+    });
+  }
+
+  function validate(filePath) {
+    return new Promise((resolve, reject) => {
+      fs.stat(filePath, function(err, data) {
+        if (!err) {
+          var now = new Date();
+          var mtime = new Date(data.mtime);
+          var age = (now - mtime) / 1000;
+          debug(age);
+          if (age < cacheTime) {
+            resolve(filePath);
+          } else {
+            reject('Cache object expired');
+          }
+        } else {
+          reject(err);
+        }
+      });
+    });
+  }
 
   return {
-
-    put: function(id, contents, callback) {
-      var filePath = base + id;
-      fs.writeFile(filePath, contents, function(err) {
-        callback(err);
-      });
-    },
-
-    get: function(id, callback) {
-      var filePath = base + id;
-      fs.readFile(filePath, 'utf8', function(err, data) {
-        callback(err, data);
-      });
-    }
-
+    get: get,
+    put: put
   }
 
 }

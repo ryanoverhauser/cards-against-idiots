@@ -3,6 +3,7 @@
 var debug = require('debug')('game');
 var Table = require('cli-table');
 
+var cardcast = require('./cardcast')();
 var db = require('./database')();
 var lobby = require('./lobby');
 var util = require('./util');
@@ -110,16 +111,40 @@ function Game(gameOpts) {
     };
   }
 
-  function init() {
+  function getCustomDecks() {
+    return Promise.all(
+      gameOpts.customDecks.map(cardcast.getDeckCards)
+    )
+    .then((decks) => {
+      decks.forEach(function(deck) {
+        game.whiteCards.add(deck.whiteCards);
+        game.blackCards.add(deck.blackCards);
+      })
+    })
+    .catch((err) => {
+      debug('Error loading custom decks: ' + err);
+    });
+  }
+
+  function getDecks() {
     return db.getCardsFromDecks(gameOpts.decks)
-    .then((result) => {
-      game.whiteCards.add(result.whiteCards);
-      game.blackCards.add(result.blackCards);
+    .then((decks) => {
+      game.whiteCards.add(decks.whiteCards);
+      game.blackCards.add(decks.blackCards);
+    })
+    .catch((err) => {
+      debug('Error loading decks: ' + err);
+    });
+  }
+
+  function init() {
+    return getDecks()
+    .then(getCustomDecks)
+    .then(() => {
       game.whiteCards.shuffle();
       game.blackCards.shuffle();
       debug('Game initialized: ' + info());
       cardCount();
-      return true;
     });
   }
 

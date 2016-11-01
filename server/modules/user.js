@@ -109,16 +109,11 @@ function User(socket) {
 
   function onLoadCustomDeck(data) {
     if (util.exists(data.deckId)) {
-      cardcast.getDeck(data.deckId, function(deck) {
-        if (util.exists(deck.id) && deck.id === 'not_found') {
-          socket.emit('customDeckLoaded', {
-            err: 'Deck not found'
-          });
-        } else {
-          socket.emit('customDeckLoaded', {
-            deck: deck
-          });
-        }
+      cardcast.getDeck(data.deckId)
+      .then((deck) => {
+        socket.emit('customDeckLoaded', {
+          deck: deck
+        });
       });
     }
   }

@@ -5,65 +5,108 @@ var https = require('https');
 var StringDecoder = require('string_decoder').StringDecoder;
 
 var cache = require('./cache')();
+var cards = require('./cards');
+var BlackCard = cards.blackCard;
+var WhiteCard = cards.whiteCard;
 
 function Cardcast() {
 
-  function fetchDeck(deckId, callback) {
+  function getJSON(url) {
+    return new Promise((resolve, reject) => {
+      https.get(url, function(res) {
+        var content = '';
+        res.on('data', function(data) {
+          content += data;
+        });
+        res.on('end', function () {
+          var decoder = new StringDecoder('utf8');
+          resolve(JSON.parse(decoder.write(content)));
+        });
+      }).on('error', function(e) {
+        reject('Cardcast error: ' + e.message);
+      });
+    });
+  }
+
+  function fetchDeck(deckId) {
+    debug('fetchDeck');
     var url = 'https://api.cardcastgame.com/v1/decks/' + deckId;
-    https.get(url, function(res) {
-      var content = '';
-      res.on('data', function(data) {
-        content += data;
-      });
-      res.on('end', function () {
-        debug(content);
-        var decoder = new StringDecoder('utf8');
-        callback(decoder.write(content));
-      });
-    }).on('error', function(e) {
-      debug('Got error: ' + e.message);
+    var key = deckId + '_cc_deck';
+    return getJSON(url)
+    .then((data) => {
+      cache.put(key, JSON.stringify(data));
+      return data;
     });
   }
 
   function fetchDeckCards(deckId, callback) {
+    debug('fetchDeckCards');
     var url = 'https://api.cardcastgame.com/v1/decks/' + deckId + '/cards';
-    https.get(url, function(res) {
-      var content = '';
-      res.on('data', function(data) {
-        content += data;
+    var key = deckId + '_cc_cards';
+    return getJSON(url)
+    .then((data) => {
+      var cards = parseCards(data);
+      cache.put(key, JSON.stringify(cards));
+      return cards;
+    });
+  }
+
+  function fetchDeckFromCache(deckId) {
+    debug('fetchDeckFromCache');
+    var key = deckId + '_cc_deck';
+    return new Promise((resolve, reject) => {
+      cache.get(key)
+      .then((data) => {
+        resolve(JSON.parse(data));
+      })
+      .catch((err) => {
+        debug(err);
+        resolve(fetchDeck(deckId));
       });
-      res.on('end', function () {
-        var decoder = new StringDecoder('utf8');
-        callback(decoder.write(content));
+    });
+  }
+
+  function fetchDeckCardsFromCache(deckId) {
+    debug('fetchDeckCardsFromCache');
+    var key = deckId + '_cc_cards';
+    return new Promise((resolve, reject) => {
+      cache.get(key)
+      .then((data) => {
+        resolve(JSON.parse(data));
+      })
+      .catch((err) => {
+        debug(err);
+        resolve(fetchDeckCards(deckId));
       });
-    }).on('error', function(e) {
-      debug('Got error: ' + e.message);
     });
   }
 
   function parseCards(data) {
-    var res = {
-      black: [],
-      white: []
+    // debug(data);
+    var cards = {
+      blackCards: [],
+      whiteCards: []
     }
-    for (var i = 0; i < data.calls.length; i++) {
-      var draw = (data.calls[i].text.length >= 3) ? 2 : 0;
-      var card = {
-        id: data.calls[i].id,
-        text: concatText(data.calls[i].text),
-        pick: (data.calls[i].text.length - 1),
-        draw: draw
-      }
-      res.black.push(card);
-    }
-    for (var i = 0; i < data.responses.length; i++) {
-      var card = {
-        id: data.responses[i].id,
-        text: data.responses[i].text[0]
-      };
-      res.white.push(card);
-    }
-    return res;
+
+    // Parse black cards
+    data.calls.forEach(function(call) {
+      var text = concatText(call.text)
+      var draw = (call.text.length >= 3) ? 2 : 0;
+      var pick = call.text.length - 1;
+      var card = new BlackCard(call.id, text, draw, pick);
+      cards.blackCards.push(card);
+    })
+
+    // Parse white cards
+    data.responses.forEach(function(response) {
+      var card = new WhiteCard(
+        response.id,
+        response.text[0]
+      );
+      cards.whiteCards.push(card);
+    });
+
+    return cards;
   }
 
   function concatText(segments) {
@@ -76,38 +119,8 @@ function Cardcast() {
   }
 
   return {
-
-    getDeck: function(deckId, callback) {
-      var key = deckId + '_cc_deck';
-      cache.get(key, function(err, data) {
-        if (err) {
-          fetchDeck(deckId, function(data) {
-            cache.put(key, data, function(err) {
-              if (err) { debug(err) };
-            });
-            callback(JSON.parse(data));
-          });
-        } else {
-          callback(JSON.parse(data));
-        }
-      });
-    },
-    getDeckCards: function(deckId, callback) {
-      var key = deckId + '_cc_cards';
-      cache.get(key, function(err, data) {
-        if (err) {
-          fetchDeckCards(deckId, function(data) {
-            cache.put(key, data, function(err) {
-              if (err) { debug(err) };
-            });
-            callback(parseCards(JSON.parse(data)));
-          });
-        } else {
-          callback(parseCards(JSON.parse(data)));
-        }
-      });
-    }
-
+    getDeck: fetchDeckFromCache,
+    getDeckCards: fetchDeckCardsFromCache
   }
 
 }
