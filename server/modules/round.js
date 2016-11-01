@@ -54,6 +54,7 @@ function Round(game) {
       debug('czar has left');
       game.sendMessage('Card Czar has left the game. Reseting round...', 'info');
       pickCzar();
+      game.deal();
       reset();
     }
   }

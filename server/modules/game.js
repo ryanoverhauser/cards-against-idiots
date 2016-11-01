@@ -19,6 +19,7 @@ function Game(gameOpts) {
 
   var game = {
     id: id,
+    deal: deal,
     name: gameOpts.name,
     init: init,
     info: info,
