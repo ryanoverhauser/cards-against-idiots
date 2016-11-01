@@ -8,6 +8,20 @@ function Cache() {
   var base = __dirname + '/../cache/';
   var cacheTime = (process.env.CACHE_TIME) ? parseInt(process.env.CACHE_TIME) : 1800;
 
+  function clear() {
+    fs.readdir(base, (err, files) => {
+      // Ignore dot files and directories
+      var filtered = files.filter(function(file) {
+        var filePath = base + file;
+        return fs.lstatSync(filePath).isFile() && file.charAt(0) !== '.';
+      });
+      filtered.forEach(function(file) {
+        var filePath = base + file;
+        fs.unlink(filePath);
+      });
+    });
+  }
+
   function get(key) {
     var filePath = base + key;
     return validate(filePath).then(readFile);
@@ -59,6 +73,7 @@ function Cache() {
   }
 
   return {
+    clear: clear,
     get: get,
     put: put
   }
