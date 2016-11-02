@@ -13,6 +13,7 @@
   "globals"     : {
     "angular"   : false,
     "app"       : false,
-    "io"        : false
+    "io"        : false,
+    "timesync"  : false
   }
 }

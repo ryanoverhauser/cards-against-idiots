@@ -25,6 +25,7 @@
     "mysql": "^2.11.1",
     "pug": "^2.0.0-beta6",
     "socket.io": "^1.5.0",
+    "timesync": "^0.2.1",
     "validator": "^3.22.1"
   },
   "devDependencies": {

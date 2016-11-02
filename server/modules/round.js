@@ -8,6 +8,10 @@ function Round(game) {
   var answers = new Stack();
   var io = global.socketIO;
   var state = 'waiting';
+  var czarTimerEnd = false;
+  var czarTimerInterval = false;
+  var roundTimerEnd = false;
+  var roundTimerInterval = false;
 
   if (!game.blackCards.count()) {
     game.reshuffleBlack();
@@ -47,6 +51,32 @@ function Round(game) {
     };
   }
 
+  /* Close the round after all answers are in */
+  function close() {
+    state = 'closed';
+    czarTimerEnd = Date.now() + (1000 * game.czarTime);
+    czarTimerInterval = setInterval(checkCzarTime, 100);
+    roundTimerEnd = false;
+    clearInterval(roundTimerInterval);
+    game.sendMessage('The answers are in. Waiting on the Card Czar...', 'info');
+  }
+
+  function checkCzarTime() {
+    if (czarTimerEnd && Date.now() > czarTimerEnd) {
+      clearInterval(czarTimerInterval);
+      debug('clear');
+      io.to(game.id).emit('czarTimeExpired');
+    }
+  }
+
+  function checkRoundTime() {
+    if (roundTimerEnd && Date.now() > roundTimerEnd) {
+      clearInterval(roundTimerInterval);
+      debug('clear');
+      io.to(game.id).emit('roundTimeExpired');
+    }
+  }
+
   /* Check that the round still has a czar, otherwise reset the round */
   function czarCheck() {
     var czar = util.findByKeyValue(game.players, 'czar', true);
@@ -57,6 +87,16 @@ function Round(game) {
       game.deal();
       reset();
     }
+  }
+
+  /* Open the round to play */
+  function open() {
+    state = 'open';
+    czarTimerEnd = false;
+    clearInterval(czarTimerInterval);
+    roundTimerEnd = Date.now() + (1000 * game.roundTime);
+    roundTimerInterval = setInterval(checkRoundTime, 100);
+    io.to(game.id).emit('roundStatus', status());
   }
 
   /* Assign round czar */
@@ -77,9 +117,10 @@ function Round(game) {
   /* Handle czar choosing round winner */
   function pickWinner(userId, answer) {
     debug('pickWinner', answer);
-    var czar = util.findByKeyValue(game.players, 'id', userId);
+    var player = util.findByKeyValue(game.players, 'id', userId);
     //confirm the player is actually the card czar
-    if (czar.czar) {
+    if (player.czar) {
+      clearInterval(czarTimerInterval);
       io.to(game.id).emit('roundEnded', answer);
       // Award point to round winner
       var winner = util.findByKeyValue(game.players, 'id', answer.userId);
@@ -96,6 +137,10 @@ function Round(game) {
   function reset() {
     debug('resetting round');
     answers = new Stack();
+    czarTimerEnd = false;
+    clearInterval(czarTimerInterval);
+    roundTimerEnd = false;
+    clearInterval(roundTimerInterval);
     state = 'waiting';
 
     for (let player of game.players) {
@@ -121,8 +166,12 @@ function Round(game) {
   /* Get round status */
   function status() {
     var status = {
-      state: state,
-      prompt: prompt
+      czarTime: game.czarTime,
+      czarTimerEnd: czarTimerEnd,
+      prompt: prompt,
+      roundTime: game.roundTime,
+      roundTimerEnd: roundTimerEnd,
+      state: state
     }
     if (allAnswered()) {
       status.answers = answers.get();
@@ -136,26 +185,28 @@ function Round(game) {
     switch (state) {
       case 'waiting':
         if (game.players.length > 2) {
-          state = 'open';
-          io.to(game.id).emit('roundStatus', status());
+          open();
         }
         break;
       case 'open':
         if (game.players.length < 3) {
-          state = 'waiting';
-          game.sendMessage('Too few players. Resetting round...', 'info');
-          reset();
-          io.to(game.id).emit('roundStatus', status());
+          wait();
         } else {
           if (allAnswered()) {
-            state = 'closed';
-            game.sendMessage('The answers are in. Waiting on the Card Czar...', 'info');
+            close();
           }
         }
         break;
       case 'closed':
         break;
     }
+  }
+
+  /* Reset round and wait for enough players */
+  function wait() {
+    game.sendMessage('Too few players. Resetting round...', 'info');
+    reset();
+    io.to(game.id).emit('roundStatus', status());
   }
 
   return {

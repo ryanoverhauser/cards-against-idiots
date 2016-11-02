@@ -5,15 +5,18 @@
     .module('cati')
     .controller('GameController', GameController);
 
-  GameController.$inject = ['$uibModal', 'players', 'socket', 'user', 'util'];
+  GameController.$inject = ['$interval', '$uibModal', 'players', 'socket', 'user', 'util'];
 
-  function GameController($uibModal, players, socket, user, util) {
+  function GameController($interval, $uibModal, players, socket, user, util) {
 
     var $ctrl = this;
 
     $ctrl.answered = false;
+    $ctrl.afk = 0;
     $ctrl.clearCards = clearCards;
     $ctrl.czar = false;
+    $ctrl.czarTimer = '--:--';
+    $ctrl.czarTimerInterval = $interval(updateCzarTime, 100);
     $ctrl.getNumber = getNumber;
     $ctrl.hand = {};
     $ctrl.isActive = isActive;
@@ -27,9 +30,38 @@
     $ctrl.playSlots = [];
     $ctrl.round = false;
     $ctrl.submitAnswer = submitAnswer;
+    $ctrl.roundTimer = '--:--';
+    $ctrl.roundTimerInterval = $interval(updateRoundTime, 100);
+
+    // create a timesync instance
+    var ts = timesync.create({
+      server: '/timesync',
+      interval: 10000
+    });
 
     // Listen for updates to the player list
     players.registerObserver(updatePlayers);
+
+    function autoCzar() {
+      console.log('autoCzar');
+      var rand = Math.floor(Math.random() * $ctrl.round.answers.length);
+      pickWinner($ctrl.round.answers[rand]);
+    }
+
+    function autoSubmit() {
+      console.log('autoSubmit');
+      for (var i = 0; i < $ctrl.playSlots.length; i++) {
+        if (!$ctrl.playSlots[i].card) {
+          var rand = Math.floor(Math.random() * $ctrl.hand.length);
+          while ($ctrl.hand[rand].disabled) {
+            rand = Math.floor(Math.random() * $ctrl.hand.length);
+          }
+          $ctrl.playSlots[i].card = $ctrl.hand[rand];
+          $ctrl.hand[rand].disabled = true;
+        }
+      }
+      submitAnswer();
+    }
 
     function cleanCard(card) {
       var cleaned = angular.copy(card);
@@ -130,15 +162,61 @@
       czarCheck();
     }
 
+    function updateCzarTime() {
+      if (!$ctrl.round || !$ctrl.round.czarTimerEnd || !isClosed()) {
+        $ctrl.roundTimer = '--:--';
+      }
+      var timeRemaining = getTimeRemaining($ctrl.round.czarTimerEnd);
+      if (timeRemaining) {
+        $ctrl.czarTimer = timeRemaining;
+      } else {
+        $ctrl.czarTimer = '--:--';
+      }
+    }
+
+    function updateRoundTime() {
+      if (!$ctrl.round || !$ctrl.round.roundTimerEnd || !isOpen()) {
+        $ctrl.roundTimer = '--:--';
+      }
+      var timeRemaining = getTimeRemaining($ctrl.round.roundTimerEnd);
+      if (timeRemaining) {
+        $ctrl.roundTimer = timeRemaining;
+      } else {
+        $ctrl.roundTimer = '--:--';
+      }
+    }
+
+    function getTimeRemaining(endTime) {
+      var now = ts.now();
+      if (endTime > now) {
+        var t = endTime - now;
+        var minutes = Math.floor((t / 1000 / 60) % 60);
+        var seconds = Math.floor((t / 1000) % 60);
+        return ('0' + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2);
+      } else {
+        return false;
+      }
+    }
+
+    socket.on('czarTimeExpired', onCzarTimeExpired);
     socket.on('hand', onHand);
     socket.on('joinedGame', onJoinedGame);
     socket.on('newRound', onNewRound);
-    socket.on('updateGame', onUpdateGame);
     socket.on('resetRound', onResetRound);
-    socket.on('roundEnded', onRoundEnded);
+    socket.on('resetRound', onResetRound);
+    socket.on('roundTimeExpired', onRoundTimeExpired);
+    socket.on('updateGame', onUpdateGame);
+
+    function onCzarTimeExpired() {
+      console.log('czarTimeExpired', $ctrl.czar);
+      if ($ctrl.czar) {
+        autoCzar();
+        $ctrl.afk += 1;
+      }
+    }
 
     function onHand(data) {
-      // console.log('hand', data);
+      console.log('hand', data);
       $ctrl.hand = data;
     }
 
@@ -162,6 +240,14 @@
 
     function onRoundEnded(data) {
       console.log('onRoundEnded', data);
+    }
+
+    function onRoundTimeExpired() {
+      console.log('roundTimeExpired', $ctrl.czar, $ctrl.answered);
+      if (!$ctrl.czar && !$ctrl.answered) {
+        autoSubmit();
+        $ctrl.afk += 1;
+      }
     }
 
     function onUpdateGame(data) {

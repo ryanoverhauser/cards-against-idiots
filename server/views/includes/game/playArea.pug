@@ -33,3 +33,7 @@
   p.czar-message(ng-show="game.isOpen() && game.czar")
     i.fa.fa-lg.fa-star
     |  You're the Card Czar. You'll have to wait for the rest of these assholes to submit their cards. For your patience you will be rewarded with a chance to judge your peers.
+
+  //- TIMERS
+  .round-timer round: {{ game.roundTimer }}
+  .czar-timer czar: {{ game.czarTimer }}

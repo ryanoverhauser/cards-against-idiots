@@ -19,6 +19,7 @@ function Game(gameOpts) {
 
   var game = {
     id: id,
+    czarTime: gameOpts.czarTime,
     deal: deal,
     name: gameOpts.name,
     init: init,
@@ -30,6 +31,7 @@ function Game(gameOpts) {
     playerList: playerList,
     playerLimit: 8,
     round: false,
+    roundTime: gameOpts.roundTime,
     scoreLimit: gameOpts.scoreLimit,
     reshuffleBlack: reshuffleBlack,
     reshuffleWhite: reshuffleWhite,
