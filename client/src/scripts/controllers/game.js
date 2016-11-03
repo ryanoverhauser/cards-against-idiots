@@ -164,7 +164,8 @@
 
     function updateCzarTime() {
       if (!$ctrl.round || !$ctrl.round.czarTimerEnd || !isClosed()) {
-        $ctrl.roundTimer = '--:--';
+        $ctrl.czarTimer = '--:--';
+        return;
       }
       var timeRemaining = getTimeRemaining($ctrl.round.czarTimerEnd);
       if (timeRemaining) {
@@ -177,6 +178,7 @@
     function updateRoundTime() {
       if (!$ctrl.round || !$ctrl.round.roundTimerEnd || !isOpen()) {
         $ctrl.roundTimer = '--:--';
+        return;
       }
       var timeRemaining = getTimeRemaining($ctrl.round.roundTimerEnd);
       if (timeRemaining) {
