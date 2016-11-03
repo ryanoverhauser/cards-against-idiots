@@ -1,9 +1,19 @@
-#hand {
+#hand .cards {
   display: flex;
   align-items: stretch;
-  height: 13vw;
+  height: 14vw;
+  padding: .5vw 15px;
   .card-slot {
-    padding: .2vw;
+    padding: 0 .2vw;
     flex: 1;
+    &:first-child {
+      padding-left: 0;
+    }
+    &:last-child {
+      padding-right: 0;
+    }
+  }
+  .card {
+    margin: 0;
   }
 }

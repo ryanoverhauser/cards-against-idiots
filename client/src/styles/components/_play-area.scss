@@ -1,12 +1,12 @@
 #play-area {
   @extend .clearfix;
-  margin-top: 20px;
 }
 
 .prompt, {
   float: left;
   .card {
     margin-right: 15px;
+    margin-bottom: 0;
     float: left;
   }
 }

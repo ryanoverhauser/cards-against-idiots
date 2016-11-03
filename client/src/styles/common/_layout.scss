@@ -8,14 +8,21 @@ html, body {
   flex-direction: column;
 }
 
-#board, #info {
+#play-area, #hand, #info {
   width: 100%;
   justify-content: top;
   flex-direction: column;
 }
 
-#board {
-  padding: 41px 0 20px;
+#hand {
+  background: rgba(47,138,189,.5);
+  flex-basis: 14vw;
+  margin-bottom: 14px;
+}
+
+#play-area {
+  margin: 41px 0 0;
+  padding: 20px 15px;
   flex: 1;
   overflow-y: auto;
 }

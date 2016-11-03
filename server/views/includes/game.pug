@@ -3,15 +3,11 @@
   ng-show="main.initialized && main.inGame"
 )
 
-  //- BOARD
-  #board
-    .container-fluid
-      
-      //- PLAY AREA
-      include ./game/playArea.pug
-      
-      //- PLAYER HAND
-      include ./game/hand.pug
+  //- PLAY AREA
+  include ./game/playArea.pug
+  
+  //- PLAYER HAND
+  include ./game/hand.pug
 
   //- INFO PANEL
   include ./game/infoPanel.pug
