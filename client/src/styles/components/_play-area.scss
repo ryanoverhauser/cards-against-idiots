@@ -43,6 +43,10 @@
   }
 }
 
+.answered .fa {
+  color: $brand-success;
+}
+
 .answers {
   position: relative;
   height: 320px;
@@ -94,6 +98,7 @@
     clear: both;
   }
 }
+
 
 .czar-message,
 .waiting-message {
