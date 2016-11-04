@@ -17,6 +17,7 @@
     $ctrl.czar = false;
     $ctrl.czarTimer = '--:--';
     $ctrl.czarTimerInterval = $interval(updateCzarTime, 100);
+    $ctrl.getAnswersWidth = getAnswersWidth;
     $ctrl.getNumber = getNumber;
     $ctrl.hand = {};
     $ctrl.isActive = isActive;
@@ -84,6 +85,18 @@
         $ctrl.czar = true;
       } else {
         $ctrl.czar = false;
+      }
+    }
+
+    function getAnswersWidth() {
+      if ($ctrl.round.answers) {
+        var answerCount = $ctrl.round.answers.length;
+        var cardCount = $ctrl.round.answers[0].cards.length;
+        var answerWidth = (cardCount * 208) + 24;
+        var totalWidth = answerCount * answerWidth;
+        return {width: totalWidth + 'px'};
+      } else {
+        return {};
       }
     }
 

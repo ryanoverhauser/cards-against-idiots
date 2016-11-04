@@ -21,10 +21,12 @@
 
   //- ANSWERS    
   .answers(ng-show="game.isClosed()")
-    .answer-slot(ng-repeat="answer in game.round.answers")
-      .card.card-white(ng-repeat="card in answer.cards") {{ card.text }}
-      .czar-controls(ng-show="game.czar")
-        button.btn.btn-primary(ng-click="game.pickWinner(answer)") Pick Winner
+    .answers-viewport
+      .answers-wrap(ng-style="game.getAnswersWidth()")
+        .answer-slot(ng-repeat="answer in game.round.answers")
+          .card.card-white(ng-repeat="card in answer.cards") {{ card.text }}
+          .czar-controls(ng-show="game.czar")
+            button.btn.btn-primary(ng-click="game.pickWinner(answer)") Pick Winner
 
   //- MESSAGES
   p.waiting-message(ng-show="!game.isActive()")
@@ -35,5 +37,6 @@
     |  You're the Card Czar. You'll have to wait for the rest of these assholes to submit their cards. For your patience you will be rewarded with a chance to judge your peers.
 
   //- TIMERS
-  .round-timer round: {{ game.roundTimer }}
-  .czar-timer czar: {{ game.czarTimer }}
+  .timer
+    .round-timer round: {{ game.roundTimer }}
+    .czar-timer czar: {{ game.czarTimer }}

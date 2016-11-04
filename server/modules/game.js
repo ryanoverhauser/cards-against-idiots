@@ -179,6 +179,10 @@ function Game(gameOpts) {
       if (!game.round) {
         newRound();
       } else {
+        /* Mark player as answered if the round is closed */
+        if (game.round.status().state === 'closed') {
+          player.answered = true;
+        }
         game.round.update();
       }
 
