@@ -212,6 +212,9 @@ function Game(gameOpts) {
     if (index >= 0) {
       /* Alert other clients */
       sendMessage(game.players[index].name + ' has left the game.');
+      /* Remove player answer if exists */
+      game.round.removePlayerAnswer(playerId)
+      /* Discard hand */
       game.whiteDiscards.add(game.players[index].hand.empty());
       game.players.splice(index, 1);
       game.round.update();

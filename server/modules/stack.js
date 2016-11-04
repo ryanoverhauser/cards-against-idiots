@@ -4,52 +4,63 @@ var util = require('./util');
 
 function Stack() {
 
-  var cards = [];
+  var items = [];
 
-  function add(items) {
-    cards = cards.concat(items);
+  function add(newItems) {
+    items = items.concat(newItems);
   }
 
   function draw(count) {
-    return cards.splice(0, count);
+    return items.splice(0, count);
   }
 
   function drawOne() {
-    return cards.shift();
+    return items.shift();
   }
 
   function count() {
-    return cards.length;
+    return items.length;
   }
 
   function empty() {
-    return cards.splice(0);
+    return items.splice(0);
   }
 
   function get() {
-    return cards;
+    return items;
   }
 
   function getById(id) {
-    return util.findByKeyValue(cards, 'id', id);
+    return util.findByKeyValue(items, 'id', id);
+  }
+
+  function getByKey(key, value) {
+    return util.findByKeyValue(items, key, value);
   }
 
   function removeById(id) {
-    var i = util.findIndexByKeyValue(cards, 'id', id);
+    var i = util.findIndexByKeyValue(items, 'id', id);
     if (i >= 0) {
-      cards.splice(i, 1);
+      items.splice(i, 1);
+    }
+  }
+
+  function removeByKey(key, value) {
+    var i = util.findIndexByKeyValue(items, key, value);
+    if (i >= 0) {
+      items.splice(i, 1);
     }
   }
 
   function shuffle() {
-    var theLength = cards.length - 1;
+    var theLength = items.length - 1;
     var toSwap;
     var tempCard;
     for (var i = theLength; i > 0; i--) {
       toSwap = Math.floor(Math.random() * i);
-      tempCard = cards[i];
-      cards[i] = cards[toSwap];
-      cards[toSwap] = tempCard;
+      tempCard = items[i];
+      items[i] = items[toSwap];
+      items[toSwap] = tempCard;
     }
   }
 
@@ -57,11 +68,13 @@ function Stack() {
     add: add,
     get: get,
     getById: getById,
+    getByKey: getByKey,
     count: count,
     draw: draw,
     drawOne: drawOne,
     empty: empty,
     removeById: removeById,
+    removeByKey: removeByKey,
     shuffle: shuffle
   };
 

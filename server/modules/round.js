@@ -133,6 +133,10 @@ function Round(game) {
     }
   }
 
+  function removePlayerAnswer(playerId) {
+    answers.removeByKey('userId', playerId);
+  }
+
   /* Re-initalize the round */
   function reset() {
     debug('resetting round');
@@ -212,6 +216,7 @@ function Round(game) {
   return {
     pickWinner: pickWinner,
     prompt: prompt,
+    removePlayerAnswer: removePlayerAnswer,
     submitAnswer: submitAnswer,
     status: status,
     update: update
