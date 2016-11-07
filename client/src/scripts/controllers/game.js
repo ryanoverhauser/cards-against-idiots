@@ -34,16 +34,7 @@
     $ctrl.roundTimer = '--:--';
     $ctrl.roundTimerInterval = $interval(updateRoundTime, 100);
     $ctrl.submitAnswer = submitAnswer;
-    // $ctrl.winner = false;
-    $ctrl.winner = {
-      prompt: 'Something or other',
-      name: 'Bob',
-      cards: [
-        {text: 'card 1 text'},
-        {text: 'card 2 text'}
-      ],
-      show: true
-    };
+    $ctrl.winner = false;
 
     // create a timesync instance
     var ts = timesync.create({
