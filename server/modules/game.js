@@ -103,7 +103,10 @@ function Game(gameOpts) {
 
   function deal() {
     for (let player of game.players) {
-      var count = 10 + game.round.prompt.draw - player.hand.count();
+      var count = 10 - player.hand.count();
+      if (!player.czar) {
+        count += game.round.prompt.draw
+      }
       if (count > game.whiteCards.count()) {
         reshuffleWhite();
       }

@@ -155,6 +155,7 @@ function Round(game) {
       player.answered = false;
     };
 
+    game.deal();
     io.to(game.id).emit('resetRound');
   }
 
