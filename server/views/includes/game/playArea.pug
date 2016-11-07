@@ -1,5 +1,6 @@
 #play-area
 
+  //- PROMPT
   .prompt
     .card.card-large.card-black
       span(ng-show="game.isActive()") {{ game.round.prompt.text }}
@@ -40,3 +41,15 @@
   .timer
     .round-timer round: {{ game.roundTimer }}
     .czar-timer czar: {{ game.czarTimer }}
+
+  //- WINNER
+  .winner(ng-show="game.winner.show" ng-click="game.dismissWinner()")
+    h2
+      span {{ game.winner.name }}
+      |  wins the round!
+    .winner-cards
+      .card.card-large.card-black
+        | {{ game.winner.prompt }}
+      .card.card-large.card-white(ng-repeat="card in game.winner.cards")
+        | {{ card.text }}
+    .btn.btn-primary(ng-click="game.dismissWinner()") OK

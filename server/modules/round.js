@@ -121,10 +121,14 @@ function Round(game) {
     //confirm the player is actually the card czar
     if (player.czar) {
       clearInterval(czarTimerInterval);
-      io.to(game.id).emit('roundEnded', answer);
       // Award point to round winner
       var winner = util.findByKeyValue(game.players, 'id', answer.userId);
       if (winner) {
+        io.to(game.id).emit('roundEnded', {
+          name: winner.name,
+          cards: answer.cards,
+          prompt: prompt.text
+        });
         game.sendMessage(winner.name + ' wins the round!', 'info');
         winner.score += 1;
       }

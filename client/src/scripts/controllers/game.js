@@ -17,6 +17,7 @@
     $ctrl.czar = false;
     $ctrl.czarTimer = '--:--';
     $ctrl.czarTimerInterval = $interval(updateCzarTime, 100);
+    $ctrl.dismissWinner = dismissWinner;
     $ctrl.getAnswersWidth = getAnswersWidth;
     $ctrl.getNumber = getNumber;
     $ctrl.hand = {};
@@ -30,9 +31,19 @@
     $ctrl.playerList = [];
     $ctrl.playSlots = [];
     $ctrl.round = false;
-    $ctrl.submitAnswer = submitAnswer;
     $ctrl.roundTimer = '--:--';
     $ctrl.roundTimerInterval = $interval(updateRoundTime, 100);
+    $ctrl.submitAnswer = submitAnswer;
+    // $ctrl.winner = false;
+    $ctrl.winner = {
+      prompt: 'Something or other',
+      name: 'Bob',
+      cards: [
+        {text: 'card 1 text'},
+        {text: 'card 2 text'}
+      ],
+      show: true
+    };
 
     // create a timesync instance
     var ts = timesync.create({
@@ -88,8 +99,14 @@
       }
     }
 
+    function dismissWinner() {
+      if ($ctrl.winner) {
+        $ctrl.winner.show = false;
+      }
+    }
+
     function getAnswersWidth() {
-      if ($ctrl.round.answers) {
+      if ($ctrl.round.answers && $ctrl.round.answers[0]) {
         var answerCount = $ctrl.round.answers.length;
         var cardCount = $ctrl.round.answers[0].cards.length;
         var answerWidth = (cardCount * 208) + 24;
@@ -219,6 +236,7 @@
     socket.on('newRound', onNewRound);
     socket.on('resetRound', onResetRound);
     socket.on('resetRound', onResetRound);
+    socket.on('roundEnded', onRoundEnded);
     socket.on('roundTimeExpired', onRoundTimeExpired);
     socket.on('updateGame', onUpdateGame);
 
@@ -255,6 +273,8 @@
 
     function onRoundEnded(data) {
       console.log('onRoundEnded', data);
+      $ctrl.winner = data;
+      $ctrl.winner.show = true;
     }
 
     function onRoundTimeExpired() {

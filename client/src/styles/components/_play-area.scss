@@ -124,3 +124,30 @@
   top: 50px;
   right: 15px;
 }
+
+.winner {
+  position: absolute;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  padding-top: 60px;
+  text-align: center;
+  background: rgba(255,255,255,.9);
+  h2 {
+    margin-bottom: 30px;
+    span {
+      color: $brand-danger;
+    }
+  }
+  .winner-cards {
+    margin-bottom: 40px;
+  }
+  .card {
+    display: inline-block;
+    vertical-align: top;
+    text-align: left;
+    margin: 0 20px;
+  }
+}
