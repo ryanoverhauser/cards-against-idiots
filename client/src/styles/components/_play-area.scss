@@ -134,11 +134,19 @@
   top: 0;
   padding-top: 60px;
   text-align: center;
-  background: rgba(255,255,255,.9);
+  background: rgba(50,50,50,.9);
   h2 {
+    color: #fafafa;
     margin-bottom: 30px;
-    span {
-      color: $brand-danger;
+    span.name {
+      color: $brand-info;
+    }
+    &.won-game::before,
+    &.won-game::after {
+      content: "\f091";
+      color: $brand-warning;
+      font-family: "FontAwesome";
+      margin: 0 10px;
     }
   }
   .winner-cards {

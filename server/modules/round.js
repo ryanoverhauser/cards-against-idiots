@@ -124,13 +124,14 @@ function Round(game) {
       // Award point to round winner
       var winner = util.findByKeyValue(game.players, 'id', answer.userId);
       if (winner) {
+        winner.score += 1;
         io.to(game.id).emit('roundEnded', {
           name: winner.name,
           cards: answer.cards,
-          prompt: prompt.text
+          prompt: prompt.text,
+          wonGame: (winner.score >= game.scoreLimit) ? true : false
         });
         game.sendMessage(winner.name + ' wins the round!', 'info');
-        winner.score += 1;
       }
       cleanup();
       game.newRound();

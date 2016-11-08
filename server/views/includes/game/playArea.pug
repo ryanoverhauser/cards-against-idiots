@@ -44,9 +44,10 @@
 
   //- WINNER
   .winner(ng-show="game.winner.show" ng-click="game.dismissWinner()")
-    h2
-      span {{ game.winner.name }}
-      |  wins the round!
+    h2(ng-class="{'won-game': game.winner.wonGame}")
+      span.name {{ game.winner.name }}
+      span(ng-hide="game.winner.wonGame")  wins the round!
+      span(ng-show="game.winner.wonGame")  wins the game!
     .winner-cards
       .card.card-large.card-black
         | {{ game.winner.prompt }}
