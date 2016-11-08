@@ -7,6 +7,7 @@
     'ui.bootstrap',
     'ngDraggable',
     'angularResizable',
+    'angular-svg-round-progressbar',
     'luegg.directives'
   ]);
 

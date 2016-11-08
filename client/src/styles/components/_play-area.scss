@@ -51,6 +51,7 @@
   position: relative;
   height: 320px;
   margin-left: 243px;
+  margin-right: 80px;
   &::before, &::after {
     content: '';
     display: block;
@@ -121,8 +122,28 @@
 
 .timer {
   position: absolute;
-  top: 50px;
+  top: 60px;
   right: 15px;
+}
+
+.timer-wrap {
+  width: 60px;
+  position: relative;
+  text-align: center;
+  .display-text {
+    font-weight: 700;
+    color: rgba(10,10,10,.5);
+    font-size: 18px;
+    line-height: 18px;
+    &.hurry {
+      color: rgba(221,33,27,0.6);
+    }
+    span {
+      font-size: 80%;
+      color: rgba(10,10,10,.5);
+      display: block;
+    }
+  }
 }
 
 .winner {

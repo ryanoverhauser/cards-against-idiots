@@ -14,13 +14,19 @@
       ng-drop-success='game.placeCard(slot,$data)'
     ) {{ slot.card.text }}
     .play-controls(ng-show="game.isOpen() && !game.answered")
-      button.btn.btn-default(ng-click="game.clearCards()") Clear
-      button.btn.btn-primary(ng-click="game.submitAnswer()") Submit
+      button.btn.btn-default(
+        ng-click="game.clearCards()"
+        ng-disabled="game.playSlotsEmpty()"
+      ) Clear
+      button.btn.btn-primary(
+        ng-click="game.submitAnswer()"
+        ng-disabled="!game.playSlotsFilled()"
+      ) Submit
     p.answered(ng-show="game.answered")
       i.fa.fa-lg.fa-check
       |  Waiting for other players
 
-  //- ANSWERS    
+  //- ANSWERS
   .answers(ng-show="game.isClosed()")
     .answers-viewport
       .answers-wrap(ng-style="game.getAnswersWidth()")
@@ -39,8 +45,33 @@
 
   //- TIMERS
   .timer
-    .round-timer round: {{ game.roundTimer }}
-    .czar-timer czar: {{ game.czarTimer }}
+    .timer-wrap(ng-show="game.roundTimerCurrent")
+      round-progress.round-timer(
+        current="game.roundTimerCurrent"
+        max="game.roundTimerMax"
+        color="rgba(10,10,10,.35)"
+        bgcolor="rgba(10,10,10,.15)"
+        radius="30"
+        stroke="30"
+        clockwise="false"
+        duration="50"
+        animation-delay="0")
+      .display-text(ng-class="{'hurry': game.roundTimerCurrent < 11000}")
+        | {{ game.roundTimerText }}
+    .timer-wrap(ng-show="game.czarTimerCurrent")
+      round-progress.czar-timer(
+        current="game.czarTimerCurrent"
+        max="game.czarTimerMax"
+        color="rgba(10,10,10,.35)"
+        bgcolor="rgba(10,10,10,.15)"
+        radius="30"
+        stroke="30"
+        clockwise="false"
+        duration="50"
+        animation-delay="0")
+      .display-text(ng-class="{'hurry': game.czarTimerCurrent < 11000}")
+        | {{ game.czarTimerText }}
+        span (czar)
 
   //- WINNER
   .winner(ng-show="game.winner.show" ng-click="game.dismissWinner()")

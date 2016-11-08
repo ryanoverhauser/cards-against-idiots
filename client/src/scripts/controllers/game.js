@@ -15,8 +15,10 @@
     $ctrl.afk = 0;
     $ctrl.clearCards = clearCards;
     $ctrl.czar = false;
-    $ctrl.czarTimer = '--:--';
+    $ctrl.czarTimerCurrent = 0;
     $ctrl.czarTimerInterval = $interval(updateCzarTime, 100);
+    $ctrl.czarTimerMax = 100;
+    $ctrl.czarTimerText = '--:--';
     $ctrl.dismissWinner = dismissWinner;
     $ctrl.getAnswersWidth = getAnswersWidth;
     $ctrl.getNumber = getNumber;
@@ -30,9 +32,13 @@
     $ctrl.placeCard = placeCard;
     $ctrl.playerList = [];
     $ctrl.playSlots = [];
+    $ctrl.playSlotsEmpty = playSlotsEmpty;
+    $ctrl.playSlotsFilled = playSlotsFilled;
     $ctrl.round = false;
-    $ctrl.roundTimer = '--:--';
+    $ctrl.roundTimerCurrent = 0;
     $ctrl.roundTimerInterval = $interval(updateRoundTime, 100);
+    $ctrl.roundTimerMax = 100;
+    $ctrl.roundTimerText = '--:--';
     $ctrl.submitAnswer = submitAnswer;
     $ctrl.winner = false;
 
@@ -96,6 +102,16 @@
       }
     }
 
+    function formatTime(t) {
+      if (t) {
+        var minutes = Math.floor((t / 1000 / 60) % 60);
+        var seconds = Math.floor((t / 1000) % 60);
+        return ('0' + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2);
+      } else {
+        return '--:--';
+      }
+    }
+
     function getAnswersWidth() {
       if ($ctrl.round.answers && $ctrl.round.answers[0]) {
         var answerCount = $ctrl.round.answers.length;
@@ -105,6 +121,15 @@
         return {width: totalWidth + 'px'};
       } else {
         return {};
+      }
+    }
+
+    function getTimeRemaining(endTime) {
+      var now = ts.now();
+      if (endTime > now) {
+        return endTime - now;
+      } else {
+        return 0;
       }
     }
 
@@ -148,9 +173,18 @@
       }
     }
 
+    function playSlotsEmpty() {
+      for (var i = 0; i < $ctrl.playSlots.length; i++) {
+        if ($ctrl.playSlots[i].card) {
+          return false;
+        }
+      }
+      return true;
+    }
+
     function playSlotsFilled() {
       for (var i = 0; i < $ctrl.playSlots.length; i++) {
-        if (!$ctrl.playSlots.card) {
+        if (!$ctrl.playSlots[i].card) {
           return false;
         }
       }
@@ -161,6 +195,8 @@
       czarCheck();
       $ctrl.answered = false;
       $ctrl.playSlots = [];
+      $ctrl.roundTimerMax = $ctrl.round.roundTime * 1000;
+      $ctrl.czarTimerMax = $ctrl.round.czarTime * 1000;
       for (var i = 0; i < $ctrl.round.prompt.pick; i++) {
         $ctrl.playSlots.push({
           id: i,
@@ -170,12 +206,14 @@
     }
 
     function submitAnswer() {
-      var answer = $ctrl.playSlots.map(function(s) {
-        return cleanCard(s.card);
-      });
-      console.log('submitAnswer', answer);
-      socket.emit('submitAnswer', answer);
-      $ctrl.answered = true;
+      if (playSlotsFilled()) {
+        var answer = $ctrl.playSlots.map(function(s) {
+          return cleanCard(s.card);
+        });
+        console.log('submitAnswer', answer);
+        socket.emit('submitAnswer', answer);
+        $ctrl.answered = true;
+      }
     }
 
     function updatePlayers() {
@@ -185,39 +223,33 @@
 
     function updateCzarTime() {
       if (!$ctrl.round || !$ctrl.round.czarTimerEnd || !isClosed()) {
-        $ctrl.czarTimer = '--:--';
+        $ctrl.czarTimerText = '--:--';
+        $ctrl.czarTimerCurrent = 0;
         return;
       }
       var timeRemaining = getTimeRemaining($ctrl.round.czarTimerEnd);
       if (timeRemaining) {
-        $ctrl.czarTimer = timeRemaining;
+        $ctrl.czarTimerCurrent = timeRemaining;
+        $ctrl.czarTimerText = formatTime(timeRemaining);
       } else {
-        $ctrl.czarTimer = '--:--';
+        $ctrl.czarTimerText = '--:--';
+        $ctrl.czarTimerCurrent = 0;
       }
     }
 
     function updateRoundTime() {
       if (!$ctrl.round || !$ctrl.round.roundTimerEnd || !isOpen()) {
-        $ctrl.roundTimer = '--:--';
+        $ctrl.roundTimerCurrent = 0;
+        $ctrl.roundTimerText = '--:--';
         return;
       }
       var timeRemaining = getTimeRemaining($ctrl.round.roundTimerEnd);
       if (timeRemaining) {
-        $ctrl.roundTimer = timeRemaining;
+        $ctrl.roundTimerCurrent = timeRemaining;
+        $ctrl.roundTimerText = formatTime(timeRemaining);
       } else {
-        $ctrl.roundTimer = '--:--';
-      }
-    }
-
-    function getTimeRemaining(endTime) {
-      var now = ts.now();
-      if (endTime > now) {
-        var t = endTime - now;
-        var minutes = Math.floor((t / 1000 / 60) % 60);
-        var seconds = Math.floor((t / 1000) % 60);
-        return ('0' + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2);
-      } else {
-        return false;
+        $ctrl.roundTimerCurrent = 0;
+        $ctrl.roundTimerText = '--:--';
       }
     }
 
