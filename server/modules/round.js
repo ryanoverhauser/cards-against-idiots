@@ -58,7 +58,7 @@ function Round(game) {
     czarTimerInterval = setInterval(checkCzarTime, 100);
     roundTimerEnd = false;
     clearInterval(roundTimerInterval);
-    game.sendMessage('The answers are in. Waiting on the Card Czar...', 'info');
+    game.sendMessage('The answers are in. Waiting on the Card Czar...');
   }
 
   function checkCzarTime() {

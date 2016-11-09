@@ -53,7 +53,7 @@ function Game(gameOpts) {
     for (let player of game.players) {
       if (player.score >= game.scoreLimit) {
         player.wins += 1;
-        sendMessage(player.name + ' wins the game!', 'info');
+        sendMessage(player.name + ' wins the game!', 'warning');
         newGame();
         break;
       }
@@ -231,7 +231,7 @@ function Game(gameOpts) {
   }
 
   function newGame() {
-    sendMessage('Starting new game...', 'warning');
+    sendMessage('Starting new game...', 'info');
     // discard all hand cards and reset points
     for (let player of game.players) {
       player.score = 0;
