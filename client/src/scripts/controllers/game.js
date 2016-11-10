@@ -179,7 +179,6 @@
         }
         slot.card = card;
         card.disabled = true;
-        audio.play('plink');
       }
     }
 
@@ -213,7 +212,7 @@
           card: false
         });
       }
-      audio.play('round');
+      audio.play('warp');
     }
 
     function submitAnswer() {

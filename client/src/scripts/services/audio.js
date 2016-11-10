@@ -13,7 +13,7 @@
       alert: ngAudio.load('audio/alert.mp3'),
       drip: ngAudio.load('audio/drip.mp3'),
       plink: ngAudio.load('audio/plink.mp3'),
-      round: ngAudio.load('audio/round.mp3')
+      warp: ngAudio.load('audio/warp.mp3')
     };
 
     var service = {
