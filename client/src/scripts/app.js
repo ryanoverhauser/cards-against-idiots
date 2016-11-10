@@ -8,7 +8,8 @@
     'ngDraggable',
     'angularResizable',
     'angular-svg-round-progressbar',
-    'luegg.directives'
+    'luegg.directives',
+    'rzModule'
   ]);
 
 })();

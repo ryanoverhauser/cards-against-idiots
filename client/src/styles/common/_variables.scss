@@ -25,3 +25,37 @@ $navbar-inverse-brand-hover-bg:             transparent !default;
 $navbar-inverse-toggle-hover-bg:            #2a2a2a !default;
 $navbar-inverse-toggle-icon-bar-bg:         #fff !default;
 $navbar-inverse-toggle-border-color:        #2a2a2a !default;
+
+
+// Sliders
+@mixin rounded($radius: 2px) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
+}
+
+$handleActiveColor: #ddd;
+$handleHoverColor: #ddd;
+$labelTextColor: #55637d;
+$handleBgColor: #ddd;
+$handleInnerColor: #ddd;
+$handleDisabledColor: #d8e0f3;
+$limitLabelTextColor: $labelTextColor;
+$barFillColor: $handleBgColor;
+$barDisabledFillColor: #8b91a2;
+$barNormalColor: #666;
+
+$ticksColor: $barNormalColor;
+$selectedTicksColor: $barFillColor;
+$ticksWidth: 10px;
+$ticksHeight: 10px;
+$ticksValuePosition: -30px;
+$ticksLegendPosition: 24px;
+$ticksValuePositionOnVertical: 24px;
+
+$handleSize: 9px;
+$handlePointerSize: 8px;
+$bubblePadding: 1px 3px;
+$barDimension: 3px;
+
+$withLegendMargin: 40px;

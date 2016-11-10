@@ -17,6 +17,7 @@
         "angular-resizable",
         "angular-scroll-glue",
         "angular-svg-round-progressbar",
+        "angularjs-slider",
         "ngDraggable"
       ]
     },

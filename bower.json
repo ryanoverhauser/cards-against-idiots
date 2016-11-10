@@ -12,10 +12,11 @@
     "ngDraggable": "^0.1.11",
     "angular-bootstrap": "^2.2.0",
     "angular-animate": "^1.5.8",
-    "angular-audio": "^1.7.3",
+    "angular-audio": "1.7.2",
     "angular-resizable": "^1.2.0",
     "angular-scroll-glue": "^2.0.7",
-    "angular-svg-round-progressbar": "^0.4.8"
+    "angular-svg-round-progressbar": "^0.4.8",
+    "angularjs-slider": "^5.8.7"
   },
   "overrides": {
     "font-awesome": {

@@ -5,19 +5,36 @@
     .module('cati')
     .controller('MainController', MainController);
 
-  MainController.$inject = ['socket', 'user'];
+  MainController.$inject = ['$log', 'audio', 'socket', 'user'];
 
-  function MainController(socket, user) {
+  function MainController($log, audio, socket, user) {
 
     var $ctrl = this;
 
     $ctrl.addAlert = addAlert;
     $ctrl.alerts = [];
+    $ctrl.audio = audio;
     $ctrl.closeAlert = closeAlert;
     $ctrl.inGame = false;
     $ctrl.init = init;
     $ctrl.initialized = false;
     $ctrl.leaveGame = leaveGame;
+    $ctrl.toggleMute = toggleMute;
+    $ctrl.volume = {
+      value: 50,
+      prevValue: 50,
+      options: {
+        floor: 0,
+        ceil: 100,
+        hidePointerLabels: true,
+        hideLimitLabels: true,
+        onChange: onVolumeChange,
+        showSelectionBar: true,
+      }
+    };
+
+    // Set default volume
+    audio.setVolume($ctrl.volume.value / 100);
 
     // // Auto init - For testing only
     // socket.emit('init', {name: 'foobar'});
@@ -37,9 +54,6 @@
     socket.on('initialized', function (data) {
       user.init(data.userId, data.userName);
       $ctrl.initialized = true;
-      console.log('user initialized', user.getUser());
-      // console.log('games', data.games);
-      // console.log('decks', data.decks);
     });
 
     socket.on('joinedGame', function (data) {
@@ -48,7 +62,6 @@
 
     socket.on('leftGame', function () {
       $ctrl.inGame = false;
-      console.log('Left Game');
     });
 
     //////
@@ -72,6 +85,21 @@
 
     function leaveGame() {
       socket.emit('leaveGame');
+    }
+
+    function onVolumeChange() {
+      audio.setVolume($ctrl.volume.value / 100);
+      $ctrl.volume.prevValue = $ctrl.volume.value;
+    }
+
+    function toggleMute() {
+      if ($ctrl.volume.value) { // mute
+        $ctrl.volume.value = 0;
+        audio.setVolume(0);
+      } else { // unmute
+        $ctrl.volume.value = $ctrl.volume.prevValue;
+        audio.setVolume($ctrl.volume.value / 100);
+      }
     }
 
   }

@@ -5,9 +5,18 @@
     .module('cati')
     .controller('GameController', GameController);
 
-  GameController.$inject = ['$interval', '$uibModal', 'players', 'socket', 'user', 'util'];
+  GameController.$inject = [
+    '$interval',
+    '$log',
+    '$uibModal',
+    'audio',
+    'players',
+    'socket',
+    'user',
+    'util'
+  ];
 
-  function GameController($interval, $uibModal, players, socket, user, util) {
+  function GameController($interval, $log, $uibModal, audio, players, socket, user, util) {
 
     var $ctrl = this;
 
@@ -52,13 +61,13 @@
     players.registerObserver(updatePlayers);
 
     function autoCzar() {
-      console.log('autoCzar');
+      $log.debug('autoCzar');
       var rand = Math.floor(Math.random() * $ctrl.round.answers.length);
       pickWinner($ctrl.round.answers[rand]);
     }
 
     function autoSubmit() {
-      console.log('autoSubmit');
+      $log.debug('autoSubmit');
       for (var i = 0; i < $ctrl.playSlots.length; i++) {
         if (!$ctrl.playSlots[i].card) {
           var rand = Math.floor(Math.random() * $ctrl.hand.length);
@@ -170,6 +179,7 @@
         }
         slot.card = card;
         card.disabled = true;
+        audio.play('plink');
       }
     }
 
@@ -203,6 +213,7 @@
           card: false
         });
       }
+      audio.play('round');
     }
 
     function submitAnswer() {
@@ -210,7 +221,7 @@
         var answer = $ctrl.playSlots.map(function(s) {
           return cleanCard(s.card);
         });
-        console.log('submitAnswer', answer);
+        $log.debug('submitAnswer', answer);
         socket.emit('submitAnswer', answer);
         $ctrl.answered = true;
       }
@@ -264,7 +275,7 @@
     socket.on('updateGame', onUpdateGame);
 
     function onCzarTimeExpired() {
-      console.log('czarTimeExpired', $ctrl.czar);
+      $log.debug('czarTimeExpired', $ctrl.czar);
       if ($ctrl.czar) {
         autoCzar();
         $ctrl.afk += 1;
@@ -272,36 +283,36 @@
     }
 
     function onHand(data) {
-      console.log('hand', data);
+      $log.debug('hand', data);
       $ctrl.hand = data;
     }
 
     function onJoinedGame(data) {
-      console.log('joinedGame', data);
+      $log.debug('joinedGame', data);
       $ctrl.round = data.round;
       setupRound();
     }
 
     function onNewRound(data) {
-      console.log('newRound', data);
+      $log.debug('newRound', data);
       $ctrl.round = data.round;
       setupRound();
     }
 
     function onResetRound() {
-      console.log('resetRound');
+      $log.debug('resetRound');
       $ctrl.answered = false;
       clearCards();
     }
 
     function onRoundEnded(data) {
-      console.log('onRoundEnded', data);
+      $log.debug('onRoundEnded', data);
       $ctrl.winner = data;
       $ctrl.winner.show = true;
     }
 
     function onRoundTimeExpired() {
-      console.log('roundTimeExpired', $ctrl.czar, $ctrl.answered);
+      $log.debug('roundTimeExpired', $ctrl.czar, $ctrl.answered);
       if (!$ctrl.czar && !$ctrl.answered) {
         autoSubmit();
         $ctrl.afk += 1;
@@ -309,7 +320,7 @@
     }
 
     function onUpdateGame(data) {
-      console.log('updateGame', data);
+      $log.debug('updateGame', data);
       $ctrl.round = data.round;
     }
 

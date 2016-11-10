@@ -5,21 +5,20 @@ header#site-header
         a.navbar-brand
           i.fa.fa-globe
           |  CATI
-      .navbar-left
+      .navbar-right
         ul.nav.navbar-nav
           li
             a.leave-game(
               ng-show="main.inGame"
               ng-click="main.leaveGame()"
             ) Leave Game
-      .navbar-right
-        ul.nav.navbar-nav
-          li
+          li.volume
+            .volume-slider
+              rzslider(
+                rz-slider-model="main.volume.value"
+                rz-slider-options="main.volume.options"
+              )
             a.toggle-mute(
-              ng-click="toggleMute()"
-              ng-class="{muted: isMuted()}"
+              ng-click="main.toggleMute()"
+              ng-class="{muted: !main.volume.value, low: (main.volume.value < 50)}"
             )
-      .navbar-right
-        .round-timer(ng-show="inGame")
-          i.fa.fa-clock-o
-          |  {{displayTime}}
