@@ -5,9 +5,9 @@
     .module('cati')
     .controller('CreateGameModalController', CreateGameModalController);
 
-  CreateGameModalController.$inject = ['$uibModalInstance', 'user', 'util', 'socket', 'decks'];
+  CreateGameModalController.$inject = ['$uibModalInstance', '$log', 'user', 'util', 'socket', 'decks'];
 
-  function CreateGameModalController($uibModalInstance, user, util, socket, decks) {
+  function CreateGameModalController($uibModalInstance, $log, user, util, socket, decks) {
 
     var $ctrl = this;
 
@@ -96,9 +96,9 @@
 
     function onCustomDeckLoaded(data) {
       if (data.err) {
-        console.warn(data.err);
+        $log.warn(data.err);
       } else {
-        console.log('Loaded custom deck',data.deck);
+        $log.debug('Loaded custom deck',data.deck);
         if (typeof util.findByKeyValue($ctrl.customDecks, 'code', data.deck.code) === 'undefined') {
           $ctrl.customDecks.push(data.deck);
           $ctrl.options.customDecks.push(data.deck.code);

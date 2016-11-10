@@ -22,7 +22,6 @@
     }
 
     function onMessage(data) {
-      console.log('Message', data);
       $ctrl.messages.push(data);
     }
 

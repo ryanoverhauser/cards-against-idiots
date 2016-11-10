@@ -39,7 +39,6 @@
     });
 
     socket.on('updateLobby', function (data) {
-      console.log('updateLobby', data);
       $ctrl.games = data.games;
       $ctrl.decks = data.decks;
     });
@@ -67,11 +66,9 @@
           roundTime: options.roundTime.value,
           czarTime: options.czarTime.value
         };
-        console.log(gameOpts);
         socket.emit('createGame', gameOpts);
-        // console.log('createGame', gameOpts);
       }, function () {
-        // console.log('Modal dismissed at: ' + new Date());
+        //
       });
     }
 

@@ -34,7 +34,6 @@
     }
 
     function update(data) {
-      console.log('Players', data.players);
       service.playerList = data.players;
       notifyObservers();
     }
