@@ -80,7 +80,7 @@
     }
 
     function refreshGamesList() {
-      socket.emit('getGames');
+      socket.emit('refreshLobby');
     }
 
   }

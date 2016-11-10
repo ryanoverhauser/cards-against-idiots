@@ -1,10 +1,29 @@
 #lobby {
-  margin: 100px 0 260px;
+  padding-top: 100px;
   font-size: 125%;
+  h2 {
+    text-align: center;
+  }
+  .no-games {
+    text-align: center;
+  }
   #games-table {
-    margin: 20px 0;
+    max-width: 600px;
+    margin: 20px auto;
     background: #f8f8f8;
     border-radius: 4px;
+    th.game,
+    td.game {
+      width: 70%;
+    }
+    th.players,
+    td.players {
+      text-align: right;
+    }
+    th.refresh, td.join {
+      width:70px;
+      text-align: center;
+    }
   }
 }
 

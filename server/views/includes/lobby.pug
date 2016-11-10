@@ -3,22 +3,26 @@
   ng-show="main.initialized && !main.inGame"
 )
   .container
-    table#games-table.table
+    h2 Game Lobby
+    .no-games(ng-hide="lobby.games.length")
+      p.lead There are currently no games
+      button.btn.btn-lg.btn-success(
+        type="button"
+        ng-click="lobby.createGame()"
+      ) Create Game
+    table#games-table.table(ng-show="lobby.games.length")
       thead
         tr
-          th Game
-          th Players
-          th.align-right 
-            button.btn.btn-default(
-              type="button"
-              ng-click="lobby.refreshGamesList()"
-            )
+          th.game Game
+          th.players Players
+          th.refresh
+            a(ng-click="lobby.refreshGamesList()")
               i.fa.fa-refresh
       tbody
         tr.game(ng-repeat="game in lobby.games")
-          td {{ game.name }}
-          td {{ game.playerCount }} / {{ game.playerLimit }}
-          td.align-right 
+          td.game {{ game.name }}
+          td.players {{ game.playerCount }} / {{ game.playerLimit }}
+          td.join
             button.btn.btn-sm.btn-primary(
               type="button"
               ng-click="lobby.joinGame(game.id)"
@@ -29,6 +33,8 @@
             button.btn.btn-sm.btn-success(
               type="button"
               ng-click="lobby.createGame()"
-            ) Create Game
+            )
+              i.fa.fa-plus-circle
+              |  Create Game
           td
           td

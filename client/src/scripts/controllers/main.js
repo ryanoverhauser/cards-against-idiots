@@ -85,6 +85,7 @@
 
     function leaveGame() {
       socket.emit('leaveGame');
+      socket.emit('refreshLobby');
     }
 
     function onVolumeChange() {

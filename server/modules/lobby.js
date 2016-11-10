@@ -69,12 +69,20 @@ function Lobby() {
     }
   }
 
+  function status() {
+    return {
+      games: listGames(),
+      decks: decks
+    };
+  }
+
   return {
     listGames: listGames,
     listDecks: listDecks,
     addGame: addGame,
     getGame: getGame,
-    removeGame: removeGame
+    removeGame: removeGame,
+    status: status
   }
 
 }

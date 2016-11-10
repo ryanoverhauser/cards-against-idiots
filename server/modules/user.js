@@ -25,6 +25,7 @@ function User(socket) {
   socket.on('leaveGame', onLeaveGame);
   socket.on('message', onMessage);
   socket.on('pickWinner', onPickWinner);
+  socket.on('refreshLobby', onRefreshLobby);
   socket.on('submitAnswer', onSubmitAnswer);
 
   function info() {
@@ -128,6 +129,10 @@ function User(socket) {
     if (currentGame && currentGame.round) {
       currentGame.round.pickWinner(id, data);
     }
+  }
+
+  function onRefreshLobby() {
+    socket.emit('updateLobby', lobby.status());
   }
 
   function onSubmitAnswer(data) {
