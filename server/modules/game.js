@@ -112,8 +112,8 @@ function Game(gameOpts) {
       }
       if (count) {
         player.hand.add(game.whiteCards.draw(count));
-        io.to(player.socketId).emit('hand', player.hand.get());
       }
+      io.to(player.socketId).emit('hand', player.hand.get());
     };
   }
 
