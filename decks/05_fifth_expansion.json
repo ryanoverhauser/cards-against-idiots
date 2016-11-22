@@ -1,0 +1,357 @@
+{
+  "name": "Fifth Expansion",
+  "whiteCards": [
+    {
+      "text": "40 acres and a mule."
+    },
+    {
+      "text": "A crazy little thing called love."
+    },
+    {
+      "text": "A disappointing salad."
+    },
+    {
+      "text": "A face full of horse cum."
+    },
+    {
+      "text": "A giant powdery manbaby."
+    },
+    {
+      "text": "A mouthful of potato salad."
+    },
+    {
+      "text": "A one-way ticket to Gary, Indiana."
+    },
+    {
+      "text": "A powered exoskeleton."
+    },
+    {
+      "text": "A reason not to commit suicide."
+    },
+    {
+      "text": "A team of lawyers."
+    },
+    {
+      "text": "A whole new kind of porn."
+    },
+    {
+      "text": "A zero-risk way to make $2,000 from home."
+    },
+    {
+      "text": "AIDS monkeys."
+    },
+    {
+      "text": "All these decorative pillows."
+    },
+    {
+      "text": "An inability to form meaningful relationships."
+    },
+    {
+      "text": "An unforgettable quinceañera."
+    },
+    {
+      "text": "An uninterrupted history of imperialism and exploitation."
+    },
+    {
+      "text": "Anal fissures like you wouldn't believe."
+    },
+    {
+      "text": "Ancient Athenian boy-fucking."
+    },
+    {
+      "text": "Backwards knees."
+    },
+    {
+      "text": "Being nine years old."
+    },
+    {
+      "text": "Being paralyzed from the neck down."
+    },
+    {
+      "text": "Being worshipped as the one true God."
+    },
+    {
+      "text": "Blackface."
+    },
+    {
+      "text": "Blowjobs for everyone."
+    },
+    {
+      "text": "Boring vaginal sex."
+    },
+    {
+      "text": "Butt stuff."
+    },
+    {
+      "text": "Changing a person's mind with logic and facts."
+    },
+    {
+      "text": "Child support payments."
+    },
+    {
+      "text": "Cutting off a flamingo's legs with garden shears."
+    },
+    {
+      "text": "Daddy's credit card."
+    },
+    {
+      "text": "Deez nuts."
+    },
+    {
+      "text": "Denzel."
+    },
+    {
+      "text": "Doing the right stuff to her nipples."
+    },
+    {
+      "text": "Ejaculating live bees and the bees are angry."
+    },
+    {
+      "text": "Ennui."
+    },
+    {
+      "text": "Figuring out how to have sex with a dolphin."
+    },
+    {
+      "text": "Free ice cream, yo."
+    },
+    {
+      "text": "Genghis Khan's DNA."
+    },
+    {
+      "text": "Getting caught by the police and going to jail."
+    },
+    {
+      "text": "Getting drive-by shot."
+    },
+    {
+      "text": "Getting eaten alive by Guy Fieri."
+    },
+    {
+      "text": "Giant sperm from outer space."
+    },
+    {
+      "text": "Going to a high school reunion on ketamine."
+    },
+    {
+      "text": "Having been dead for a while."
+    },
+    {
+      "text": "Mom's new boyfriend."
+    },
+    {
+      "text": "My boyfriend's stupid penis."
+    },
+    {
+      "text": "My dead son's baseball glove."
+    },
+    {
+      "text": "My first period."
+    },
+    {
+      "text": "Not believing in giraffes."
+    },
+    {
+      "text": "Oil!"
+    },
+    {
+      "text": "Out-of-this-world bazongas."
+    },
+    {
+      "text": "P.F. Chang himself."
+    },
+    {
+      "text": "Russian super-tuberculosis."
+    },
+    {
+      "text": "Seeing my village burned and my family slaughtered before my eyes."
+    },
+    {
+      "text": "Seeing things from Hitler's perspective."
+    },
+    {
+      "text": "September 11th, 2001."
+    },
+    {
+      "text": "Slowly easing down onto a cucumber."
+    },
+    {
+      "text": "Social justice warriors with flamethrowers of compassion."
+    },
+    {
+      "text": "Some shit-hot guitar licks."
+    },
+    {
+      "text": "The Abercrombie & Fitch lifestyle."
+    },
+    {
+      "text": "The basic suffering that pervades all of existence."
+    },
+    {
+      "text": "The black half of Barack Obama."
+    },
+    {
+      "text": "The eight gay warlocks who dictate the rules of fashion."
+    },
+    {
+      "text": "The ghost of Marlon Brando."
+    },
+    {
+      "text": "The passage of time."
+    },
+    {
+      "text": "The swim team, all at once."
+    },
+    {
+      "text": "The tiger that killed my father."
+    },
+    {
+      "text": "The unbelievable world of mushrooms."
+    },
+    {
+      "text": "The white half of Barack Obama."
+    },
+    {
+      "text": "Too much cocaine."
+    },
+    {
+      "text": "Unrelenting genital punishment."
+    },
+    {
+      "text": "Vegetarian options."
+    },
+    {
+      "text": "Wearing glasses and sounding smart."
+    },
+    {
+      "text": "Western standards of beauty."
+    }
+  ],
+  "blackCards": [
+    {
+      "text": "And today's soup is Cream of ____.",
+      "draw": 0,
+      "pick": 1
+    },
+    {
+      "text": "Armani suit: $1,000. Dinner for two at that swanky restaurant: $300. The look on her face when you surprise her with ____: priceless.",
+      "draw": 0,
+      "pick": 1
+    },
+    {
+      "text": "Do the Dew® with our most extreme flavor yet! Get ready for Mountain Dew ____!",
+      "draw": 0,
+      "pick": 1
+    },
+    {
+      "text": "Do you lack energy? Does it sometimes feel like the whole world is ____? Zoloft®.",
+      "draw": 0,
+      "pick": 1
+    },
+    {
+      "text": "Don't forget! Beginning this week, Casual Friday will officially become \"____ Friday.\"",
+      "draw": 0,
+      "pick": 1
+    },
+    {
+      "text": "Get ready for the movie of the summer! One cop plays by the book. The other's only interested in one thing: ____.",
+      "draw": 0,
+      "pick": 1
+    },
+    {
+      "text": "Having the worst day EVER. #____",
+      "draw": 0,
+      "pick": 1
+    },
+    {
+      "text": "Heed my voice, mortals! I am the god of ____, and I will not tolerate ____!",
+      "draw": 0,
+      "pick": 2
+    },
+    {
+      "text": "Help me doctor, I've got ____ in my butt!",
+      "draw": 0,
+      "pick": 1
+    },
+    {
+      "text": "Here at the Academy for Gifted Children, we allow students to explore ____ at their own pace.",
+      "draw": 0,
+      "pick": 1
+    },
+    {
+      "text": "Hi MTV! My name is Kendra, I live in Malibu, I'm into ____, and I love to have a good time.",
+      "draw": 0,
+      "pick": 1
+    },
+    {
+      "text": "Hi, this is Jim from accounting. We noticed a $1,200 charge labeled \"____.\" Can you explain?",
+      "draw": 0,
+      "pick": 1
+    },
+    {
+      "text": "I don't mean to brag, but they call me the Michael Jordan of ____.",
+      "draw": 0,
+      "pick": 1
+    },
+    {
+      "text": "In his farewell address, George Washington famously warned Americans about the dangers of ____.",
+      "draw": 0,
+      "pick": 1
+    },
+    {
+      "text": "In his new action comedy, Jackie Chan must fend off ninjas while also dealing with ____.",
+      "draw": 0,
+      "pick": 1
+    },
+    {
+      "text": "Life's pretty tough in the fast lane. That's why I never leave the house without ____.",
+      "draw": 0,
+      "pick": 1
+    },
+    {
+      "text": "Now in bookstores: \"The Audacity of ____,\" by Barack Obama.",
+      "draw": 0,
+      "pick": 1
+    },
+    {
+      "text": "Patient presents ____. Likely a result of ____.",
+      "draw": 0,
+      "pick": 2
+    },
+    {
+      "text": "Well if ____ is good enough for ____, it's good enough for me.",
+      "draw": 0,
+      "pick": 2
+    },
+    {
+      "text": "Well what do you have to say for yourself, Casey? This is the third time you've been sent to the principal's office for ____.",
+      "draw": 0,
+      "pick": 1
+    },
+    {
+      "text": "What killed my boner?",
+      "draw": 0,
+      "pick": 1
+    },
+    {
+      "text": "What's making things awkward in the sauna?",
+      "draw": 0,
+      "pick": 1
+    },
+    {
+      "text": "WHOOO! God damn I love ____!",
+      "draw": 0,
+      "pick": 1
+    },
+    {
+      "text": "Why am I broke?",
+      "draw": 0,
+      "pick": 1
+    },
+    {
+      "text": "Yo' mama so fat she ____!",
+      "draw": 0,
+      "pick": 1
+    }
+  ]
+}

@@ -2,7 +2,7 @@
 
 var debug = require('debug')('lobby');
 
-var db = require('./database')();
+var db = require('./database');
 var util = require('./util');
 
 function Lobby() {

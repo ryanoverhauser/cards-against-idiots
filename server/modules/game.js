@@ -4,7 +4,7 @@ var debug = require('debug')('game');
 var Table = require('cli-table');
 
 var cardcast = require('./cardcast')();
-var db = require('./database')();
+var db = require('./database');
 var lobby = require('./lobby');
 var util = require('./util');
 
