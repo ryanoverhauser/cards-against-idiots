@@ -15,20 +15,20 @@ function DbFile() {
   var decks = [];
   var filenames = fs.readdirSync(dir);
   for (let file of filenames) {
-    if (file.substring(0, 1) === ".") {
+    if (file.substring(0, 1) === '.') {
       continue;
     }
     var filePath = dir + file;
     var deck = buildDeck(filePath);
     if (deck) {
-      decks.push(deck); 
+      decks.push(deck);
     }
   }
 
   function buildDeck(filePath) {
     try {
       var deckJSON = JSON.parse(fs.readFileSync(filePath));
-    } catch(e) {
+    } catch (e) {
       debug('Failed to parse JSON: ' + filePath);
       return false;
     }
@@ -54,12 +54,12 @@ function DbFile() {
   function getDecks() {
     return new Promise((resolve, reject) => {
       var deckArray = [];
-      for(let deck of decks) {
+      for (let deck of decks) {
         deckArray.push({
           id: deck.id,
           name: deck.name,
-          black_card_count: deck.blackCards.length,
-          white_card_count: deck.whiteCards.length
+          blackCardCount: deck.blackCards.length,
+          whiteCardCount: deck.whiteCards.length
         });
       }
       resolve(deckArray);

@@ -132,12 +132,12 @@
       $ctrl.whiteTotal = 0;
       $ctrl.blackTotal = 0;
       var i, deck;
-      // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
       for (i = 0; i < $ctrl.options.decks.length; i++) {
         deck = util.findByKeyValue($ctrl.decks, 'id', $ctrl.options.decks[i]);
-        $ctrl.whiteTotal += deck.white_card_count;
-        $ctrl.blackTotal += deck.black_card_count;
+        $ctrl.whiteTotal += deck.whiteCardCount;
+        $ctrl.blackTotal += deck.blackCardCount;
       }
+      // jscs:disable requireCamelCaseOrUpperCaseIdentifiers
       for (i = 0; i < $ctrl.options.customDecks.length; i++) {
         deck = util.findByKeyValue($ctrl.customDecks, 'code', $ctrl.options.customDecks[i]);
         $ctrl.whiteTotal += parseInt(deck.response_count);

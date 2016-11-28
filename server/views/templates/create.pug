@@ -86,8 +86,8 @@ Find or build your own decks at http://cardcastgame.com"
                       ng-click="create.toggleChecked(deck.id)"
                     )
                     | {{ deck.name }}
-              td.align-right {{ deck.white_card_count }}
-              td.align-right {{ deck.black_card_count }}
+              td.align-right {{ deck.whiteCardCount }}
+              td.align-right {{ deck.blackCardCount }}
             tr(ng-repeat="deck in create.customDecks")
               td
                 .checkbox     

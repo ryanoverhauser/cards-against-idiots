@@ -1,11 +1,14 @@
 'use strict';
 
 switch (process.env.DB_TYPE) {
-  case 'file':
-    var Database = require('./db-file')();
+  case 'mongodb':
+    var Database = require('./db-mongo')();
     break;
   case 'mysql':
     var Database = require('./db-mysql')();
+    break;
+  default:
+    var Database = require('./db-file')();
     break;
 }
 

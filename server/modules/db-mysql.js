@@ -14,11 +14,11 @@ function DbMysql() {
       '( SELECT COUNT(white_cards.id) ' +
         'FROM white_cards ' +
         'WHERE white_cards.deck_id = card_decks.id ' +
-      ') as white_card_count, ' +
+      ') as whiteCardCount, ' +
       '( SELECT COUNT(black_cards.id) ' +
         'FROM black_cards ' +
         'WHERE black_cards.deck_id = card_decks.id ' +
-      ') as black_card_count ' +
+      ') as blackCardCount ' +
       'FROM card_decks';
     return runQuery(queryString);
   }
