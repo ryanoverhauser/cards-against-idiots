@@ -12,8 +12,8 @@
     "node": "4.6.1"
   },
   "scripts": {
-    "build": "bower install && gulp",
-    "start": "node index.js",
+    "build": "npm install && bower install && gulp",
+    "start": "DEBUG=server node index.js",
     "jshint": "gulp jshint",
     "jscs": "jscs gulpfile.js index.js server client/src"
   },
