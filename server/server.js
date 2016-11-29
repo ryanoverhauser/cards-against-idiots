@@ -11,6 +11,9 @@ function Server() {
 
   var app = express();
   var server = http.Server(app);
+  var protocol = process.env.PROTOCOL || 'http';
+  var host = process.env.HOST || 'localhost';
+  var port = process.env.PORT || '8080';
 
   // Setup Pug template engine
   app.set('views', __dirname + '/views');
@@ -33,9 +36,7 @@ function Server() {
   });
 
   // Routing
-  var appSocketUrl = process.env.PROTOCOL +
-    '://' + process.env.HOST +
-    ':' + process.env.PORT;
+  var appSocketUrl = protocol + '://' + host + ':' + port;
 
   app.get('/', function(req, res) {
     res.render('main', {
@@ -48,8 +49,8 @@ function Server() {
   });
 
   // Start listening
-  server.listen(process.env.PORT, function() {
-    debug('Example app listening on port ' + process.env.PORT + '!');
+  server.listen(port, function() {
+    debug('Listening on port ' + port + '!');
   });
 
 }
