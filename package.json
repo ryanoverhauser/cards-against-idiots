@@ -13,9 +13,10 @@
   },
   "scripts": {
     "build": "npm install && bower install && gulp",
-    "start": "DEBUG=server node index.js",
     "jshint": "gulp jshint",
-    "jscs": "jscs gulpfile.js index.js server client/src"
+    "jscs": "jscs gulpfile.js index.js server client/src",
+    "postinstall": "bower install && gulp",
+    "start": "node index.js"
   },
   "dependencies": {
     "cli-table": "^0.3.1",
@@ -32,6 +33,7 @@
   },
   "devDependencies": {
     "asset-builder": "^1.1.0",
+    "bower": "^1.8.0",
     "browser-sync": "^2.8.2",
     "del": "^2.2.2",
     "gulp": "^3.9.0",
