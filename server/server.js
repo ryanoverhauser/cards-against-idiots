@@ -11,8 +11,6 @@ function Server() {
 
   var app = express();
   var server = http.Server(app);
-  var protocol = process.env.PROTOCOL || 'http';
-  var host = process.env.HOST || 'localhost';
   var port = process.env.PORT || '8080';
 
   // Setup Pug template engine
@@ -36,12 +34,8 @@ function Server() {
   });
 
   // Routing
-  var appSocketUrl = protocol + '://' + host + ':' + port;
-
   app.get('/', function(req, res) {
-    res.render('main', {
-      appSocketUrl: appSocketUrl
-    });
+    res.render('main');
   });
 
   app.get('/templates/create', function(req, res) {

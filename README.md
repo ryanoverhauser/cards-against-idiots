@@ -22,8 +22,6 @@ The `.env` file in the root directory stores environment-specific variables in t
 
 Variable    | Default   | Description
 ----------- | --------- | -----------
-PROTOCOL    | http      | `http` or `https`
-HOST        | localhost | Hostname for the server
 PORT        | 8080      | Port number for the server to listen on
 CACHE_TIME  | 600       | Time to cache CardCast decks (in seconds) before retreiving a fresh version from the CardCast API.
 DB_TYPE     | json      | Datbase type. Can be set to `json` (default), `mongodb`, or `mysql`.

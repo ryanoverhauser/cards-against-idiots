@@ -8,7 +8,7 @@
   socket.$inject = ['$rootScope'];
 
   function socket($rootScope) {
-    var socket = io.connect(window.appSocketUrl);
+    var socket = io();
     var service = {
       emit: emit,
       on: on,
