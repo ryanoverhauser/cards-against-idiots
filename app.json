@@ -1,0 +1,12 @@
+{
+  "name": "Cards Against Idiots",
+  "description": "An unnecessary Cards Against Humanity clone",
+  "repository": "https://github.com/ryanoverhauser/cards-against-idiots",
+  "keywords": ["node", "express"],
+  "env": {
+    "NPM_CONFIG_PRODUCTION": {
+      "description": "Disable production mode to install dev dependencies for build",
+      "value": "false"
+    }
+  }
+}
