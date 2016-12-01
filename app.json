@@ -5,7 +5,7 @@
   "keywords": ["node", "express"],
   "env": {
     "NPM_CONFIG_PRODUCTION": {
-      "description": "Disable production mode to install dev dependencies for build",
+      "description": "Production mode must be set to false for build",
       "value": "false"
     }
   }
