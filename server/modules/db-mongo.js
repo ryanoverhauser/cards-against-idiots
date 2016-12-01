@@ -2,6 +2,7 @@
 
 var debug = require('debug')('db');
 var MongoClient = require('mongodb').MongoClient;
+var ObjectID = require('mongodb').ObjectID
 
 var cards = require('./cards');
 var util = require('./util');
@@ -44,8 +45,8 @@ function DbMongo() {
     return MongoClient.connect(url)
     .then((db) => {
       return Promise.all([
-        db.collection('whiteCards').count({'deck_id': deck._id.toString()}),
-        db.collection('blackCards').count({'deck_id': deck._id.toString()}),
+        db.collection('whiteCards').count({'deckId': deck._id}),
+        db.collection('blackCards').count({'deckId': deck._id}),
       ])
       .then((result) => {
         deck.whiteCardCount = result[0];
@@ -73,7 +74,7 @@ function DbMongo() {
     .then((db) => {
       var ors = [];
       for (let id of deckIds) {
-        ors.push({'deck_id' : id});
+        ors.push({'deckId' : ObjectID(id)});
       };
       return db.collection('blackCards').find({$or: ors}).toArray();
     });
@@ -84,7 +85,7 @@ function DbMongo() {
     .then((db) => {
       var ors = [];
       for (let id of deckIds) {
-        ors.push({'deck_id' : id});
+        ors.push({'deckId' : ObjectID(id)});
       };
       return db.collection('whiteCards').find({$or: ors}).toArray();
     });

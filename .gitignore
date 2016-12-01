@@ -1,6 +1,7 @@
 bower_components
 node_modules
 client/dist
+decks/test.json
 npm-debug.log
 .env
 TODO

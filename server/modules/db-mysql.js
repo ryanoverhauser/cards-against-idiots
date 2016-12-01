@@ -13,13 +13,13 @@ function DbMysql() {
     var queryString = 'SELECT id, name, ' +
       '( SELECT COUNT(white_cards.id) ' +
         'FROM white_cards ' +
-        'WHERE white_cards.deck_id = card_decks.id ' +
+        'WHERE white_cards.deck_id = decks.id ' +
       ') as whiteCardCount, ' +
       '( SELECT COUNT(black_cards.id) ' +
         'FROM black_cards ' +
-        'WHERE black_cards.deck_id = card_decks.id ' +
+        'WHERE black_cards.deck_id = decks.id ' +
       ') as blackCardCount ' +
-      'FROM card_decks';
+      'FROM decks';
     return runQuery(queryString);
   }
 
@@ -33,12 +33,10 @@ function DbMysql() {
 
     var queryStringWhite = 'SELECT id, text ' +
       'FROM white_cards ' +
-      'WHERE active = 1 ' +
-      'AND (' + ors + ')';
+      'WHERE (' + ors + ')';
     var queryStringBlack = 'SELECT id, text, draw, pick ' +
       'FROM black_cards ' +
-      'WHERE active = 1 ' +
-      'AND (' + ors + ')';
+      'WHERE (' + ors + ')';
 
     return Promise.all([
       runQuery(queryStringWhite),
@@ -91,7 +89,6 @@ function DbMysql() {
       connection.query(queryString, function(err, rows, fields) {
         if (err) { reject(err) };
         connection.end();
-        debug('Query complete');
         resolve(rows);
       });
     });

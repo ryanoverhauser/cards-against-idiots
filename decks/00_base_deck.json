@@ -1,5 +1,5 @@
 {
-  "name": "Main Deck",
+  "name": "Base Deck",
   "whiteCards": [
     {
       "text": "50,000 volts straight to the nipples."
@@ -134,7 +134,7 @@
       "text": "A stray pube."
     },
     {
-      "text": "A subscription to Men's Fitness."
+      "text": "A subscription to Men’s Fitness."
     },
     {
       "text": "A Super Soaker™ full of cat pee."
@@ -230,7 +230,7 @@
       "text": "Arnold Schwarzenegger."
     },
     {
-      "text": "Asians who aren't good at math."
+      "text": "Asians who aren’t good at math."
     },
     {
       "text": "Assless chaps."
@@ -404,13 +404,13 @@
       "text": "Dick fingers."
     },
     {
-      "text": "Doin' it in the butt."
+      "text": "Doin’ it in the butt."
     },
     {
       "text": "Doing the right thing."
     },
     {
-      "text": "Domino's™ Oreo™ Dessert Pizza."
+      "text": "Domino’s™ Oreo™ Dessert Pizza."
     },
     {
       "text": "Drinking alone."
@@ -458,7 +458,7 @@
       "text": "Eugenics."
     },
     {
-      "text": "Exactly what you'd expect."
+      "text": "Exactly what you’d expect."
     },
     {
       "text": "Expecting a burp and vomiting on the floor."
@@ -482,7 +482,7 @@
       "text": "Fear itself."
     },
     {
-      "text": "Feeding Rosie O'Donnell."
+      "text": "Feeding Rosie O’Donnell."
     },
     {
       "text": "Fiery poops."
@@ -599,7 +599,7 @@
       "text": "Growing a pair."
     },
     {
-      "text": "Guys who don't call."
+      "text": "Guys who don’t call."
     },
     {
       "text": "Half-assed foreplay."
@@ -668,7 +668,7 @@
       "text": "Italians."
     },
     {
-      "text": "Jerking off into a pool of children's tears."
+      "text": "Jerking off into a pool of children’s tears."
     },
     {
       "text": "Jewish fraternities."
@@ -701,7 +701,7 @@
       "text": "Lady Gaga."
     },
     {
-      "text": "Lance Armstrong's missing testicle."
+      "text": "Lance Armstrong’s missing testicle."
     },
     {
       "text": "Land mines."
@@ -752,10 +752,10 @@
       "text": "Michael Jackson."
     },
     {
-      "text": "Michelle Obama's arms."
+      "text": "Michelle Obama’s arms."
     },
     {
-      "text": "Morgan Freeman's voice."
+      "text": "Morgan Freeman’s voice."
     },
     {
       "text": "Mouth herpes."
@@ -983,7 +983,7 @@
       "text": "Roofies."
     },
     {
-      "text": "Rush Limbaugh's soft, shitty body."
+      "text": "Rush Limbaugh’s soft, shitty body."
     },
     {
       "text": "Same-sex ice dancing."
@@ -1034,7 +1034,7 @@
       "text": "Shapeshifters."
     },
     {
-      "text": "Shaquille O'Neal's acting career."
+      "text": "Shaquille O’Neal’s acting career."
     },
     {
       "text": "Sharing needles."
@@ -1235,7 +1235,7 @@
       "text": "The miracle of childbirth."
     },
     {
-      "text": "The penny whistle solo from \"My Heart Will Go On.\""
+      "text": "The penny whistle solo from “My Heart Will Go On.”"
     },
     {
       "text": "The placenta."
@@ -1304,7 +1304,7 @@
       "text": "Tom Cruise."
     },
     {
-      "text": "Toni Morrison's vagina."
+      "text": "Toni Morrison’s vagina."
     },
     {
       "text": "Two midgets shitting into a bucket."
@@ -1331,10 +1331,10 @@
       "text": "Vikings."
     },
     {
-      "text": "Waiting 'til marriage."
+      "text": "Waiting ’til marriage."
     },
     {
-      "text": "Waking up half-naked in a Denny's parking lot."
+      "text": "Waking up half-naked in a Denny’s parking lot."
     },
     {
       "text": "Wearing underwear inside-out to avoid doing laundry."
@@ -1370,7 +1370,7 @@
       "text": "Women in yogurt commercials."
     },
     {
-      "text": "Women's suffrage."
+      "text": "Women’s suffrage."
     },
     {
       "text": "World peace."
@@ -1384,454 +1384,274 @@
   ],
   "blackCards": [
     {
-      "text": "____ + ____ = ____.",
-      "draw": 2,
-      "pick": 3
+      "text": "____ + ____ = ____."
     },
     {
-      "text": "____ is a slippery slope that leads to ____.",
-      "draw": 0,
-      "pick": 2
+      "text": "____ is a slippery slope that leads to ____."
     },
     {
-      "text": "____: Good to the last drop.",
-      "draw": 0,
-      "pick": 1
+      "text": "____: Good to the last drop."
     },
     {
-      "text": "____: kid-tested, mother-approved.",
-      "draw": 0,
-      "pick": 1
+      "text": "____: kid-tested, mother-approved."
     },
     {
-      "text": "____. Betcha can't have just one!",
-      "draw": 0,
-      "pick": 1
+      "text": "____. Betcha can’t have just one!"
     },
     {
-      "text": "____. High five, bro.",
-      "draw": 0,
-      "pick": 1
+      "text": "____. High five, bro."
     },
     {
-      "text": "____. It's a trap!",
-      "draw": 0,
-      "pick": 1
+      "text": "____. It’s a trap!"
     },
     {
-      "text": "____. That's how I want to die.",
-      "draw": 0,
-      "pick": 1
+      "text": "____. That’s how I want to die."
     },
     {
-      "text": "A romantic, candlelit dinner would be incomplete without ____.",
-      "draw": 0,
-      "pick": 1
+      "text": "A romantic, candlelit dinner would be incomplete without ____."
     },
     {
-      "text": "After the earthquake, Sean Penn brought ____ to the people of Haiti.",
-      "draw": 0,
-      "pick": 1
+      "text": "After the earthquake, Sean Penn brought ____ to the people of Haiti."
     },
     {
-      "text": "Alternative medicine is now embracing the curative powers of ____.",
-      "draw": 0,
-      "pick": 1
+      "text": "Alternative medicine is now embracing the curative powers of ____."
     },
     {
-      "text": "And the Academy Award for ____ goes to ____.",
-      "draw": 0,
-      "pick": 2
+      "text": "And the Academy Award for ____ goes to ____."
     },
     {
-      "text": "BILLY MAYS HERE FOR ____.",
-      "draw": 0,
-      "pick": 1
+      "text": "BILLY MAYS HERE FOR ____."
     },
     {
-      "text": "But before I kill you, Mr. Bond, I must show you ____.",
-      "draw": 0,
-      "pick": 1
+      "text": "But before I kill you, Mr. Bond, I must show you ____."
     },
     {
-      "text": "Coming to Broadway this season, ____: The Musical.",
-      "draw": 0,
-      "pick": 1
+      "text": "Coming to Broadway this season, ____: The Musical."
     },
     {
-      "text": "Daddy, why is Mommy crying?",
-      "draw": 0,
-      "pick": 1
+      "text": "Daddy, why is Mommy crying?"
     },
     {
-      "text": "Dear Abby, I'm having some trouble with ____ and would like your advice.",
-      "draw": 0,
-      "pick": 1
+      "text": "Dear Abby, I’m having some trouble with ____ and would like your advice."
     },
     {
-      "text": "During his childhood, Salvador Dalí produced hundreds of paintings of ____.",
-      "draw": 0,
-      "pick": 1
+      "text": "During his childhood, Salvador Dalí produced hundreds of paintings of ____."
     },
     {
-      "text": "During sex, I like to think about ____.",
-      "draw": 0,
-      "pick": 1
+      "text": "During sex, I like to think about ____."
     },
     {
-      "text": "For my next trick, I will pull ____ out of ____.",
-      "draw": 0,
-      "pick": 2
+      "text": "For my next trick, I will pull ____ out of ____."
     },
     {
-      "text": "Here is the church, Here is the steeple, Open the doors, And there is ____.",
-      "draw": 0,
-      "pick": 1
+      "text": "Here is the church, Here is the steeple, Open the doors, And there is ____."
     },
     {
-      "text": "How am I maintaining my relationship status?",
-      "draw": 0,
-      "pick": 1
+      "text": "How am I maintaining my relationship status?"
     },
     {
-      "text": "How did I lose my virginity?",
-      "draw": 0,
-      "pick": 1
+      "text": "How did I lose my virginity?"
     },
     {
-      "text": "I do not know with which weapons World War III will be fought, but World War IV will be fought with ____.",
-      "draw": 0,
-      "pick": 1
+      "text": "I do not know with which weapons World War III will be fought, but World War IV will be fought with ____."
     },
     {
-      "text": "I drink to forget ____.",
-      "draw": 0,
-      "pick": 1
+      "text": "I drink to forget ____."
     },
     {
-      "text": "I got 99 problems but ____ ain't one.",
-      "draw": 0,
-      "pick": 1
+      "text": "I got 99 problems but ____ ain’t one."
     },
     {
-      "text": "I never truly understood ____ until I encountered ____.",
-      "draw": 0,
-      "pick": 2
+      "text": "I never truly understood ____ until I encountered ____."
     },
     {
-      "text": "I'm sorry, Professor, but I couldn't complete my homework because of ____.",
-      "draw": 0,
-      "pick": 1
+      "text": "I’m sorry, Professor, but I couldn’t complete my homework because of ____."
     },
     {
-      "text": "In 1,000 years, when paper money is a distant memory, how will we pay for goods and services?",
-      "draw": 0,
-      "pick": 1
+      "text": "In 1,000 years, when paper money is a distant memory, how will we pay for goods and services?"
     },
     {
-      "text": "In a world ravaged by ____, our only solace is ____.",
-      "draw": 0,
-      "pick": 2
+      "text": "In a world ravaged by ____, our only solace is ____."
     },
     {
-      "text": "In L.A. County Jail, word is you can trade 200 cigarettes for ____.",
-      "draw": 0,
-      "pick": 1
+      "text": "In L.A. County Jail, word is you can trade 200 cigarettes for ____."
     },
     {
-      "text": "In M. Night Shyamalan's new movie, Bruce Willis discovers that ____ had really been ____ all along.",
-      "draw": 0,
-      "pick": 2
+      "text": "In M. Night Shyamalan’s new movie, Bruce Willis discovers that ____ had really been ____ all along."
     },
     {
-      "text": "In Michael Jackson's final moments, he thought about ____.",
-      "draw": 0,
-      "pick": 1
+      "text": "In Michael Jackson’s final moments, he thought about ____."
     },
     {
-      "text": "In the new Disney Channel Original Movie, Hannah Montana struggles with ____ for the first time.",
-      "draw": 0,
-      "pick": 1
+      "text": "In the new Disney Channel Original Movie, Hannah Montana struggles with ____ for the first time."
     },
     {
-      "text": "Instead of coal, Santa now gives the bad children ____.",
-      "draw": 0,
-      "pick": 1
+      "text": "Instead of coal, Santa now gives the bad children ____."
     },
     {
-      "text": "It's a pity that kids these days are all getting involved with ____.",
-      "draw": 0,
-      "pick": 1
+      "text": "It’s a pity that kids these days are all getting involved with ____."
     },
     {
-      "text": "Life for American Indians was forever changed when the White Man introduced them to ____.",
-      "draw": 0,
-      "pick": 1
+      "text": "Life for American Indians was forever changed when the White Man introduced them to ____."
     },
     {
-      "text": "Lifetime® presents ____, the story of ____.",
-      "draw": 0,
-      "pick": 2
+      "text": "Lifetime® presents ____, the story of ____."
     },
     {
-      "text": "Major League Baseball has banned ____ for giving players an unfair advantage.",
-      "draw": 0,
-      "pick": 1
+      "text": "Major League Baseball has banned ____ for giving players an unfair advantage."
     },
     {
-      "text": "Make a haiku.",
-      "draw": 2,
-      "pick": 3
+      "text": "Make a haiku."
     },
     {
-      "text": "Maybe she's born with it. Maybe it's ____.",
-      "draw": 0,
-      "pick": 1
+      "text": "Maybe she’s born with it. Maybe it’s ____."
     },
     {
-      "text": "MTV's new reality show features eight washed-up celebrities living with ____.",
-      "draw": 0,
-      "pick": 1
+      "text": "MTV’s new reality show features eight washed-up celebrities living with ____."
     },
     {
-      "text": "Next from J.K. Rowling: Harry Potter and the Chamber of ____.",
-      "draw": 0,
-      "pick": 1
+      "text": "Next from J.K. Rowling: Harry Potter and the Chamber of ____."
     },
     {
-      "text": "Next on ESPN2, the World Series of ____.",
-      "draw": 0,
-      "pick": 1
+      "text": "Next on ESPN2, the World Series of ____."
     },
     {
-      "text": "Rumor has it that Vladimir Putin's favorite delicacy is ____ stuffed with ____.",
-      "draw": 0,
-      "pick": 2
+      "text": "Rumor has it that Vladimir Putin’s favorite delicacy is ____ stuffed with ____."
     },
     {
-      "text": "Step 1: ____. Step 2: ____. Step 3: Profit.",
-      "draw": 0,
-      "pick": 2
+      "text": "Step 1: ____. Step 2: ____. Step 3: Profit."
     },
     {
-      "text": "Studies show that lab rats navigate mazes 50% faster after being exposed to ____.",
-      "draw": 0,
-      "pick": 1
+      "text": "Studies show that lab rats navigate mazes 50% faster after being exposed to ____."
     },
     {
-      "text": "That's right, I killed ____. How, you ask? ____.",
-      "draw": 0,
-      "pick": 2
+      "text": "That’s right, I killed ____. How, you ask? ____."
     },
     {
-      "text": "The class field trip was completely ruined by ____.",
-      "draw": 0,
-      "pick": 1
+      "text": "The class field trip was completely ruined by ____."
     },
     {
-      "text": "The Smithsonian Museum of Natural History has just opened an exhibit on ____.",
-      "draw": 0,
-      "pick": 1
+      "text": "The Smithsonian Museum of Natural History has just opened an exhibit on ____."
     },
     {
-      "text": "This is the way the world ends  This is the way the world ends  Not with a bang but with ____.",
-      "draw": 0,
-      "pick": 1
+      "text": "This is the way the world ends  This is the way the world ends  Not with a bang but with ____."
     },
     {
-      "text": "TSA guidelines now prohibit ____ on airplanes.",
-      "draw": 0,
-      "pick": 1
+      "text": "TSA guidelines now prohibit ____ on airplanes."
     },
     {
-      "text": "War! What is it good for?",
-      "draw": 0,
-      "pick": 1
+      "text": "War! What is it good for?"
     },
     {
-      "text": "What am I giving up for Lent?",
-      "draw": 0,
-      "pick": 1
+      "text": "What am I giving up for Lent?"
     },
     {
-      "text": "What are my parents hiding from me?",
-      "draw": 0,
-      "pick": 1
+      "text": "What are my parents hiding from me?"
     },
     {
-      "text": "What did I bring back from Mexico?",
-      "draw": 0,
-      "pick": 1
+      "text": "What did I bring back from Mexico?"
     },
     {
-      "text": "What did the U.S. airdrop to the children of Afghanistan?",
-      "draw": 0,
-      "pick": 1
+      "text": "What did the U.S. airdrop to the children of Afghanistan?"
     },
     {
-      "text": "What did Vin Diesel eat for dinner?",
-      "draw": 0,
-      "pick": 1
+      "text": "What did Vin Diesel eat for dinner?"
     },
     {
-      "text": "What do old people smell like?",
-      "draw": 0,
-      "pick": 1
+      "text": "What do old people smell like?"
     },
     {
-      "text": "What does Dick Cheney prefer?",
-      "draw": 0,
-      "pick": 1
+      "text": "What does Dick Cheney prefer?"
     },
     {
-      "text": "What don't you want to find in your Kung Pao chicken?",
-      "draw": 0,
-      "pick": 1
+      "text": "What don’t you want to find in your Kung Pao chicken?"
     },
     {
-      "text": "What ended my last relationship?",
-      "draw": 0,
-      "pick": 1
+      "text": "What ended my last relationship?"
     },
     {
-      "text": "What gets better with age?",
-      "draw": 0,
-      "pick": 1
+      "text": "What gets better with age?"
     },
     {
-      "text": "What gives me uncontrollable gas?",
-      "draw": 0,
-      "pick": 1
+      "text": "What gives me uncontrollable gas?"
     },
     {
-      "text": "What helps Obama unwind?",
-      "draw": 0,
-      "pick": 1
+      "text": "What helps Obama unwind?"
     },
     {
-      "text": "What is Batman's guilty pleasure?",
-      "draw": 0,
-      "pick": 1
+      "text": "What is Batman’s guilty pleasure?"
     },
     {
-      "text": "What never fails to liven up the party?",
-      "draw": 0,
-      "pick": 1
+      "text": "What never fails to liven up the party?"
     },
     {
-      "text": "What will always get you laid?",
-      "draw": 0,
-      "pick": 1
+      "text": "What will always get you laid?"
     },
     {
-      "text": "What will I bring back in time to convince people that I am a powerful wizard?",
-      "draw": 0,
-      "pick": 1
+      "text": "What will I bring back in time to convince people that I am a powerful wizard?"
     },
     {
-      "text": "What would grandma find disturbing, yet oddly charming?",
-      "draw": 0,
-      "pick": 1
+      "text": "What would grandma find disturbing, yet oddly charming?"
     },
     {
-      "text": "What's a girl's best friend?",
-      "draw": 0,
-      "pick": 1
+      "text": "What’s a girl’s best friend?"
     },
     {
-      "text": "What's my anti-drug?",
-      "draw": 0,
-      "pick": 1
+      "text": "What’s my anti-drug?"
     },
     {
-      "text": "What's my secret power?",
-      "draw": 0,
-      "pick": 1
+      "text": "What’s my secret power?"
     },
     {
-      "text": "What's Teach for America using to inspire inner city students to succeed?",
-      "draw": 0,
-      "pick": 1
+      "text": "What’s Teach for America using to inspire inner city students to succeed?"
     },
     {
-      "text": "What's that smell?",
-      "draw": 0,
-      "pick": 1
+      "text": "What’s that smell?"
     },
     {
-      "text": "What's that sound?",
-      "draw": 0,
-      "pick": 1
+      "text": "What’s that sound?"
     },
     {
-      "text": "What's the most emo?",
-      "draw": 0,
-      "pick": 1
+      "text": "What’s the most emo?"
     },
     {
-      "text": "What's the new fad diet?",
-      "draw": 0,
-      "pick": 1
+      "text": "What’s the new fad diet?"
     },
     {
-      "text": "What's the next Happy Meal® toy?",
-      "draw": 0,
-      "pick": 1
+      "text": "What’s the next Happy Meal® toy?"
     },
     {
-      "text": "What's the next superhero/sidekick duo?",
-      "draw": 0,
-      "pick": 2
+      "text": "What’s the next superhero/sidekick duo?"
     },
     {
-      "text": "What's there a ton of in heaven?",
-      "draw": 0,
-      "pick": 1
+      "text": "What’s there a ton of in heaven?"
     },
     {
-      "text": "When I am a billionare, I shall erect a 50-foot statue to commemorate ____.",
-      "draw": 0,
-      "pick": 1
+      "text": "When I am a billionare, I shall erect a 50-foot statue to commemorate ____."
     },
     {
-      "text": "When I am the President of the United States, I will create the Department of ____.",
-      "draw": 0,
-      "pick": 1
+      "text": "When I am the President of the United States, I will create the Department of ____."
     },
     {
-      "text": "When I was tripping on acid, ____ turned into ____.",
-      "draw": 0,
-      "pick": 2
+      "text": "When I was tripping on acid, ____ turned into ____."
     },
     {
-      "text": "When Pharaoh remained unmoved, Moses called down a plague of ____.",
-      "draw": 0,
-      "pick": 1
+      "text": "When Pharaoh remained unmoved, Moses called down a plague of ____."
     },
     {
-      "text": "While the United States raced the Soviet Union to the moon, the Mexican government funneled millions of pesos into research on ____.",
-      "draw": 0,
-      "pick": 1
+      "text": "While the United States raced the Soviet Union to the moon, the Mexican government funneled millions of pesos into research on ____."
     },
     {
-      "text": "White people like ____.",
-      "draw": 0,
-      "pick": 1
+      "text": "White people like ____."
     },
     {
-      "text": "Why am I sticky?",
-      "draw": 0,
-      "pick": 1
+      "text": "Why am I sticky?"
     },
     {
-      "text": "Why can't I sleep at night?",
-      "draw": 0,
-      "pick": 1
+      "text": "Why can’t I sleep at night?"
     },
     {
-      "text": "Why do I hurt all over?",
-      "draw": 0,
-      "pick": 1
+      "text": "Why do I hurt all over?"
     }
   ]
 }
