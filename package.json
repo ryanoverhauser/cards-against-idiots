@@ -9,7 +9,7 @@
     "url": "http://ryanoverhauser.com/"
   },
   "engines": {
-    "node": "4.6.1"
+    "node": "4.8.4"
   },
   "scripts": {
     "build": "npm install && bower install && gulp",
