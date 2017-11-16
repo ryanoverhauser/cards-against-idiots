@@ -72,7 +72,7 @@ function User(socket) {
 
   function onInit(data) {
     if (!initialized && util.exists(data)) {
-      if (validator.isLength(data.name, 1, 20)) {
+      if (validator.isLength(data.name, 1, 30)) {
         name = data.name;
         initialized = true;
         debug('user initialized with name: ' + name);
@@ -85,7 +85,7 @@ function User(socket) {
         });
       } else {
         socket.emit('alert', {
-          type: warning,
+          type: 'warning',
           msg: 'Please choose a name between 1 and 20 characters.'
         });
       }
