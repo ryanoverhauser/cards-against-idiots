@@ -320,6 +320,9 @@
 
     function onUpdateGame(data) {
       $log.debug('updateGame', data);
+      if ($ctrl.round.state === "open" && data.round.state === "closed") {
+        audio.play('warp');
+      }
       $ctrl.round = data.round;
     }
 
