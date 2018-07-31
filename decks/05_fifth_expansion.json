@@ -229,79 +229,129 @@
   ],
   "blackCards": [
     {
-      "text": "And today’s soup is Cream of ____."
+      "text": "And today’s soup is Cream of ____.",
+      "draw": 0,
+      "pick": 1
     },
     {
-      "text": "Armani suit: $1,000. Dinner for two at that swanky restaurant: $300. The look on her face when you surprise her with ____: priceless."
+      "text": "Armani suit: $1,000. Dinner for two at that swanky restaurant: $300. The look on her face when you surprise her with ____: priceless.",
+      "draw": 0,
+      "pick": 1
     },
     {
-      "text": "Do the Dew® with our most extreme flavor yet! Get ready for Mountain Dew ____!"
+      "text": "Do the Dew® with our most extreme flavor yet! Get ready for Mountain Dew ____!",
+      "draw": 0,
+      "pick": 1
     },
     {
-      "text": "Do you lack energy? Does it sometimes feel like the whole world is ____? Zoloft®."
+      "text": "Do you lack energy? Does it sometimes feel like the whole world is ____? Zoloft®.",
+      "draw": 0,
+      "pick": 1
     },
     {
-      "text": "Don’t forget! Beginning this week, Casual Friday will officially become “____ Friday.”"
+      "text": "Don’t forget! Beginning this week, Casual Friday will officially become “____ Friday.”",
+      "draw": 0,
+      "pick": 1
     },
     {
-      "text": "Get ready for the movie of the summer! One cop plays by the book. The other’s only interested in one thing: ____."
+      "text": "Get ready for the movie of the summer! One cop plays by the book. The other’s only interested in one thing: ____.",
+      "draw": 0,
+      "pick": 1
     },
     {
-      "text": "Having the worst day EVER. #____"
+      "text": "Having the worst day EVER. #____",
+      "draw": 0,
+      "pick": 1
     },
     {
-      "text": "Heed my voice, mortals! I am the god of ____, and I will not tolerate ____!"
+      "text": "Heed my voice, mortals! I am the god of ____, and I will not tolerate ____!",
+      "draw": 0,
+      "pick": 2
     },
     {
-      "text": "Help me doctor, I’ve got ____ in my butt!"
+      "text": "Help me doctor, I’ve got ____ in my butt!",
+      "draw": 0,
+      "pick": 1
     },
     {
-      "text": "Here at the Academy for Gifted Children, we allow students to explore ____ at their own pace."
+      "text": "Here at the Academy for Gifted Children, we allow students to explore ____ at their own pace.",
+      "draw": 0,
+      "pick": 1
     },
     {
-      "text": "Hi MTV! My name is Kendra, I live in Malibu, I’m into ____, and I love to have a good time."
+      "text": "Hi MTV! My name is Kendra, I live in Malibu, I’m into ____, and I love to have a good time.",
+      "draw": 0,
+      "pick": 1
     },
     {
-      "text": "Hi, this is Jim from accounting. We noticed a $1,200 charge labeled “____.” Can you explain?"
+      "text": "Hi, this is Jim from accounting. We noticed a $1,200 charge labeled “____.” Can you explain?",
+      "draw": 0,
+      "pick": 1
     },
     {
-      "text": "I don’t mean to brag, but they call me the Michael Jordan of ____."
+      "text": "I don’t mean to brag, but they call me the Michael Jordan of ____.",
+      "draw": 0,
+      "pick": 1
     },
     {
-      "text": "In his farewell address, George Washington famously warned Americans about the dangers of ____."
+      "text": "In his farewell address, George Washington famously warned Americans about the dangers of ____.",
+      "draw": 0,
+      "pick": 1
     },
     {
-      "text": "In his new action comedy, Jackie Chan must fend off ninjas while also dealing with ____."
+      "text": "In his new action comedy, Jackie Chan must fend off ninjas while also dealing with ____.",
+      "draw": 0,
+      "pick": 1
     },
     {
-      "text": "Life’s pretty tough in the fast lane. That’s why I never leave the house without ____."
+      "text": "Life’s pretty tough in the fast lane. That’s why I never leave the house without ____.",
+      "draw": 0,
+      "pick": 1
     },
     {
-      "text": "Now in bookstores: “The Audacity of ____,” by Barack Obama."
+      "text": "Now in bookstores: “The Audacity of ____,” by Barack Obama.",
+      "draw": 0,
+      "pick": 1
     },
     {
-      "text": "Patient presents ____. Likely a result of ____."
+      "text": "Patient presents ____. Likely a result of ____.",
+      "draw": 0,
+      "pick": 2
     },
     {
-      "text": "Well if ____ is good enough for ____, it’s good enough for me."
+      "text": "Well if ____ is good enough for ____, it’s good enough for me.",
+      "draw": 0,
+      "pick": 2
     },
     {
-      "text": "Well what do you have to say for yourself, Casey? This is the third time you’ve been sent to the principal’s office for ____."
+      "text": "Well what do you have to say for yourself, Casey? This is the third time you’ve been sent to the principal’s office for ____.",
+      "draw": 0,
+      "pick": 1
     },
     {
-      "text": "What killed my boner?"
+      "text": "What killed my boner?",
+      "draw": 0,
+      "pick": 1
     },
     {
-      "text": "What’s making things awkward in the sauna?"
+      "text": "What’s making things awkward in the sauna?",
+      "draw": 0,
+      "pick": 1
     },
     {
-      "text": "WHOOO! God damn I love ____!"
+      "text": "WHOOO! God damn I love ____!",
+      "draw": 0,
+      "pick": 1
     },
     {
-      "text": "Why am I broke?"
+      "text": "Why am I broke?",
+      "draw": 0,
+      "pick": 1
     },
     {
-      "text": "Yo’ mama so fat she ____!"
+      "text": "Yo’ mama so fat she ____!",
+      "draw": 0,
+      "pick": 1
     }
   ]
 }

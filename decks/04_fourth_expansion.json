@@ -214,94 +214,154 @@
   ],
   "blackCards": [
     {
-      "text": "____ may pass, but ____ will last forever."
+      "text": "____ may pass, but ____ will last forever.",
+      "draw": 0,
+      "pick": 2
     },
     {
-      "text": "____ will never be the same after ____."
+      "text": "____ will never be the same after ____.",
+      "draw": 0,
+      "pick": 2
     },
     {
-      "text": "2 AM in the city that never sleeps. The door swings open and she walks in, legs up to here. Something in her eyes tells me she’s looking for ____."
+      "text": "2 AM in the city that never sleeps. The door swings open and she walks in, legs up to here. Something in her eyes tells me she’s looking for ____.",
+      "draw": 0,
+      "pick": 1
     },
     {
-      "text": "Adventure. Romance. ____. From Paramount Pictures, “____.”"
+      "text": "Adventure. Romance. ____. From Paramount Pictures, “____.”",
+      "draw": 0,
+      "pick": 2
     },
     {
-      "text": "Alright, bros. Our frat house is condemned, and all the hot slampieces are over at Gamma Phi. The time has come to commence Operation ____."
+      "text": "Alright, bros. Our frat house is condemned, and all the hot slampieces are over at Gamma Phi. The time has come to commence Operation ____.",
+      "draw": 0,
+      "pick": 1
     },
     {
-      "text": "As king, how will I keep the peasants in line?"
+      "text": "As king, how will I keep the peasants in line?",
+      "draw": 0,
+      "pick": 1
     },
     {
-      "text": "Dear Leader Kim Jong-un, our village praises your infinite wisdom with a humble offering of ____."
+      "text": "Dear Leader Kim Jong-un, our village praises your infinite wisdom with a humble offering of ____.",
+      "draw": 0,
+      "pick": 1
     },
     {
-      "text": "Do [italic]not[/italic] fuck with me! I am literally ____ right now."
+      "text": "Do [italic]not[/italic] fuck with me! I am literally ____ right now.",
+      "draw": 0,
+      "pick": 1
     },
     {
-      "text": "Every step towards ____ gets me a little bit closer to ____."
+      "text": "Every step towards ____ gets me a little bit closer to ____.",
+      "draw": 0,
+      "pick": 2
     },
     {
-      "text": "Forget everything you know about ____, because we’ve now supercharged it with ____!"
+      "text": "Forget everything you know about ____, because we’ve now supercharged it with ____!",
+      "draw": 0,
+      "pick": 2
     },
     {
-      "text": "Honey, I have a new role-play I want to try tonight! You can be ____, and I’ll be ____."
+      "text": "Honey, I have a new role-play I want to try tonight! You can be ____, and I’ll be ____.",
+      "draw": 0,
+      "pick": 2
     },
     {
-      "text": "How am I compensating for my tiny penis?"
+      "text": "How am I compensating for my tiny penis?",
+      "draw": 0,
+      "pick": 1
     },
     {
-      "text": "I am become ____, destroyer of ____!"
+      "text": "I am become ____, destroyer of ____!",
+      "draw": 0,
+      "pick": 2
     },
     {
-      "text": "I’m pretty sure I’m high right now, because I’m absolutely mesmerized by ____."
+      "text": "I’m pretty sure I’m high right now, because I’m absolutely mesmerized by ____.",
+      "draw": 0,
+      "pick": 1
     },
     {
-      "text": "I’m sorry, sir, but we don’t allow ____ at the country club."
+      "text": "I’m sorry, sir, but we don’t allow ____ at the country club.",
+      "draw": 0,
+      "pick": 1
     },
     {
-      "text": "If you can’t handle ____, you’d better stay away from ____."
+      "text": "If you can’t handle ____, you’d better stay away from ____.",
+      "draw": 0,
+      "pick": 2
     },
     {
-      "text": "In return for my soul, the Devil promised me ____, but all I got was ____."
+      "text": "In return for my soul, the Devil promised me ____, but all I got was ____.",
+      "draw": 0,
+      "pick": 2
     },
     {
-      "text": "In the beginning, there was ____. And the Lord said, “Let there be ____.”"
+      "text": "In the beginning, there was ____. And the Lord said, “Let there be ____.”",
+      "draw": 0,
+      "pick": 2
     },
     {
-      "text": "It lurks in the night. It hungers for flesh. This summer, no one is safe from ____."
+      "text": "It lurks in the night. It hungers for flesh. This summer, no one is safe from ____.",
+      "draw": 0,
+      "pick": 1
     },
     {
-      "text": "Man, this is bullshit. Fuck ____."
+      "text": "Man, this is bullshit. Fuck ____.",
+      "draw": 0,
+      "pick": 1
     },
     {
-      "text": "Oprah’s book of the month is “____ For ____: A Story of Hope.”"
+      "text": "Oprah’s book of the month is “____ For ____: A Story of Hope.”",
+      "draw": 0,
+      "pick": 2
     },
     {
-      "text": "She’s up all night for good fun. I’m up all night for ____."
+      "text": "She’s up all night for good fun. I’m up all night for ____.",
+      "draw": 0,
+      "pick": 1
     },
     {
-      "text": "The Japanese have developed a smaller, more efficient version of ____."
+      "text": "The Japanese have developed a smaller, more efficient version of ____.",
+      "draw": 0,
+      "pick": 1
     },
     {
-      "text": "This is the prime of my life. I’m young, hot, and full of ____."
+      "text": "This is the prime of my life. I’m young, hot, and full of ____.",
+      "draw": 0,
+      "pick": 1
     },
     {
-      "text": "This year’s hottest album is “____” by ____."
+      "text": "This year’s hottest album is “____” by ____.",
+      "draw": 0,
+      "pick": 2
     },
     {
-      "text": "We never did find ____, but along the way we sure learned a lot about ____."
+      "text": "We never did find ____, but along the way we sure learned a lot about ____.",
+      "draw": 0,
+      "pick": 2
     },
     {
-      "text": "Wes Anderson’s new film tells the story of a precocious child coming to terms with ____."
+      "text": "Wes Anderson’s new film tells the story of a precocious child coming to terms with ____.",
+      "draw": 0,
+      "pick": 1
     },
     {
-      "text": "What’s fun until it gets weird?"
+      "text": "What’s fun until it gets weird?",
+      "draw": 0,
+      "pick": 1
     },
     {
-      "text": "You guys, I saw this crazy movie last night. It opens on ____, and then there’s some stuff about ____, and then it ends with ____."
+      "text": "You guys, I saw this crazy movie last night. It opens on ____, and then there’s some stuff about ____, and then it ends with ____.",
+      "draw": 2,
+      "pick": 3
     },
     {
-      "text": "You’ve seen the bearded lady! You’ve seen the ring of fire! Now, ladies and gentlemen, feast your eyes upon ____!"
+      "text": "You’ve seen the bearded lady! You’ve seen the ring of fire! Now, ladies and gentlemen, feast your eyes upon ____!",
+      "draw": 0,
+      "pick": 1
     }
   ]
 }
